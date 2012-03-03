@@ -464,7 +464,7 @@
 		# $cod .= '<p><input type="text" style="width: 99%;" value="' . $cod1 . '">';
 
 		$cod .= '<a href="#"
-			onClick = "jAlert(\'<textarea cols=60 rows=4>' . $cod1 . '</textarea>\', \'Адрес файла\'); return false;">Адрес</a>';
+			onClick = "jAlert(\'<textarea cols=60 rows=4>' . $cod1 . '</textarea>\', \'' . t('Адрес файла') . '\'); return false;">' . t('Адрес') . '</a>';
 
 		# $cod .= '<p><textarea style="width: 99%;">' . $cod1 . '</textarea>';
 
@@ -509,7 +509,7 @@
       
       
 		$cod .= ' | <a href="#"
-			onClick = "jAlert(\'<textarea cols=60 rows=5>' . $cod2 . '</textarea>\', \'HTML-ссылка файла\'); return false;">HTML-ссылка</a>';
+			onClick = "jAlert(\'<textarea cols=60 rows=5>' . $cod2 . '</textarea>\', \'' . t('HTML-ссылка файла') . '\'); return false;">' . t('HTML-ссылка') . '</a>';
 
 
 		if ( $ext == 'jpg' or $ext == 'jpeg' or $ext == 'gif' or $ext == 'png'  )
@@ -545,13 +545,13 @@
 				$cod4 = stripslashes(htmlspecialchars( '[img]' . $uploads_url . $file . '[/img]') );
 			}
 
-			$cod .= ' | <a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod3 . '</textarea>\', \'Код [image] файла\'); return false;">[image]</a>';
+			$cod .= ' | <a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod3 . '</textarea>\', \'' . t('Код [image] файла') . '\'); return false;">[image]</a>';
 			
 			
-			$cod .= ' | <a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod4 . '</textarea>\', \'Код [img] файла\'); return false;">[img]</a>';
+			$cod .= ' | <a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod4 . '</textarea>\', \'' . t('Код [img] файла') . '\'); return false;">[img]</a>';
 			
 			if ($cod_prev)
-				$cod .= ' | <a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod_prev . '</textarea>\', \'Адрес превью (100x100)\'); return false;">Превью (100x100)</a>';			
+				$cod .= ' | <a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod_prev . '</textarea>\', \'' . t('Адрес превью (100x100)') . '\'); return false;">' . t('Превью (100x100)') . '</a>';			
 
 			$predpr = '<a class="lightbox" href="' . $uploads_url . $file . '" target="_blank" title="' . htmlspecialchars($title) . ' ('. $file . ')' . '"><img class="file_img" alt="" src="' . $uploads_url . $_f . '"></a>';
 
@@ -563,7 +563,7 @@
 				$predpr = '<a href="' . $uploads_url . $file . '" target="_blank" title="' . $title . ' ('. $file . ')' . '"><img class="file_img" alt="" src="' . getinfo('admin_url') . 'plugins/admin_files/mp3.png"></a>';
 
 				$cod .= ' | <a href="#"
-			onClick = "jAlert(\'<textarea cols=60 rows=6>' . stripslashes(htmlspecialchars( '[audio=' . $uploads_url . $file . ']') ) . '</textarea>\', \'Код [audio] файла\'); return false;">Код [audio]</a>';
+			onClick = "jAlert(\'<textarea cols=60 rows=6>' . stripslashes(htmlspecialchars( '[audio=' . $uploads_url . $file . ']') ) . '</textarea>\', \'' . t('Код [audio] файла') . '\'); return false;">' . t('Код [audio]') . '</a>';
 
 			}
 			else
