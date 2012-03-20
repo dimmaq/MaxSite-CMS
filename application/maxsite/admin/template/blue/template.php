@@ -37,10 +37,10 @@
 	$admin_title = t('Админ-панель', 'admin') . ' - ' . mso_hook('admin_title', mso_head_meta('title'));
 		
 	
-?><!DOCTYPE HTML>
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head>
-	<meta charset="UTF-8">
-	<title><?= $admin_title ?></title>
+<title><?= $admin_title ?></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="shortcut icon" href="<?= getinfo('siteurl') ?>favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="<?= $admin_css ?>" type="text/css" media="screen">
 	<?= mso_load_jquery() ?>

@@ -33,7 +33,7 @@
 	}
 	else
 	{
-		$par = array( 'limit' => 15, 'cut'=>false, 'type'=>false ); 
+		$par = array( 'limit' => 7, 'cut'=>false, 'type'=>false ); 
 		
 		// подключаем кастомный вывод, где можно изменить массив параметров $par для своих задач
 		if ($f = mso_page_foreach('search-mso-get-pages')) require($f); 

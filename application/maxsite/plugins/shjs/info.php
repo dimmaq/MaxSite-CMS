@@ -3,7 +3,7 @@
 $info = array(
 	'name' => t('SHJS - Syntax Highlighting'),
 	'description' => t('Подсветка кодов (JS, PHP, CSS, HTML). Подробное описание см. в опциях плагина.'),
-	'version' => '1.3',
+	'version' => '1.4',
 	'author' => 'Максим',
 	'plugin_url' => 'http://max-3000.com/',
 	'author_url' => 'http://shjs.sourceforge.net/',

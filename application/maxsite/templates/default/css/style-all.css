@@ -227,7 +227,7 @@ pre {
 code {
   background: #F4F4F4;
   border: 1px solid #CCC;
-  padding: 0 7px;
+  padding: 0 5px;
 }
 blockquote {
   padding: 0 4px 0 20px;
@@ -1326,9 +1326,17 @@ div.tabs-box {
   margin-top: 0;
   margin-bottom: 0;
 }
+.margin-tb10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .margin-lr0 {
   margin-left: 0;
   margin-right: 0;
+}
+.margin-lr10 {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 /* paddings */
 .padding0 {
