@@ -11,7 +11,7 @@ function theme_switch_autoload($args = array())
 {
 	mso_create_allow('theme_switch_edit', t('Админ-доступ к редактированию Theme switch'));
 	mso_hook_add( 'admin_init', 'theme_switch_admin_init'); # хук на админку
-	mso_register_widget('theme_switch_widget', t('Theme switch')); # регистрируем виджет
+	mso_register_widget('theme_switch_widget', t('Шаблоны сайта')); # регистрируем виджет
 	mso_hook_add( 'init', 'theme_switch_init'); # хук на init
 	mso_hook_add( 'body_start', 'theme_switch_body_start'); # хук на body_start
 }
@@ -158,11 +158,11 @@ function theme_switch_widget_form($num = 1)
 	// вывод самой формы
 	$CI = & get_instance();
 	$CI->load->helper('form');
-		
-	$form = '<p><div class="t150">' . t('Заголовок:') . '</div> '. 
-			form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ) ;
-	$form .= '<p><div class="t150">' . t('Надпись на кнопке:') . '</div> '. 
-			form_input( array( 'name'=>$widget . 'submit', 'value'=>$options['submit'] ) ) ;			
+	
+	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+
+	$form .= mso_widget_create_form('Надпись на кнопке', form_input( array( 'name'=>$widget . 'submit', 'value'=>$options['submit'] ) ), '');
+	
 	
 	return $form;
 }

@@ -25,7 +25,7 @@
 	if ($f = mso_page_foreach('contact-do')) require($f); // подключаем кастомный вывод
 
 	$form_def = '[form]
-[subject=Обратная связь]
+[subject=Пожелания по сайту # Нашел ошибку на сайте # Подскажите, пожалуйста]
 
 [field]
 require = 0
@@ -42,15 +42,6 @@ type = text
 description = Телефон
 tip = Телефон лучше указывать с кодом города/страны
 placeholder = Введите свой телефонный номер
-[/field]
-
-[field]
-require = 1
-type = select
-description = Тема
-values = Пожелания по сайту # Нашел ошибку на сайте # Подскажите, пожалуйста
-default = ожелания по сайту
-tip = Выберите тему письма
 [/field]
 
 [field]

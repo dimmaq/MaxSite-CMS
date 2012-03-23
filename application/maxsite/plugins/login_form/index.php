@@ -80,11 +80,10 @@ function login_form_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = '<p><div class="t150">' . t('Заголовок:') . '</div> '. form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ) ;
+	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'])), 'Укажите заголовок виджета');
 	
-	$form .= '<p><div class="t150">' . t('Текст после формы:') . '</div> '. form_input( array( 'name'=>$widget . 'after_form', 'value'=>$options['after_form'] ) ) ;
-	
-	$form .= '<p><div class="t150">&nbsp;</div> '. t('Например, ссылка на регистрацию') ;
+	$form .= mso_widget_create_form('Текст после формы', form_input( array( 'name'=>$widget . 'after_form', 'value'=>$options['after_form'])), 'Например, ссылка на регистрацию');
+
 	
 	return $form;
 }

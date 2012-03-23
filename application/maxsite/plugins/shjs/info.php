@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
 
 $info = array(
-	'name' => t('SHJS - Syntax Highlighting'),
+	'name' => t('Подсветка кода'),
 	'description' => t('Подсветка кодов (JS, PHP, CSS, HTML). Подробное описание см. в опциях плагина.'),
 	'version' => '1.4',
 	'author' => 'Максим',

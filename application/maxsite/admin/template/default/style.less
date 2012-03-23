@@ -426,19 +426,24 @@ table.widgets-allow {
 }
 
 // виджеты
-
 div.admin-edit-widgets-form {
 	
 	h3 {
-		background: #BAC6CC;
+		background: #8BB2C5;
+		color: #D2F0FF;
 		margin: 5px 0 5px 0;
 		padding: 5px 10px;
 		font-size: 10pt;
 		
 		.border_radius(5px);
-		&:after {content: " ↓ "}
+		.box_shadow(0, 1px);
+		&:before {content: "▶ "}
 		
-		//a {display: block;}
+		a {
+			color: #41535C;
+			margin-left: 5px;
+			//.text_shadow(1px, 1px, 1px, #AAA);		
+		}
 	}
 	
 	p {margin: 0;}
@@ -446,6 +451,9 @@ div.admin-edit-widgets-form {
 	div.admin_widgets {
 	
 		background: #EDF1F3;
+		
+		.background_gradient(darken(#EDF1F3, 10%), #EDF1F3);
+		
 		.border_radius(5px);
 		
 		padding: 5px;
@@ -458,6 +466,7 @@ div.admin-edit-widgets-form {
 			padding-right: 5px;
 		}
 		
+		
 		input[type="text"], 
 		input[type="email"], 
 		input[type="password"], 
@@ -466,7 +475,23 @@ div.admin-edit-widgets-form {
 		input[type="number"], 
 		textarea,
 		select {
-			width: 600px;
+			min-width: 600px;
+		}
+		
+	}
+}
+
+// форма для виджетов
+// подстройка полей
+form.admin_widgets {
+	p {
+		@first: 200px; // размер первой ячейки или отступ (+5 на padding)
+		
+		span, label {
+			&.ffirst {width: @first;} // ширина первой ячейки
+			&.ffirst.ftitle {width: @first - 5px;} // корректировка для двойного класса ffirst.ftitle
+			&.ftitle {font-weight: bold;}
+			&.ftop {padding-top: 1px;}
 		}
 	}
 }

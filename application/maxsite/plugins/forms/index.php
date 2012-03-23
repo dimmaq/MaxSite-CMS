@@ -100,6 +100,25 @@ function forms_content_callback($matches)
 		pr($ushka);
 		*/
 		
+		
+		if ($subject)
+		{
+			// поле тема письма делаем в виде обязательнного поля select.
+			
+			// формируем массив для формы
+			$subject_f['require'] = 1;
+			$subject_f['type'] = 'select';
+			$subject_f['description'] = t('Тема письма');
+			//$subject_f['tip'] = t('Выберите тему письма');
+			$subject_f['values'] = $subject;
+			$subject_f['default'] = '';
+
+			// преобразования, чтобы сделать ключ для поля 
+			$f1['subject'] = $subject_f; // у поля тема будет ключ subject
+			foreach($f as $key=>$val) $f1[$key] = $val; 
+			$f = $f1;
+		}
+		
 		$i = 0;
 
 		foreach ($fields as $val)
@@ -189,7 +208,7 @@ function forms_content_callback($matches)
 			// всё ок
 			if ($ok)
 			{
-				// pr($post);
+				//pr($post);
 				// pr($f);
 				// pr($redirect);
 				// pr($email);
@@ -200,19 +219,28 @@ function forms_content_callback($matches)
 				if (!mso_valid_email($email)) 
 					$email = mso_get_option('admin_email', 'general', 'admin@site.com'); // куда приходят письма
 					
-				$message = 'Имя: ' . $post['forms_name'] . "\n";
-				$message .= 'Email: ' . $post['forms_email'] . "\n";
+				$message = t('Имя: ') . $post['forms_name'] . "\n";
+				$message .= t('Email: ') . $post['forms_email'] . "\n";
 				
 				foreach ($post['forms_fields'] as $key=>$val)
 				{
+					//pr($key);
+					if ($key === 'subject' and $val)
+					{
+						$subject = $val;
+						
+						//pr($subject);
+						continue;
+					}
+					
 					$message .= $f[$key]['description'] . ': ' . $val . "\n\n";
 				}
 				
 				if ($_SERVER['REMOTE_ADDR'] and $_SERVER['HTTP_REFERER'] and $_SERVER['HTTP_USER_AGENT']) 
 				{
-					$message .= "\n" . 'IP-адрес: ' . $_SERVER['REMOTE_ADDR'] . "\n";
-					$message .= 'Отправлено со страницы: ' . $_SERVER['HTTP_REFERER'] . "\n";
-					$message .= 'Браузер: ' . $_SERVER['HTTP_USER_AGENT'] . "\n";
+					$message .= "\n" . t('IP-адрес: ') . $_SERVER['REMOTE_ADDR'] . "\n";
+					$message .= t('Отправлено со страницы: ') . $_SERVER['HTTP_REFERER'] . "\n";
+					$message .= t('Браузер: ') . $_SERVER['HTTP_USER_AGENT'] . "\n";
 				}
 				
 				// pr($message);
@@ -232,7 +260,7 @@ function forms_content_callback($matches)
 			}
 			else // какая-то ошибка, опять отображаем форму
 			{
-				$out .= forms_show_form($f, $ushka, $forms_subscribe, $reset);
+				$out .= forms_show_form($f, $ushka, $forms_subscribe, $reset, $subject);
 			}
 			
 			
@@ -244,14 +272,14 @@ function forms_content_callback($matches)
 		}
 		else // нет post
 		{
-			$out .= forms_show_form($f, $ushka, $forms_subscribe, $reset);
+			$out .= forms_show_form($f, $ushka, $forms_subscribe, $reset, $subject);
 		}
 	}
 
 	return $out;
 }
 
-function forms_show_form($f = array(), $ushka = '', $forms_subscribe = true, $reset = true)
+function forms_show_form($f = array(), $ushka = '', $forms_subscribe = true, $reset = true, $subject = '')
 {
 	$out = '';
 
@@ -260,7 +288,24 @@ function forms_show_form($f = array(), $ushka = '', $forms_subscribe = true, $re
 	
 	$id = 1; // счетчик для id label
 	
-	
+	if ($subject)
+	{
+		// поле тема письма делаем в виде обязательнного поля select.
+		
+		// формируем массив для формы
+		$subject_f['require'] = 1;
+		$subject_f['type'] = 'select';
+		$subject_f['description'] = t('Тема письма');
+		//$subject_f['tip'] = t('Выберите тему письма');
+		$subject_f['values'] = $subject;
+		$subject_f['default'] = '';
+
+		// преобразования, чтобы сделать ключ для поля 
+		$f1['subject'] = $subject_f; // у поля тема будет ключ subject
+		foreach($f as $key=>$val) $f1[$key] = $val; 
+		$f = $f1;
+	}
+
 	$out .= NR . '<div class="forms"><form method="post" class="plugin_forms fform">' . mso_form_session('forms_session');
 	
 	$out .= '<input type="hidden" name="forms_antispam1" value="' . $antispam1 * 984 . '">';

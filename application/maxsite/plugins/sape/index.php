@@ -180,15 +180,16 @@ function sape_widget_form($num = 1)
 	// вывод самой формы
 	$CI = & get_instance();
 	$CI->load->helper('form');
-		
-	$form = '<p><div class="t150">Заголовок:</div> '. form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ) ;
-	$form .= '<p><div class="t150">Количество ссылок:</div> '. form_input( array( 'name'=>$widget . 'count', 'value'=>$options['count'] ) ) ;
-	$form .= '<p><div class="t150">&nbsp;</div> Если этот виджет последний или единственный, то оставьте это поле пустым или 0';
-	$form .= '<p><div class="t150">HTML до:</div> '. form_input( array( 'name'=>$widget . 'htmldo', 'value'=>$options['htmldo'] ) ) ;
-	$form .= '<p><div class="t150">HTML после:</div> '. form_input( array( 'name'=>$widget . 'htmlposle', 'value'=>$options['htmlposle'] ) ) ;
 	
-	$form .= '<p><div class="t150">' . 'Выводить:' . '</div> '. 
-		form_dropdown( $widget . 'links_or_articles', array('links'=>'Ссылки', 'articles'=>'Статьи'), $options['links_or_articles']);
+	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	
+	$form .= mso_widget_create_form('Количество ссылок', form_input( array( 'name'=>$widget . 'count', 'value'=>$options['count'] ) ), 'Если этот виджет последний или единственный, то оставьте это поле пустым или 0');
+	
+	$form .= mso_widget_create_form('HTML до', form_input( array( 'name'=>$widget . 'htmldo', 'value'=>$options['htmldo'] ) ), '');
+	
+	$form .= mso_widget_create_form('HTML после', form_input( array( 'name'=>$widget . 'htmlposle', 'value'=>$options['htmlposle'] ) ), '');
+	
+	$form .= mso_widget_create_form('Выводить', form_dropdown( $widget . 'links_or_articles', array('links'=>'Ссылки', 'articles'=>'Статьи'), $options['links_or_articles']), '');
 	
 	
 	return $form;
@@ -314,4 +315,4 @@ function sape_articles_custom_page_404($args = false)
 }
 
 
-### end file
+# end file

@@ -56,18 +56,12 @@ function tabs_widget_form($num = 1)
 	
 	// if (!function_exists('ushka')) $form = '<p style="color: red; text-align: center;">' . t('Для работы этого виджета следует включить плагин «Ушки»!') . '</p>'; 
 	
-	$form .= '<p><div class="t150">' . t('Заголовок:') . '</div> '. form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ) ;
+	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= '<p><div class="t150">' . t('Табы:') . '</div> '. form_textarea( array( 'name'=>$widget . 'tabs', 'value'=>$options['tabs'] ) ) ;
+	$form .= mso_widget_create_form('Табы', form_textarea( array( 'name'=>$widget . 'tabs', 'value'=>$options['tabs'] ) ), 'Указывайте по одному табу в каждом абзаце в формате: <strong>заголовок | виджет номер</strong><br>Например: <strong>Цитаты | randomtext_widget 1</strong><br>Для ушки: <strong>Цитаты | ушка_цитаты</strong>');
 	
-	$form .= '<br><div class="t150">&nbsp;</div>' . t('Указывайте по одному табу в каждом абзаце в формате: <strong>заголовок | виджет номер</strong>');
-	
-	$form .= '<br><div class="t150">&nbsp;</div>' . t('Например: <strong>Цитаты | randomtext_widget 1</strong>');
-	
-	$form .= '<br><div class="t150">&nbsp;</div>' . t('Для ушки: <strong>Цитаты | ушка_цитаты</strong>');
-	
-	
-	$form .= '<p><div class="t150">' . t('Использовать:') . '</div> '. form_dropdown( $widget . 'type_func', array( 'widget'=>t('Виджет (функция и номер через пробел)'), 'ushka'=>t('Ушка (только название)')), $options['type_func']);
+	$form .= mso_widget_create_form('Использовать с', form_dropdown( $widget . 'type_func', array( 'widget'=>t('виджетами'), 'ushka'=>t('ушками')), $options['type_func']), '');
+
 
 	return $form;
 }

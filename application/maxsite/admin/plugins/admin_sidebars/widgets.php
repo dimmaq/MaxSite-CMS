@@ -139,7 +139,7 @@
 	if (!$error)
 	{
 		// добавляем форму, а также текущую сессию
-		echo '<form method="post">' . mso_form_session('f_session_id');
+		echo '<form method="post" class="fform admin_widgets">' . mso_form_session('f_session_id');
 		echo $form;
 		echo '<p class="br"><input type="submit" name="f_submit" value="' . t('Сохранить изменения') . '"></p>';
 		echo '</form>';

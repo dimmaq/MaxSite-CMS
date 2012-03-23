@@ -111,11 +111,6 @@ function ushki_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 		
-	$form = '<p><div class="t150">' . t('Заголовок (блока):') . '</div> '. form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ) ;
-	
-	//$form .= '<p><div class="t150">' . t('Ушка (название):') . '</div> '. form_input( array( 'name'=>$widget . 'ushka', 'value'=>$options['ushka'] ) ) ;
-	
-	
 	# получим список всех ушек
 	$ushki = mso_get_float_option('ushki', 'ushki', array());
 	
@@ -124,11 +119,10 @@ function ushki_widget_form($num = 1)
 	{
 		$ushki_list[$val['name']] = $val['name'];
 	}
-		
-	$form .= '<p><div class="t150">' . t('Ушка (название):') . '</div> '. 
-		form_dropdown( $widget . 'ushka', 
-		$ushki_list, 
-		$options['ushka']);
+	
+	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	
+	$form .= mso_widget_create_form('Ушка', form_dropdown( $widget . 'ushka', $ushki_list, $options['ushka']), '');
 	
 	
 	return $form;
