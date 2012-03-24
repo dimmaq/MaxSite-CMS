@@ -51,11 +51,11 @@ function random_pages_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Количество', form_input( array( 'name'=>$widget . 'count', 'value'=>$options['count'] ) ), '');
+	$form .= mso_widget_create_form(t('Количество'), form_input( array( 'name'=>$widget . 'count', 'value'=>$options['count'] ) ), '');
 	
-	$form .= mso_widget_create_form('Тип страниц', form_input( array( 'name'=>$widget . 'page_type', 'value'=>$options['page_type'] ) ), '');
+	$form .= mso_widget_create_form(t('Тип страниц'), form_input( array( 'name'=>$widget . 'page_type', 'value'=>$options['page_type'] ) ), '');
 	
 	$form .= mso_widget_create_form(' ', form_checkbox( array( 'name'=>$widget . 'page_content', 'checked'=>$options['page_content'], 'value'=>'page_content')) . ' ' . t('Показывать содержимое'), '');
 	

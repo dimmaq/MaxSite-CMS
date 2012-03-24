@@ -51,11 +51,11 @@ function page_comments_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Количество записей', form_input( array( 'name'=>$widget . 'limit', 'value'=>$options['limit'] ) ), '');
+	$form .= mso_widget_create_form(t('Количество записей'), form_input( array( 'name'=>$widget . 'limit', 'value'=>$options['limit'] ) ), '');
 	
-	$form .= mso_widget_create_form('Формат', form_input( array( 'name'=>$widget . 'format', 'value'=>$options['format'] ) ), '<strong>[TITLE]</strong> - название записи<br><strong>[COUNT]</strong> - количество комментариев<br><strong>[A]</strong>ссылка<strong>[/A]</strong>');
+	$form .= mso_widget_create_form(t('Формат'), form_input( array( 'name'=>$widget . 'format', 'value'=>$options['format'] ) ), t('<strong>[TITLE]</strong> - название записи<br><strong>[COUNT]</strong> - количество комментариев<br><strong>[A]</strong>ссылка<strong>[/A]</strong>'));
 	
 	return $form;
 }

@@ -5,8 +5,6 @@
  * (c) http://max-3000.com/
  */
 	
-	mso_cur_dir_lang('admin');
-	
 	# Форма - работает совместно с edit и new
 	
 	$page_files = '';

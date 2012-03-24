@@ -8,9 +8,8 @@
 # функция автоподключения плагина
 function ushki_autoload($args = array())
 {
-	mso_create_allow('plugin_ushki', t('Админ-доступ к Ушкам'));
 	mso_hook_add( 'admin_init', 'ushki_admin_init'); # хук на админку
-	mso_register_widget('ushki_widget', 'Ушки'); # регистрируем виджет
+	mso_register_widget('ushki_widget', t('Ушки')); # регистрируем виджет
 	//mso_hook_add( 'content', 'ushki_content'); # хук на вывод контента
 	mso_hook_add( 'content_content', 'ushki_content'); # хук на вывод контента
 }
@@ -18,6 +17,7 @@ function ushki_autoload($args = array())
 # функция выполняется при активации (вкл) плагина
 function ushki_activate($args = array())
 {	
+	mso_create_allow('plugin_ushki', t('Админ-доступ к Ушкам'));
 	return $args;
 }
 
@@ -120,9 +120,9 @@ function ushki_widget_form($num = 1)
 		$ushki_list[$val['name']] = $val['name'];
 	}
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Ушка', form_dropdown( $widget . 'ushka', $ushki_list, $options['ushka']), '');
+	$form .= mso_widget_create_form(t('Ушка'), form_dropdown( $widget . 'ushka', $ushki_list, $options['ushka']), '');
 	
 	
 	return $form;

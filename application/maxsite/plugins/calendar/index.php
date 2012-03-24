@@ -43,7 +43,7 @@ function calendar_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . '_header', 'value'=>$options['header'])));
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . '_header', 'value'=>$options['header'])));
 	
 	return $form;
 }

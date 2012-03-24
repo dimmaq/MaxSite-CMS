@@ -61,13 +61,13 @@ function page_views_widget_form($num = 1)
 		$types[$page['page_type_id']] = $page['page_type_name'];
 	}
 
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Количество записей', form_input( array( 'name'=>$widget . 'limit', 'value'=>$options['limit'] ) ), '');
+	$form .= mso_widget_create_form(t('Количество записей'), form_input( array( 'name'=>$widget . 'limit', 'value'=>$options['limit'] ) ), '');
 	
-	$form .= mso_widget_create_form('Тип записей', form_dropdown( $widget . 'page_type', $types, array( 'value'=>$options['page_type'] ) ), '');
+	$form .= mso_widget_create_form(t('Тип записей'), form_dropdown( $widget . 'page_type', $types, array( 'value'=>$options['page_type'] ) ), '');
 	
-	$form .= mso_widget_create_form('Формат', form_input( array( 'name'=>$widget . 'format', 'value'=>$options['format'] ) ), '<strong>[TITLE]</strong> - название записи<br><strong>[COUNT]</strong> - просмотров в день<br><strong>[ALLCOUNT]</strong> - всего просмотров<br><strong>[A]</strong>ссылка<strong>[/A]</strong>');
+	$form .= mso_widget_create_form(t('Формат'), form_input( array( 'name'=>$widget . 'format', 'value'=>$options['format'] ) ), t('<strong>[TITLE]</strong> - название записи<br><strong>[COUNT]</strong> - просмотров в день<br><strong>[ALLCOUNT]</strong> - всего просмотров<br><strong>[A]</strong>ссылка<strong>[/A]</strong>'));
 
 
 	return $form;

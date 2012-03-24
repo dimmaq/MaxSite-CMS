@@ -44,7 +44,6 @@ function login_form_widget($num = 1)
 				[<a href="' . getinfo('siteurl') . 'users/' . $comuser['comusers_id'] . '">' . t('своя страница') . '</a>]
 				[<a href="' . getinfo('siteurl') . 'logout'.'">' . t('выйти') . '</a>] 
 				</p>';
-
 	}
 	else
 	{
@@ -55,8 +54,6 @@ function login_form_widget($num = 1)
 	
 	if ($out)
 	{
-		
-		
 		if ( isset($options['header']) and $options['header'] ) $out = mso_get_val('widget_header_start', '<h2 class="box"><span>') . $options['header'] . mso_get_val('widget_header_end', '</span></h2>') . $out;
 	}
 	
@@ -80,9 +77,9 @@ function login_form_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'])), 'Укажите заголовок виджета');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'])), t('Укажите заголовок виджета'));
 	
-	$form .= mso_widget_create_form('Текст после формы', form_input( array( 'name'=>$widget . 'after_form', 'value'=>$options['after_form'])), 'Например, ссылка на регистрацию');
+	$form .= mso_widget_create_form(t('Текст после формы'), form_input( array( 'name'=>$widget . 'after_form', 'value'=>$options['after_form'])), t('Например, ссылка на регистрацию'));
 
 	
 	return $form;

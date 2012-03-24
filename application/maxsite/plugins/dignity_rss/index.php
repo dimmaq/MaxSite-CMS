@@ -81,21 +81,21 @@ function dignity_rss_widget_form($num = 1)
 	$CI->load->helper('form');
 	
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Текст вначале', form_textarea( array( 'name'=>$widget . 'textdo', 'value'=>$options['textdo'] ) ), '');
+	$form .= mso_widget_create_form(t('Текст вначале'), form_textarea( array( 'name'=>$widget . 'textdo', 'value'=>$options['textdo'] ) ), '');
 	
-	$form .= mso_widget_create_form('Адрес RSS-Feed', form_input( array( 'name'=>$widget . 'feed_url', 'value'=>$options['feed_url'] ) ), '');
+	$form .= mso_widget_create_form(t('Адрес RSS-Feed'), form_input( array( 'name'=>$widget . 'feed_url', 'value'=>$options['feed_url'] ) ), '');
 	
-	$form .= mso_widget_create_form('Текст для Google', form_input( array( 'name'=>$widget . 'google_text', 'value'=>$options['google_text'] )) , '');
+	$form .= mso_widget_create_form(t('Текст для Google'), form_input( array( 'name'=>$widget . 'google_text', 'value'=>$options['google_text'] )) , '');
 	
-	$form .= mso_widget_create_form('Текст для Яндекс', form_input( array( 'name'=>$widget . 'yandex_text', 'value'=>$options['yandex_text'] ) ), '');
+	$form .= mso_widget_create_form(t('Текст для Яндекс'), form_input( array( 'name'=>$widget . 'yandex_text', 'value'=>$options['yandex_text'] ) ), '');
 	
-	$form .= mso_widget_create_form('Текст RSS ленты', form_input( array( 'name'=>$widget . 'rss_text', 'value'=>$options['rss_text'] ) ), '');
+	$form .= mso_widget_create_form(t('Текст RSS ленты'), form_input( array( 'name'=>$widget . 'rss_text', 'value'=>$options['rss_text'] ) ), '');
 	
-	$form .= mso_widget_create_form('Текст RSS-лента на почту', form_input( array( 'name'=>$widget . 'rss_to_email', 'value'=>$options['rss_to_email'] ) ), '');
+	$form .= mso_widget_create_form(t('Текст RSS-лента на почту'), form_input( array( 'name'=>$widget . 'rss_to_email', 'value'=>$options['rss_to_email'] ) ), '');
 	
-	$form .= mso_widget_create_form('Текст в конце', form_textarea( array( 'name'=>$widget . 'textposle', 'value'=>$options['textposle'] ) ), '');
+	$form .= mso_widget_create_form(t('Текст в конце'), form_textarea( array( 'name'=>$widget . 'textposle', 'value'=>$options['textposle'] ) ), '');
 	
 	return $form;
 }

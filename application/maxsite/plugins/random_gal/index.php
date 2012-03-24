@@ -71,43 +71,43 @@ function random_gal_widget_form($num = 1)
 			$out[$d] = $d;
 	}
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Галерея', form_dropdown( $widget . 'gal', $out, $options['gal']), '');
+	$form .= mso_widget_create_form(t('Галерея'), form_dropdown( $widget . 'gal', $out, $options['gal']), '');
 	
-	$form .= mso_widget_create_form('несколько, через |', form_input( array( 'name'=>$widget . 'galother', 'value'=>$options['galother'] ) ), '');
+	$form .= mso_widget_create_form(t('несколько, через |'), form_input( array( 'name'=>$widget . 'galother', 'value'=>$options['galother'] ) ), '');
 	
-	$form .= mso_widget_create_form('Количество', form_input( array( 'name'=>$widget . 'count', 'value'=>$options['count'] ) ), '');
+	$form .= mso_widget_create_form(t('Количество'), form_input( array( 'name'=>$widget . 'count', 'value'=>$options['count'] ) ), '');
 	
-	$form .= mso_widget_create_form('Режим отображения', form_dropdown( $widget . 'type', 
+	$form .= mso_widget_create_form(t('Режим отображения'), form_dropdown( $widget . 'type', 
 		array(
 			'image'=>t('Картинками'), 
 			'slider'=>t('Слайдер'), 
 			), $options['type']), '');
 	
-	$form .= mso_widget_create_form('CSS-cтиль блока', form_input( array( 'name'=>$widget . 'style', 'value'=>$options['style'] ) ), '');
+	$form .= mso_widget_create_form(t('CSS-cтиль блока'), form_input( array( 'name'=>$widget . 'style', 'value'=>$options['style'] ) ), '');
 	
-	$form .= mso_widget_create_form('Дополнит. class', form_input( array( 'name'=>$widget . 'class', 'value'=>$options['class'] ) ), '');
+	$form .= mso_widget_create_form(t('Дополнит. class'), form_input( array( 'name'=>$widget . 'class', 'value'=>$options['class'] ) ), '');
 	
-	$form .= mso_widget_create_form('CSS-cтиль IMG', form_input( array( 'name'=>$widget . 'style_img', 'value'=>$options['style_img'] ) ), '');
+	$form .= mso_widget_create_form(t('CSS-cтиль IMG'), form_input( array( 'name'=>$widget . 'style_img', 'value'=>$options['style_img'] ) ), '');
 	
-	$form .= mso_widget_create_form('Свой HTML-блок', form_input( array( 'name'=>$widget . 'html', 'value'=>$options['html'] ) ), '');
+	$form .= mso_widget_create_form(t('Свой HTML-блок'), form_input( array( 'name'=>$widget . 'html', 'value'=>$options['html'] ) ), '');
 	
-	$form .= mso_widget_create_form('Сортировка', form_dropdown( $widget . 'sort', 
+	$form .= mso_widget_create_form(t('Сортировка'), form_dropdown( $widget . 'sort', 
 		array(
-			'random'=>'Случайно', 
-			'name_file'=>'По именам файлов', 
-			'name_file_desc'=>'По именам файлов (обратный порядок)', 
-			'description'=>'По описанию',
-			'description_desc'=>'По описанию (обратный порядок)',
-			'name_file_description'=>'По именам, потом по описанию',
-			'description_name_file'=>'По описанию, потом по именам',
-			'datefile'=>'По времени создания файлов',
-			'datefile_desc'=>'По времени создания файлов (обратный порядок)',
+			'random'=>t('Случайно'), 
+			'name_file'=>t('По именам файлов'), 
+			'name_file_desc'=>t('По именам файлов (обратный порядок)'), 
+			'description'=>t('По описанию'),
+			'description_desc'=>t('По описанию (обратный порядок)'),
+			'name_file_description'=>t('По именам, потом по описанию'),
+			'description_name_file'=>t('По описанию, потом по именам'),
+			'datefile'=>t('По времени создания файлов'),
+			'datefile_desc'=>t('По времени создания файлов (обратный порядок)'),
 			
 			), $options['sort']), '');
 	
-	$form .= mso_widget_create_form('Фильтр', form_input( array( 'name'=>$widget . 'filter', 'value'=>$options['filter'] ) ), 'Можно указать фразу, с которой должно начинаться хотя бы одно слово в описании файла.');
+	$form .= mso_widget_create_form(t('Фильтр'), form_input( array( 'name'=>$widget . 'filter', 'value'=>$options['filter'] ) ), t('Можно указать фразу, с которой должно начинаться хотя бы одно слово в описании файла.'));
 	
 	
 	return $form;

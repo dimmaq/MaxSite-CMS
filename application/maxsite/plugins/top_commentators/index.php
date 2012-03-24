@@ -56,13 +56,13 @@ function top_commentators_widget_form($num = 1)
   $CI = & get_instance();
   $CI->load->helper('form');
   
-  $form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+  $form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
   
-  $form .= mso_widget_create_form('Формат', form_input( array( 'name'=>$widget . 'format', 'value'=>$options['format'] ) ), 'Возможные подстановки: [LINK_URL]ссылка[/LINK] [LINK_PAGE]ссылка[/LINK] [NAME] [COUNT]');
+  $form .= mso_widget_create_form(t('Формат'), form_input( array( 'name'=>$widget . 'format', 'value'=>$options['format'] ) ), t('Возможные подстановки: [LINK_URL]ссылка[/LINK] [LINK_PAGE]ссылка[/LINK] [NAME] [COUNT]'));
   
   $form .= mso_widget_create_form('Количество комментаторов', form_input( array( 'name'=>$widget . 'commentators_cnt', 'value'=>$options['commentators_cnt'] ) ), '');
   
-  $form .= mso_widget_create_form('За сколько дней учитывать комментарии', form_input( array( 'name'=>$widget . 'days', 'value'=>$options['days'])), '');
+  $form .= mso_widget_create_form(t('За сколько дней учитывать комментарии'), form_input( array( 'name'=>$widget . 'days', 'value'=>$options['days'])), '');
 
 
   return $form;

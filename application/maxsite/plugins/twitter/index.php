@@ -54,19 +54,19 @@ function twitter_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . '_header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . '_header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Адрес RSS', form_input( array( 'name'=>$widget . '_url', 'value'=>$options['url'] ) ), '');
+	$form .= mso_widget_create_form(t('Адрес RSS'), form_input( array( 'name'=>$widget . '_url', 'value'=>$options['url'] ) ), '');
 	
-	$form .= mso_widget_create_form('Количество записей', form_input( array( 'name'=>$widget . '_count', 'value'=>$options['count'] ) ), '');
+	$form .= mso_widget_create_form(t('Количество записей'), form_input( array( 'name'=>$widget . '_count', 'value'=>$options['count'] ) ), '');
 	
-	$form .= mso_widget_create_form('Формат вывода', form_input( array( 'name'=>$widget . '_format', 'value'=>$options['format'] ) ), '%TITLE% %DATE% %LINK%');
+	$form .= mso_widget_create_form(t('Формат вывода'), form_input( array( 'name'=>$widget . '_format', 'value'=>$options['format'] ) ), '%TITLE% %DATE% %LINK%');
 	
-	$form .= mso_widget_create_form('Формат даты', form_input( array( 'name'=>$widget . '_format_date', 'value'=>$options['format_date'] ) ), '');
+	$form .= mso_widget_create_form(t('Формат даты'), form_input( array( 'name'=>$widget . '_format_date', 'value'=>$options['format_date'] ) ), '');
 	
-	$form .= mso_widget_create_form('Количество слов', form_input( array( 'name'=>$widget . '_max_word_description', 'value'=>$options['max_word_description'] ) ), '');
+	$form .= mso_widget_create_form(t('Количество слов'), form_input( array( 'name'=>$widget . '_max_word_description', 'value'=>$options['max_word_description'] ) ), '');
 	
-	$form .= mso_widget_create_form('Текст в конце блока', form_input( array( 'name'=>$widget . '_footer', 'value'=>$options['footer'] ) ), '');
+	$form .= mso_widget_create_form(t('Текст в конце блока'), form_input( array( 'name'=>$widget . '_footer', 'value'=>$options['footer'] ) ), '');
 	
 	$form .= mso_widget_create_form('', form_checkbox( array( 'name'=>$widget . '_show_nick', 'value'=> 'show_nick', 'checked' =>  $options['show_nick'])) . ' ' . t('Отображать ник'));
 	

@@ -52,15 +52,11 @@ function tabs_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = '';
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	// if (!function_exists('ushka')) $form = '<p style="color: red; text-align: center;">' . t('Для работы этого виджета следует включить плагин «Ушки»!') . '</p>'; 
+	$form .= mso_widget_create_form(t('Табы'), form_textarea( array( 'name'=>$widget . 'tabs', 'value'=>$options['tabs'] ) ), t('Указывайте по одному табу в каждом абзаце в формате: <strong>заголовок | виджет номер</strong><br>Например: <strong>Цитаты | randomtext_widget 1</strong><br>Для ушки: <strong>Цитаты | ушка_цитаты</strong>'));
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
-	
-	$form .= mso_widget_create_form('Табы', form_textarea( array( 'name'=>$widget . 'tabs', 'value'=>$options['tabs'] ) ), 'Указывайте по одному табу в каждом абзаце в формате: <strong>заголовок | виджет номер</strong><br>Например: <strong>Цитаты | randomtext_widget 1</strong><br>Для ушки: <strong>Цитаты | ушка_цитаты</strong>');
-	
-	$form .= mso_widget_create_form('Использовать с', form_dropdown( $widget . 'type_func', array( 'widget'=>t('виджетами'), 'ushka'=>t('ушками')), $options['type_func']), '');
+	$form .= mso_widget_create_form(t('Использовать с'), form_dropdown( $widget . 'type_func', array( 'widget'=>t('виджетами'), 'ushka'=>t('ушками')), $options['type_func']), '');
 
 
 	return $form;

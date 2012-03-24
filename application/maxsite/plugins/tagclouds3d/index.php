@@ -88,37 +88,37 @@ function tagclouds3d_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Скорость вращения', form_input( array( 'name'=>$widget . 'speed', 'value'=>$options['speed'] ) ), '');
+	$form .= mso_widget_create_form(t('Скорость вращения'), form_input( array( 'name'=>$widget . 'speed', 'value'=>$options['speed'] ) ), '');
 	
-	$form .= mso_widget_create_form('Ширина (px)', form_input( array( 'name'=>$widget . 'width', 'value'=>$options['width'] ) ), '');
+	$form .= mso_widget_create_form(t('Ширина (px)'), form_input( array( 'name'=>$widget . 'width', 'value'=>$options['width'] ) ), '');
 	
-	$form .= mso_widget_create_form('Высота (px)', form_input( array( 'name'=>$widget . 'height', 'value'=>$options['height'] ) ), '');
+	$form .= mso_widget_create_form(t('Высота (px)'), form_input( array( 'name'=>$widget . 'height', 'value'=>$options['height'] ) ), '');
 	
-	$form .= mso_widget_create_form('Background Color #', form_input( array( 'name'=>$widget . 'bgcolor', 'value'=>$options['bgcolor'] ) ), 'Все цвета указывайте без символа #');
+	$form .= mso_widget_create_form(t('Background Color #'), form_input( array( 'name'=>$widget . 'bgcolor', 'value'=>$options['bgcolor'] ) ), t('Все цвета указывайте без символа #'));
 	
-	$form .= mso_widget_create_form('Цвет текста #', form_input( array( 'name'=>$widget . 'text_color', 'value'=>$options['text_color'] ) ), '');
+	$form .= mso_widget_create_form(t('Цвет текста #'), form_input( array( 'name'=>$widget . 'text_color', 'value'=>$options['text_color'] ) ), '');
 	
-	$form .= mso_widget_create_form('Цвет текста 2 #', form_input( array( 'name'=>$widget . 'text_color2', 'value'=>$options['text_color2'] ) ), '');
+	$form .= mso_widget_create_form(t('Цвет текста 2 #'), form_input( array( 'name'=>$widget . 'text_color2', 'value'=>$options['text_color2'] ) ), '');
 	
-	$form .= mso_widget_create_form('Цвет «hover» #', form_input( array( 'name'=>$widget . 'hover_color', 'value'=>$options['hover_color'] ) ), '');
+	$form .= mso_widget_create_form(t('Цвет «hover» #'), form_input( array( 'name'=>$widget . 'hover_color', 'value'=>$options['hover_color'] ) ), '');
 	
-	$form .= mso_widget_create_form('Мин. размер (%)', form_input( array( 'name'=>$widget . 'min_size', 'value'=>$options['min_size'] ) ), '');
+	$form .= mso_widget_create_form(t('Мин. размер (%)'), form_input( array( 'name'=>$widget . 'min_size', 'value'=>$options['min_size'] ) ), '');
 	
-	$form .= mso_widget_create_form('Макс. размер (%)', form_input( array( 'name'=>$widget . 'max_size', 'value'=>$options['max_size'] ) ), '');
+	$form .= mso_widget_create_form(t('Макс. размер (%)'), form_input( array( 'name'=>$widget . 'max_size', 'value'=>$options['max_size'] ) ), '');
 	
-	$form .= mso_widget_create_form('Макс. меток',form_input( array( 'name'=>$widget . 'max_num', 'value'=>$options['max_num'] ) ) , '');
+	$form .= mso_widget_create_form(t('Макс. меток'),form_input( array( 'name'=>$widget . 'max_num', 'value'=>$options['max_num'] ) ) , '');
 	
-	$form .= mso_widget_create_form('Миним. меток', form_input( array( 'name'=>$widget . 'min_count', 'value'=>$options['min_count'] ) ), 'Отображать только метки, которых более указанного количества (0 - без ограничений)');
+	$form .= mso_widget_create_form(t('Миним. меток'), form_input( array( 'name'=>$widget . 'min_count', 'value'=>$options['min_count'] ) ), t('Отображать только метки, которых более указанного количества (0 - без ограничений)'));
 	
-	$form .= mso_widget_create_form('Начало блока', form_input( array( 'name'=>$widget . 'block_start', 'value'=>$options['block_start'] ) ), '');
+	$form .= mso_widget_create_form(t('Начало блока'), form_input( array( 'name'=>$widget . 'block_start', 'value'=>$options['block_start'] ) ), '');
 	
-	$form .= mso_widget_create_form('Конец блока', form_input( array( 'name'=>$widget . 'block_end', 'value'=>$options['block_end'] ) ), '');
+	$form .= mso_widget_create_form(t('Конец блока'), form_input( array( 'name'=>$widget . 'block_end', 'value'=>$options['block_end'] ) ), '');
 	
-	$form .= mso_widget_create_form('Сортировка', form_dropdown($widget . 'sort', 
-								array( '0'=>'По количеству записей (обратно)', '1'=>'По количеству записей', 
-									   '2'=>'По алфавиту', '3'=>'По алфавиту (обратно)'), $options['sort'] ), '');
+	$form .= mso_widget_create_form(t('Сортировка'), form_dropdown($widget . 'sort', 
+								array( '0'=>t('По количеству записей (обратно)'), '1'=>t('По количеству записей'), 
+									   '2'=>t('По алфавиту'), '3'=>t('По алфавиту (обратно)')), $options['sort'] ), '');
 
 	
 	return $form;

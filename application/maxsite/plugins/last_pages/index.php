@@ -68,33 +68,33 @@ function last_pages_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Формат', form_input( array( 'name'=>$widget . 'format', 'value'=>$options['format'] ) ), '%TITLE% %DATE% %TEXT% %TEXT_CUT% %TEXT_PREV% %IMG_PREV% %COMMENTS% %URL%');
+	$form .= mso_widget_create_form(t('Формат'), form_input( array( 'name'=>$widget . 'format', 'value'=>$options['format'] ) ), '%TITLE% %DATE% %TEXT% %TEXT_CUT% %TEXT_PREV% %IMG_PREV% %COMMENTS% %URL%');
 	
-	$form .= mso_widget_create_form('Количество', form_input( array( 'name'=>$widget . 'count', 'value'=>$options['count'] ) ), '');
+	$form .= mso_widget_create_form(t('Количество'), form_input( array( 'name'=>$widget . 'count', 'value'=>$options['count'] ) ), '');
 	
-	$form .= mso_widget_create_form('Формат даты', form_input( array( 'name'=>$widget . 'date_format', 'value'=>$options['date_format'] ) ), '');
+	$form .= mso_widget_create_form(t('Формат даты'), form_input( array( 'name'=>$widget . 'date_format', 'value'=>$options['date_format'] ) ), '');
 	
-	$form .= mso_widget_create_form('Формат комментариев', form_input( array( 'name'=>$widget . 'comments_format', 'value'=>$options['comments_format'] ) ), '');
+	$form .= mso_widget_create_form(t('Формат комментариев'), form_input( array( 'name'=>$widget . 'comments_format', 'value'=>$options['comments_format'] ) ), '');
 	
-	$form .= mso_widget_create_form('Тип страниц', form_input( array( 'name'=>$widget . 'page_type', 'value'=>$options['page_type'] ) ), '');
+	$form .= mso_widget_create_form(t('Тип страниц'), form_input( array( 'name'=>$widget . 'page_type', 'value'=>$options['page_type'] ) ), '');
 	
-	$form .= mso_widget_create_form('Исключить рубрики', form_input( array( 'name'=>$widget . 'exclude_cat', 'value'=>$options['exclude_cat'] ) ), '');
+	$form .= mso_widget_create_form(t('Исключить рубрики'), form_input( array( 'name'=>$widget . 'exclude_cat', 'value'=>$options['exclude_cat'] ) ), '');
 	
-	$form .= mso_widget_create_form('Включить рубрики', form_input( array( 'name'=>$widget . 'include_cat', 'value'=>$options['include_cat'] ) ), '');
+	$form .= mso_widget_create_form(t('Включить рубрики'), form_input( array( 'name'=>$widget . 'include_cat', 'value'=>$options['include_cat'] ) ), '');
 	
-	$form .= mso_widget_create_form('Сортировка', form_dropdown( $widget . 'sort', array( 'page_date_publish'=>t('По дате'), 'page_title'=>t('По алфавиту')), $options['sort']), '');
+	$form .= mso_widget_create_form(t('Сортировка'), form_dropdown( $widget . 'sort', array( 'page_date_publish'=>t('По дате'), 'page_title'=>t('По алфавиту')), $options['sort']), '');
 
-	$form .= mso_widget_create_form('Порядок сортировки', form_dropdown( $widget . 'sort_order', array( 'asc'=>t('Прямой'), 'desc'=>t('Обратный')), $options['sort_order']), '');
+	$form .= mso_widget_create_form(t('Порядок сортировки'), form_dropdown( $widget . 'sort_order', array( 'asc'=>t('Прямой'), 'desc'=>t('Обратный')), $options['sort_order']), '');
 	
-	$form .= mso_widget_create_form('Метаполе миниатюры', form_input( array( 'name'=>$widget . 'img_prev', 'value'=>$options['img_prev'] ) ), 'Ключ метаполя, где расположен адрес миниатюры изображения записи');
+	$form .= mso_widget_create_form(t('Метаполе миниатюры'), form_input( array( 'name'=>$widget . 'img_prev', 'value'=>$options['img_prev'] ) ), t('Ключ метаполя, где расположен адрес миниатюры изображения записи'));
 	
-	$form .= mso_widget_create_form('Миниатюра по-умолчанию', form_input( array( 'name'=>$widget . 'img_prev_def', 'value'=>$options['img_prev_def'] ) ), 'Адрес миниатюры изображения, которое будет выводиться там, где не указано метаполе');
+	$form .= mso_widget_create_form(t('Миниатюра по-умолчанию'), form_input( array( 'name'=>$widget . 'img_prev_def', 'value'=>$options['img_prev_def'] ) ), t('Адрес миниатюры изображения, которое будет выводиться там, где не указано метаполе'));
 	
-	$form .= mso_widget_create_form('Атрибуты миниатюры', form_input( array( 'name'=>$widget . 'img_prev_attr', 'value'=>$options['img_prev_attr'] ) ), 'Например можно указать class, style');
+	$form .= mso_widget_create_form(t('Атрибуты миниатюры'), form_input( array( 'name'=>$widget . 'img_prev_attr', 'value'=>$options['img_prev_attr'] ) ), t('Например можно указать class, style'));
 
-	$form .= mso_widget_create_form('Количество слов', form_input( array( 'name'=>$widget . 'max_words', 'value'=>$options['max_words'] ) ), 'Используется только с %TEXT_PREV%');
+	$form .= mso_widget_create_form(t('Количество слов'), form_input( array( 'name'=>$widget . 'max_words', 'value'=>$options['max_words'] ) ), t('Используется только с %TEXT_PREV%'));
 	
 	
 	return $form;

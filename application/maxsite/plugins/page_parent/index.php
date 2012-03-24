@@ -49,9 +49,9 @@ function page_parent_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Номер страницы', form_input( array( 'name'=>$widget . 'page_id', 'value'=>$options['page_id'] ) ), '');
+	$form .= mso_widget_create_form(t('Номер страницы'), form_input( array( 'name'=>$widget . 'page_id', 'value'=>$options['page_id'] ) ), '');
 	
 	return $form;
 }

@@ -45,21 +45,21 @@ function picasa_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Логин пользователя', form_input( array( 'name'=>$widget . 'url', 'value'=>$options['url'] ) ), 'http://picasaweb.google.com/<b>логин</b>');
+	$form .= mso_widget_create_form(t('Логин пользователя'), form_input( array( 'name'=>$widget . 'url', 'value'=>$options['url'] ) ), 'http://picasaweb.google.com/<b>' . t('логин') . '</b>');
 	
-	$form .= mso_widget_create_form('Показывать', form_dropdown($widget . 'show_type', 
+	$form .= mso_widget_create_form(t('Показывать'), form_dropdown($widget . 'show_type', 
 								array( '1'=>t('Только названия альбомов'),
 										'2'=>t('Обложки альбомов'),
 										'3'=>t('Фотографии из альбома')), 
 								$options['show_type'] ), '');
 	
-	$form .= mso_widget_create_form('Количество', form_input( array( 'name'=>$widget . 'albums_count', 'value'=>$options['albums_count'] ) ), 'Количество выводимых названий альбомов/обложек/фотографий');
+	$form .= mso_widget_create_form(t('Количество'), form_input( array( 'name'=>$widget . 'albums_count', 'value'=>$options['albums_count'] ) ), t('Количество выводимых названий альбомов/обложек/фотографий'));
 	
-	$form .= mso_widget_create_form('Название альбома', form_input( array( 'name'=>$widget . 'album_name', 'value'=>$options['album_name'] ) ), 'Для «Фотографии из альбома» http://picasaweb.google.com/логин/<b>название_альбома</b>');
+	$form .= mso_widget_create_form(t('Название альбома'), form_input( array( 'name'=>$widget . 'album_name', 'value'=>$options['album_name'] ) ), t('Для «Фотографии из альбома» http://picasaweb.google.com/логин/<b>название_альбома</b>'));
 	
-	$form .= mso_widget_create_form('Размер изображений', form_dropdown($widget . 'img_size', 
+	$form .= mso_widget_create_form(t('Размер изображений'), form_dropdown($widget . 'img_size', 
 								array( '32'=>t('32px'), 
 										'48'=>t('48px'), 
 										'64'=>t('64px'), 

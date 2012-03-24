@@ -5,8 +5,6 @@
  * (c) http://max-3000.com/
  */
 
-	mso_cur_dir_lang('templates');
-	
 	# подготовка данных
 	$min_search_chars = 2; // минимальное кол-во симоволов при поиске
 	

@@ -49,9 +49,9 @@ function favorites_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Ссылки', form_textarea( array( 'name'=>$widget . 'favorites', 'value'=>$options['favorites'] ) ), 'Указывайте по одной ссылке в каждом абзаце в формате: <strong>тип/ссылка | название</strong><br><strong>тип/ссылка</strong> - указывается от адреса сайта, например<br><strong>page/about</strong>, <strong>category/news</strong><br>Для главной страницы укажите: <strong> / | Главная</strong>');
+	$form .= mso_widget_create_form(t('Ссылки'), form_textarea( array( 'name'=>$widget . 'favorites', 'value'=>$options['favorites'] ) ), t('Указывайте по одной ссылке в каждом абзаце в формате: <strong>тип/ссылка | название</strong><br><strong>тип/ссылка</strong> - указывается от адреса сайта, например<br><strong>page/about</strong>, <strong>category/news</strong><br>Для главной страницы укажите: <strong> / | Главная</strong>'));
 
 
 	return $form;

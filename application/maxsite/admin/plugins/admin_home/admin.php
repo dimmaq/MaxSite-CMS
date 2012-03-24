@@ -1,8 +1,5 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');?>
 
-mso_cur_dir_lang('admin');
-
-?>
 <h1><?= t('Добро пожаловать в MaxSite CMS!') ?></h1>
 <br>
 <ul>

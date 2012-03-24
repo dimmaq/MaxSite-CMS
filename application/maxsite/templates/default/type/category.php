@@ -6,8 +6,6 @@
  */
 
 
-mso_cur_dir_lang('templates');
-
 # подготовка данных
 
 $full_posts = mso_get_option('category_full_text', 'templates', '1'); // полные или короткие записи

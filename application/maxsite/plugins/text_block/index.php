@@ -55,11 +55,11 @@ function text_block_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Текст', form_textarea( array( 'name'=>$widget . 'text', 'value'=>$options['text'] ) ), '');
+	$form .= mso_widget_create_form(t('Текст'), form_textarea( array( 'name'=>$widget . 'text', 'value'=>$options['text'] ) ), '');
 	
-	$form .= mso_widget_create_form('Тип', form_dropdown( $widget . 'type', array( 'html'=>t('HTML или текст'), 'php'=>'PHP'), $options['type']), 'Можно использовать HTML-тэги. Если тип PHP, то код должен выполняться без ошибок!');
+	$form .= mso_widget_create_form(t('Тип'), form_dropdown( $widget . 'type', array( 'html'=>t('HTML или текст'), 'php'=>'PHP'), $options['type']), t('Можно использовать HTML-тэги. Если тип PHP, то код должен выполняться без ошибок!'));
 	
 	return $form;
 }

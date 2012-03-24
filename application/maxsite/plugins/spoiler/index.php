@@ -141,8 +141,8 @@ function spoiler_head($args = array())
 # функция отрабатывающая миниопции плагина (function плагин_mso_options)
 function spoiler_mso_options() 
 {
-	mso_cur_dir_lang(__FILE__);
-//// Взято из wp-converter
+
+	//// Взято из wp-converter
 	$CI = & get_instance();
 	// найдем все файлы по маске *.css
 	$CI->load->helper('directory');

@@ -71,13 +71,13 @@ function last_comments_widget_form($num = 1)
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = mso_widget_create_form('Заголовок', form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
 	
-	$form .= mso_widget_create_form('Количество', form_input( array( 'name'=>$widget . 'count', 'value'=>$options['count'] ) ), '');
+	$form .= mso_widget_create_form(t('Количество'), form_input( array( 'name'=>$widget . 'count', 'value'=>$options['count'] ) ), '');
 	
-	$form .= mso_widget_create_form('Количество слов', form_input( array( 'name'=>$widget . 'words', 'value'=>$options['words'] ) ), '');
+	$form .= mso_widget_create_form(t('Количество слов'), form_input( array( 'name'=>$widget . 'words', 'value'=>$options['words'] ) ), '');
 	
-	$form .= mso_widget_create_form('Количество символов в одном слове', form_input( array( 'name'=>$widget . 'maxchars', 'value'=>$options['maxchars'] ) ), '');
+	$form .= mso_widget_create_form(t('Количество символов в одном слове'), form_input( array( 'name'=>$widget . 'maxchars', 'value'=>$options['maxchars'] ) ), '');
 	
 	
 	return $form;

@@ -6,8 +6,6 @@
  */
 
 
-	mso_cur_dir_lang('templates');
-	
 	$title_contact = mso_get_option('title_contact', 'templates', t('Обратная связь'));
 	
 	mso_head_meta('title', $title_contact); //  meta title страницы
