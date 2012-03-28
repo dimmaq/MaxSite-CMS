@@ -56,14 +56,14 @@ function admin_comments_admin($args = array())
 	
 	if ($seg == 'edit')
 	{
-		mso_hook_add_dinamic( 'mso_admin_header', ' return $args . t("Редактирование комментария", "admin"); ' );
-		mso_hook_add_dinamic( 'admin_title', ' return t("Редактирование комментария", "admin") . " - " . $args; ' );
+		mso_hook_add_dinamic( 'mso_admin_header', ' return $args . t("Редактирование комментария"); ' );
+		mso_hook_add_dinamic( 'admin_title', ' return t("Редактирование комментария") . " - " . $args; ' );
 		require($MSO->config['admin_plugins_dir'] . 'admin_comments/edit.php');
 	} 
 	else
 	{
-		mso_hook_add_dinamic( 'mso_admin_header', ' return $args . t("Комментарии", "admin"); ' );
-		mso_hook_add_dinamic( 'admin_title', ' return t("Комментарии", "admin") . " - " . $args; ' );
+		mso_hook_add_dinamic( 'mso_admin_header', ' return $args . t("Комментарии"); ' );
+		mso_hook_add_dinamic( 'admin_title', ' return t("Комментарии") . " - " . $args; ' );
 		require($MSO->config['admin_plugins_dir'] . 'admin_comments/admin.php');
 	}
 }

@@ -55,10 +55,10 @@ function admin_cat_admin($args = array())
 	
 	// хук на заголовок в админке
 	// функцию создаем динамически
-	mso_hook_add_dinamic( 'mso_admin_header', ' return $args . t("Настройка рубрик", "admin"); ' );
-	mso_hook_add_dinamic( 'admin_title', ' return t("Настройка рубрик", "admin") . " - " . $args; ' );
+	mso_hook_add_dinamic( 'mso_admin_header', ' return $args . t("Настройка рубрик"); ' );
+	mso_hook_add_dinamic( 'admin_title', ' return t("Настройка рубрик") . " - " . $args; ' );
 
 	require($MSO->config['admin_plugins_dir'] . 'admin_cat/admin.php');
 }
 
-?>
+# end file

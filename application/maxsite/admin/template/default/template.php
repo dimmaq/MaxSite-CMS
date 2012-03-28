@@ -30,11 +30,11 @@
 		$admin_footer = ob_get_contents() . $admin_footer_hook;
 	ob_end_clean();
 	
-	if (!$admin_header) $admin_header = t('Админ-панель', 'admin');
+	if (!$admin_header) $admin_header = t('Админ-панель');
 	
 	$admin_css = getinfo('admin_url') . 'template/' . mso_get_option('admin_template', 'general', 'default') . '/style.css';
 	$admin_css = mso_hook('admin_css', $admin_css);
-	$admin_title = t('Админ-панель', 'admin') . ' - ' . mso_hook('admin_title', mso_head_meta('title'));
+	$admin_title = t('Админ-панель') . ' - ' . mso_hook('admin_title', mso_head_meta('title'));
 		
 	
 ?><!DOCTYPE HTML>
@@ -68,5 +68,6 @@
 	</div></div><!-- div class=admin-footer -->
 
 </div><!-- div id="#container" -->
+
 </body>
 </html>

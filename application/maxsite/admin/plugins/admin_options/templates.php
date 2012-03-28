@@ -39,7 +39,7 @@
 	
 	if (file_exists($templates_dir . $current_template . '/screenshot.jpg'))
 	{
-		echo '<img src="' . $MSO->config['templates_url'] . $current_template . '/screenshot.jpg' . '" width="250" height="200" alt="" title="">';
+		echo '<img class="template_current" src="' . $MSO->config['templates_url'] . $current_template . '/screenshot.jpg' . '" width="250" height="200" alt="" title="">';
 	}	
 	
 	if (file_exists($templates_dir . $current_template . '/info.php'))
@@ -54,7 +54,7 @@
 	// все каталоги в массиве $dirs
 	$dirs = directory_map($templates_dir, true);
 	
-	echo '<form action="" method="post">' . mso_form_session('f_session_id');
+	echo '<form method="post">' . mso_form_session('f_session_id');
 	echo '<div class="float-parent" style="width:100%">';
 	
 	foreach ($dirs as $dir)
@@ -101,4 +101,5 @@
 
 	echo '</div>';
 	echo '</form>';
+	
 ?>

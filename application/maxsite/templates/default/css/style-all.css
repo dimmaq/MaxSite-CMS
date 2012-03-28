@@ -269,6 +269,7 @@ fieldset {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  behavior: url(/PIE.php);
 }
 legend {
   padding: 0 5px;
@@ -384,6 +385,7 @@ form.fform p label.fempty {
 form.fform p span.fhint,
 form.fform p label.fhint {
   font-size: .9em;
+  font-style: italic;
   color: #606060;
   padding-top: 0;
   padding-bottom: 5px;
@@ -640,6 +642,7 @@ div.type_loginform div.loginform {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  behavior: url(/PIE.php);
 }
 div.type_loginform div.login-form-auth {
   clear: both;
@@ -656,6 +659,7 @@ div.type_loginform p.header {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  behavior: url(/PIE.php);
 }
 div.type_loginform div.form-end {
   text-align: right;
@@ -685,6 +689,7 @@ div.comment-form {
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  behavior: url(/PIE.php);
 }
 div.comment-form textarea {
   width: 100%;
@@ -697,6 +702,7 @@ div.comment-form div.comments-auth {
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  behavior: url(/PIE.php);
 }
 /* СООБЩЕНИЯ О КОММЕНТАРИИ */
 div.comment-ok {
@@ -709,6 +715,7 @@ div.comment-ok {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+  behavior: url(/PIE.php);
 }
 div.comment-error {
   background: #FF4040;
@@ -720,6 +727,7 @@ div.comment-error {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+  behavior: url(/PIE.php);
 }
 /* комментарии */
 div.comments {
@@ -741,6 +749,7 @@ div.comments div.comment-info {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  behavior: url(/PIE.php);
 }
 div.comments blockquote {
   margin-left: 0;
@@ -758,6 +767,7 @@ form.comusers-form h3 {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  behavior: url(/PIE.php);
 }
 form.comusers-form p span.ffirst,
 form.comusers-form p label.ffirst {
@@ -1068,6 +1078,7 @@ ul.tabs-nav li.elem {
   -webkit-border-radius: 5px 5px 0 0;
   -moz-border-radius: 5px 5px 0 0;
   border-radius: 5px 5px 0 0;
+  behavior: url(/PIE.php);
 }
 ul.tabs-nav li.elem:hover,
 ul.tabs-nav li.tabs-current {
@@ -1081,6 +1092,7 @@ div.tabs-box {
   -webkit-border-radius: 0 5px 0 0;
   -moz-border-radius: 0 5px 0 0;
   border-radius: 0 5px 0 0;
+  behavior: url(/PIE.php);
 }
 /* HELPERS */
 /* messages */
@@ -1092,6 +1104,7 @@ div.tabs-box {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+  behavior: url(/PIE.php);
 }
 .message.note {
   background: #dae8ee url("../images/icons/note.png") no-repeat 10px 10px;
@@ -1386,22 +1399,26 @@ div.tabs-box {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  behavior: url(/PIE.php);
 }
 .radius8 {
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  behavior: url(/PIE.php);
 }
 .radius10 {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+  behavior: url(/PIE.php);
 }
 div.no-border-radius,
 .radius0 {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
+  behavior: url(/PIE.php);
 }
 .no-border {
   border: none!important;
@@ -1412,7 +1429,6 @@ div.no-border-radius,
   -o-box-shadow: 0 0 7px #bbbbbb;
   -webkit-box-shadow: 0 0 7px #bbbbbb;
   -moz-box-shadow: 0 0 7px #bbbbbb;
-  behavior: url(/PIE.php);
 }
 .box-shadow-none {
   box-shadow: none;

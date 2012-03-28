@@ -52,7 +52,7 @@
 	
 		8.1 Необходимо задать сайдбары в custom/my_functions.php
 	   
-			mso_register_sidebar('2', t('Второй сайдбар', 'templates'));
+			mso_register_sidebar('2', tf('Второй сайдбар'));
 	
 	        Этот код подключит настройку второго сайдбара в админ-панели.
 	   

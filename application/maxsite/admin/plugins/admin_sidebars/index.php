@@ -48,9 +48,11 @@ function admin_sidebars_admin($args = array())
 		return $args;
 	}
 	
-	mso_hook_add_dinamic( 'mso_admin_header', ' return $args . t("Сайдбары и виджеты", "admin"); ' );
-	mso_hook_add_dinamic( 'admin_title', ' return t("Сайдбары и виджеты", "admin") . " - " . $args; ' );
+	mso_hook_add_dinamic( 'mso_admin_header', ' return $args . t("Сайдбары и виджеты"); ' );
+	mso_hook_add_dinamic( 'admin_title', ' return t("Сайдбары и виджеты") . " - " . $args; ' );
 	
 	require($MSO->config['admin_plugins_dir'] . 'admin_sidebars/admin.php');
 }
-?>
+
+
+# end file

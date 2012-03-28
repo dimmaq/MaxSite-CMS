@@ -180,7 +180,7 @@
 	
 	// вторая таблица
 	$tmpl = array (
-					'table_open'		  => '<table class="page tablesorter" border="0" width="99%" id="pagetable2">',
+					'table_open'		  => '<table class="page tablesorter inactive-plugins" border="0" width="99%" id="pagetable2">',
 					'row_alt_start'		  => '<tr class="alt">',
 					'cell_alt_start'	  => '<td class="alt">',
 					'heading_row_start'    => NR . '<thead><tr>',

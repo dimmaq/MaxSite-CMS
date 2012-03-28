@@ -546,5 +546,88 @@ div.float-parent {
 			}
 		}
 	}
+	
+	// выбор шаблона сайта
+	div.template {
+		display: inline-block;
+		vertical-align: top;
+		margin: 0 15px 15px 0;
+		min-height: 165px;
+		width: 280px;
+		
+		.border(1px, #DDD);
+		.border_radius(5px);
+		.box_shadow(0px, 0px);
+		text-align: center;
+		img {
+			.box_shadow(0px, 0px);
+			.border_radius(5px);
+		}
+	}
+}
 
+// шаблон текущий
+img.template_current {
+	.box_shadow(0px, 0px);
+	.border_radius(5px);
+}
+
+// ушки
+div.ushki {
+
+	margin: 0 0 10px 0;
+	padding: 10px 10px 1px 10px;
+	background: #BAC6CC;
+	.border_radius(10px);
+	
+	textarea {
+		width: 99.3%;
+		height: 250px;
+	}
+	
+	p.ushki_title {
+		margin: 0;
+	}
+}
+
+// таблица неактивных плагинов
+table.inactive-plugins {
+	color: gray;
+	a {color: gray;}
+
+}
+
+// отступ в форме
+form.fform {
+	p.br {
+		padding: 15px 0 0 0;
+	}
+}
+
+// опции плагинов информация
+div.admin_plugin_options_info {
+	padding: 0;
+	margin: 0;
+	
+	h3 {
+		margin: 10px 0 0 0;
+		background: #BDCBD2;
+		padding: 3px 5px;
+	}
+	
+	p {
+		margin: 0 0 5px 0;
+		padding: 0;
+		font-style: italic;
+	}
+
+}
+
+// выбор шаблона сайта
+// загрузки 
+div.float-parent {
+	div.template {
+		//display: inline-block;
+		
+	}
 }

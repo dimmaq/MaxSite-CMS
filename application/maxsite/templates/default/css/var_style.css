@@ -36,6 +36,7 @@ h1.category {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+  behavior: url(/PIE.php);
 }
 div.all-wrap {
   width: 960px;
@@ -45,7 +46,6 @@ div.all-wrap {
   -o-box-shadow: 0 0 7px #606060;
   -webkit-box-shadow: 0 0 7px #606060;
   -moz-box-shadow: 0 0 7px #606060;
-  behavior: url(/PIE.php);
 }
 div.header {
   width: 960px;
@@ -113,6 +113,7 @@ div.leave_a_comment {
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  behavior: url(/PIE.php);
 }
 div.pagination strong {
   background: #225DA3;
@@ -131,4 +132,5 @@ div.type_home_cat_block div.header_home_cat {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+  behavior: url(/PIE.php);
 }

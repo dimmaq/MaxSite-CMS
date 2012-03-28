@@ -100,7 +100,7 @@ if (!function_exists('default_components'))
 		if ($all === false)
 			$all = get_path_files(getinfo('template_dir') . 'components/', getinfo('template_url') . 'components/', false, array('php'));
 			
-		return '0||' . t('Отсутствует', __FILE__) . '#' . implode($all, '#');
+		return '0||' . tf('Отсутствует') . '#' . implode($all, '#');
 	}
 }
 
@@ -147,7 +147,7 @@ if (!function_exists('default_header_image'))
 		
 		natsort($dirs);
 		
-		return '-template-||' . t('Каталог шаблона', __FILE__) . '#' . implode($dirs, '#');
+		return '-template-||' . tf('Каталог шаблона') . '#' . implode($dirs, '#');
 	}
 }
 
@@ -236,11 +236,10 @@ if (!function_exists('mso_default_head_section'))
 	{
 	
 		// ob_start(); # задел на будущее - буферизация
-	
+	// <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=8"><![endif]-->
 		echo '<!DOCTYPE HTML>
 <html><head>
 	<meta charset="UTF-8">
-	<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=8"><![endif]-->
 	<title>' . mso_head_meta('title') . '</title>
 	<meta name="generator" content="MaxSite CMS">
 	<meta name="description" content="' . mso_head_meta('description') . '">
