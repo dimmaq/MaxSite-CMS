@@ -86,13 +86,9 @@
 	$CI->load->helper('form');
 	
 	$tmpl = array (
-				'table_open'		  => '<table class="page tablesorter" border="0" id="pagetable">',
+				'table_open'		  => '<table class="page tablesorter">',
 				'row_alt_start'		  => '<tr class="alt">',
 				'cell_alt_start'	  => '<td class="alt">',
-				'heading_row_start' 	=> NR . '<thead><tr>',
-				'heading_row_end' 		=> '</tr></thead>' . NR,
-				'heading_cell_start'	=> '<th style="cursor: pointer;">',
-				'heading_cell_end'		=> '</th>',
 		  );
 		  
 	$CI->table->set_template($tmpl); // шаблон таблицы
@@ -296,16 +292,12 @@
 	//echo  '<br>';
 	
 	
-	echo mso_load_jquery('jquery.tablesorter.js');
-	echo '
-	<script type="text/javascript">
-	$(function() {
-		$("table.tablesorter th").animate({opacity: 0.7});
-		$("table.tablesorter th").hover(function(){ $(this).animate({opacity: 1}); }, function(){ $(this).animate({opacity: 0.7}); });
-		$("#pagetable").tablesorter();
-	});	
-	</script>
-	';
+	echo mso_load_jquery('jquery.tablesorter.js') . '
+		<script>
+		$(function() {
+			$("table.tablesorter").tablesorter();
+		});
+		</script>';
 	
 
 	echo $CI->table->generate(); // вывод подготовленной таблицы
@@ -320,7 +312,7 @@
 	mso_hook('pagination', $pagination);
 
 	
-	echo '<form action="" method="post">' . mso_form_session('f_session_id');
+	echo '<form method="post">' . mso_form_session('f_session_id');
 	echo '<h2 class="br">' . t('Удалить страницу') . '</h2><p>';
 	echo $all_pages;
 	echo ' <input type="submit" name="f_submit" value="' . t('Удалить') . '" onClick="if(confirm(\'' . t('Удалить страницу?') . '\')) {return true;} else {return false;}" ></p>';

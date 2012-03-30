@@ -46,17 +46,13 @@
 
 	$CI->load->library('table');
 	$tmpl = array (
-				'table_open'			=> '<table class="page tablesorter" border="0" width="99%" id="pagetable">',
+				'table_open'			=> '<table class="page tablesorter">',
 				'row_alt_start'			=> '<tr class="alt">',
 				'cell_alt_start'		=> '<td class="alt">',
-				'heading_row_start' 	=> NR . '<thead><tr>',
-				'heading_row_end' 		=> '</tr></thead>' . NR,
-				'heading_cell_start'	=> '<th style="cursor: pointer;">',
-				'heading_cell_end'		=> '</th>',
 		  );
 
 	$CI->table->set_template($tmpl); // шаблон таблицы
-	$CI->table->set_heading('ID', '&bull;', t('Ник'), t('Актив.'), t('Кол.'), t('Последний вход'),  t('E-mail'), t('Сайт'));
+	$CI->table->set_heading('ID', ' ', t('Ник'), t('Актив.'), t('Кол.'), t('Последний вход'),  t('E-mail'), t('Сайт'));
 
 
 	// для пагинации нам нужно знать общее количество записей
@@ -129,19 +125,14 @@
 	mso_hook('pagination', $pag);
 	//echo '<br>'; // вывод навигации
 
-	echo mso_load_jquery('jquery.tablesorter.js');
+	echo mso_load_jquery('jquery.tablesorter.js') . '
+		<script>
+		$(function() {
+			$("table.tablesorter").tablesorter( {headers: { 1: {sorter: false}, 3: {sorter: false} }});
+		});
+		</script>';
 
-	echo '
-	<script type="text/javascript">
-	$(function() {
-		$("table.tablesorter th").animate({opacity: 0.7});
-		$("table.tablesorter th").hover(function(){ $(this).animate({opacity: 1}); }, function(){ $(this).animate({opacity: 0.7}); });
-		$("#pagetable").tablesorter();
-	});
-	</script>
-	';
-
-	echo '<form action="" method="post">' . mso_form_session('f_session_id');
+	echo '<form method="post">' . mso_form_session('f_session_id');
 
 	echo $CI->table->generate(); // вывод подготовленной таблицы
 

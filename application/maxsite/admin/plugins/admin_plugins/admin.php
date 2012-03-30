@@ -49,10 +49,6 @@
 					'table_open'		  => '<table class="page tablesorter" border="0" width="99%" id="pagetable">',
 					'row_alt_start'		  => '<tr class="alt">',
 					'cell_alt_start'	  => '<td class="alt">',
-					'heading_row_start'    => NR . '<thead><tr>',
-					'heading_row_end'       => '</tr></thead>' . NR,
-					'heading_cell_start'   => '<th style="cursor: pointer;">',
-					'heading_cell_end'      => '</th>',
 			  );
 
 	$CI->table->set_template($tmpl); // шаблон таблицы
@@ -180,13 +176,9 @@
 	
 	// вторая таблица
 	$tmpl = array (
-					'table_open'		  => '<table class="page tablesorter inactive-plugins" border="0" width="99%" id="pagetable2">',
+					'table_open'		  => '<table class="page tablesorter inactive-plugins" id="pagetable2">',
 					'row_alt_start'		  => '<tr class="alt">',
 					'cell_alt_start'	  => '<td class="alt">',
-					'heading_row_start'    => NR . '<thead><tr>',
-					'heading_row_end'       => '</tr></thead>' . NR,
-					'heading_cell_start'   => '<th style="cursor: pointer;">',
-					'heading_cell_end'      => '</th>',
 			  );
 
 	$CI->table->set_template($tmpl); // шаблон таблицы
@@ -202,17 +194,13 @@
 	$table2 .= '<p><input type="submit" name="f_activate_submit" value="&nbsp;+ &nbsp;&nbsp;' . t('Включить') . '">	</p>';
 	
 	
-	echo mso_load_jquery('jquery.tablesorter.js');
-	echo '
-	<script type="text/javascript">
-	$(function() {
-	  $("table.tablesorter th").animate({opacity: 0.7});
-	  $("table.tablesorter th").hover(function(){ $(this).animate({opacity: 1}); }, function(){ $(this).animate({opacity: 0.7}); });
-	  $("#pagetable").tablesorter();
-	  $("#pagetable2").tablesorter();
-	});   
-	</script>
-	';
+	echo mso_load_jquery('jquery.tablesorter.js') . '
+		<script>
+		$(function() {
+			$("table.tablesorter").tablesorter( {headers: { 0: {sorter: false}, 2: {sorter: false} }});
+		});
+		</script>';
+		
 	// добавляем форму, а также текущую сессию
 	echo '<form method="post">' . mso_form_session('f_session_id');
 	echo $table1 . $table2; // вывод таблиц

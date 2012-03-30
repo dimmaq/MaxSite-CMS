@@ -212,28 +212,34 @@ ul.admin-menu {
 }
 
 
-td div.section {
+
+td.section {
 	
-	background: #395766;
-	color: #EBD4D7;
-	
-	font-size: 10pt;
-	font-weight: bold;
-	height: 30px;
-	line-height: 30px;
-	
-	padding: 0 5px;
+	background: none !important;
+	padding: 0;
+	border: none !important;
 	
 	h2 {
+		background: #395766;
+		color: #EBD4D7;
 		margin:0;
-		padding: 0;
+		padding: 0 5px;
 		font-size: 11pt;
 		font-weight: bold;
 		height: 30px;
 		line-height: 30px;
+		.border_radius(5px, 5px, 0, 0);
 	}
-}
+	
+	p {
+		color: #404040;
+		font-style: italic;
+		background: #EEEEEE;
+		margin: 0 0 15px 0;
+		padding: 5px;
+	}
 
+}
 
 
 div.admin-h-menu {
@@ -283,13 +289,30 @@ p.nav {
 
 table.page {
 
-	tr:nth-child(odd) td, tr:nth-child(odd) th {background-color: #f0f0f0;}
-	
-	tr:hover {
-		td, th {background-color: #f6f6f6;}
+	tr:nth-child(odd) td {
+		background-color: #f0f0f0;
 	}
 	
-	td {border: none;}
+	tr:hover {
+		td {background-color: #f6f6f6;}
+	}
+	
+	td {
+		border: none;
+		border-bottom: 1px solid #E0E0E0;
+		padding-top: 7px; 
+		padding-bottom: 7px; 
+	}
+	
+	th {
+		background: #BDC8CE;
+		border-color: #F0F0F0;
+		border-top: none;
+		border-bottom: none;
+		padding: 7px; 
+		text-align: left;
+	}
+	
 
 	input[type="text"], 
 	input[type="email"], 
@@ -301,6 +324,33 @@ table.page {
 	select {
 		width: 99%;
 	}
+	
+}
+
+// сортировка в таблицах
+table.tablesorter { 
+	th {
+		
+		&.header {
+			cursor: pointer;
+			background-image: url(images/tablesorter/bg.gif); 
+			background-repeat: no-repeat;
+			background-position: center right;
+			
+			padding-right: 20px;
+		}
+		
+		&.headerSortUp { 
+			background: #A6B3B9 url(images/tablesorter/asc.gif) no-repeat right center; 
+		}
+		
+		&.headerSortDown {
+			background: #A6B3B9 url(images/tablesorter/desc.gif) no-repeat right center; 
+		}
+	
+	}
+	
+	
 }
 
 table.new_or_edit {
@@ -429,15 +479,18 @@ table.widgets-allow {
 div.admin-edit-widgets-form {
 	
 	h3 {
-		background: #8BB2C5;
+		background: #B3C2C9;
 		color: #D2F0FF;
-		margin: 5px 0 5px 0;
+		margin: 5px 0 8px 0;
 		padding: 5px 10px;
 		font-size: 10pt;
 		
 		.border_radius(5px);
 		.box_shadow(0, 1px);
-		&:before {content: "▶ "}
+		&:before {
+			content: "▶ "; 
+			color: #395766;
+		}
 		
 		a {
 			color: #41535C;
@@ -449,14 +502,18 @@ div.admin-edit-widgets-form {
 	p {margin: 0;}
 	
 	div.admin_widgets {
-	
-		background: #EDF1F3;
 		
-		.background_gradient(darken(#EDF1F3, 10%), #EDF1F3);
+		@bg_color: #F8F8FF;
+		
+		background: @bg_color;
+		
+		.background_gradient(darken(@bg_color, 3%), @bg_color);
 		
 		.border_radius(5px);
+		.border(#B3C2C9);
 		
-		padding: 5px;
+		padding: 15px 5px 15px 5px;
+		margin: -2px 0 10px 0;
 		
 		div.t150 {
 			width: 180px;
@@ -620,14 +677,38 @@ div.admin_plugin_options_info {
 		padding: 0;
 		font-style: italic;
 	}
-
 }
 
-// выбор шаблона сайта
-// загрузки 
-div.float-parent {
-	div.template {
-		//display: inline-block;
-		
+// форма редактирования комментария
+form.comment_edit {
+	textarea {
+		width: 100%;
+		height: 200px;
 	}
+}
+
+// комментарии
+form.admin_comments {
+	span {
+		&.admin {
+			color: blue; 
+			font-weight: bold;
+		}
+		
+		&.comuser {
+			color: green; 
+			font-weight: bold;
+		}
+		
+		&.anonymous {
+			color: maroon; 
+		}
+	}
+}
+
+// рубрики 
+table.cats {
+		input[type="submit"]{
+			width: 100%;
+		}
 }

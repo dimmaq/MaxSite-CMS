@@ -30,7 +30,7 @@ function admin_comments_admin_init($args = array())
 		# Третий - название ссылки	
 		# четвертый номер по порядку
 		
-		mso_admin_menu_add('page', $this_plugin_url, t('Комментарии'), 3);
+		mso_admin_menu_add('users', $this_plugin_url, t('Комментарии'), 1);
 
 		# прописываем для указаного admin_url_ + $this_plugin_url - (он будет в url) 
 		# связанную функцию именно она будет вызываться, когда 
@@ -48,7 +48,7 @@ function admin_comments_admin($args = array())
 	global $MSO;
 	if ( !mso_check_allow('admin_comments') ) 
 	{
-		echo 'Доступ запрещен';
+		echo t('Доступ запрещен');
 		return $args;
 	}
 	
@@ -68,4 +68,4 @@ function admin_comments_admin($args = array())
 	}
 }
 
-?>
+# end file

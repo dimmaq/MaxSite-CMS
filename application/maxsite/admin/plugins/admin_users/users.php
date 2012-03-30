@@ -72,13 +72,13 @@
 	$CI->load->library('table');
 	
 	$tmpl = array (
-					'table_open'          => '<table class="page tablesorter" border="0" width="99%" id="pagetable">',
+					'table_open'          => '<table class="page tablesorter">',
 					'row_alt_start'          => '<tr class="alt">',
 					'cell_alt_start'      => '<td class="alt">',
-					'heading_row_start'     => NR . '<thead><tr>',
-					'heading_row_end'         => '</tr></thead>' . NR,
-					'heading_cell_start'    => '<th style="cursor: pointer;">',
-					'heading_cell_end'        => '</th>',
+				//	'heading_row_start'     => NR . '<thead><tr>',
+				//	'heading_row_end'         => '</tr></thead>' . NR,
+				//	'heading_cell_start'    => '<th style="cursor: pointer;">',
+				//	'heading_cell_end'        => '</th>',
 				);
 		  
 	$CI->table->set_template($tmpl); // шаблон таблицы
@@ -115,16 +115,12 @@
 		$CI->table->add_row($id, $login, $nik, $email, $url, $groups_name, $act);
 	}
 
-	echo mso_load_jquery('jquery.tablesorter.js');
-	echo '
-	<script type="text/javascript">
-	$(function() {
-		$("table.tablesorter th").animate({opacity: 0.7});
-		$("table.tablesorter th").hover(function(){ $(this).animate({opacity: 1}); }, function(){ $(this).animate({opacity: 0.7}); });
-		$("#pagetable").tablesorter();
-	});    
-	</script>
-	';
+	echo mso_load_jquery('jquery.tablesorter.js') . '
+		<script>
+		$(function() {
+			$("table.tablesorter").tablesorter( {headers: { 6: {sorter: false} }});
+		});
+		</script>';
 
 	// добавляем форму, а также текущую сессию
 	echo $CI->table->generate(); // вывод подготовленной таблицы
@@ -158,7 +154,7 @@
 		$form .=  '<p class="input_submit"><input type="submit" name="f_submit" value="' . t('Создать пользователя') . '"></p>';
 		
 		echo '<div class="item new_user">';
-		echo '<form action="" method="post">' . mso_form_session('f_session_id');
+		echo '<form method="post">' . mso_form_session('f_session_id');
 		echo '<h2 class="br">' . t('Создать нового пользователя') . '</h2>';
 		echo '<p>' . t('Если данные некорректны, то пользователь создан не будет. Для нового пользователя-админа нужно обновить разрешения.') . '</p>';
 		echo $form;
@@ -171,7 +167,7 @@
 		$CI->load->helper('form');
 		
 		echo '<div class="item delete_user">';
-		echo '<form action="" method="post">' . mso_form_session('f_session_id');
+		echo '<form method="post">' . mso_form_session('f_session_id');
 		echo '<h2 class="br">' . t('Удалить пользователя') . '</h2>';
 		echo '<p class="input"><strong>' . t('Удалить') . ' </strong>';
 		echo form_dropdown('f_user_delete', $all_users, '', '');

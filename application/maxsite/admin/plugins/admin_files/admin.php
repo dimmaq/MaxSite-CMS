@@ -256,7 +256,7 @@
 	// форма нового каталога
 	echo '
 		<div class="new_cat_upload"><h2>'. t('Новый каталог'). '</h2>
-		<form action="" method="post">' . mso_form_session('f_session3_id') .
+		<form method="post">' . mso_form_session('f_session3_id') .
 		'<p>'. t('Имя каталога'). ': <input type="text" name="f_cat_name" value="">
 		<input type="submit" name="f_newcat_submit" value="'. t('Создать'). '" onClick="if(confirm(\'' . t('Создать каталог в uploads?') . '\')) {return true;} else {return false;}" ></p>
 		</form></div>';
@@ -317,7 +317,7 @@
 		<div class="upload_file">
 		<h2>' . t('Загрузка файлов') . '</h2>
 		<p>' . t('Для загрузки файла нажмите кнопку «Обзор», выберите файл на своем компьютере. После этого нажмите кнопку «Загрузить». Размер файла не должен превышать') . ' ' . ini_get ('post_max_size') . '.</p>
-		<form action="" method="post" enctype="multipart/form-data">' . mso_form_session('f_session2_id') .
+		<form method="post" enctype="multipart/form-data">' . mso_form_session('f_session2_id') .
 		'<p>';
 	
 	for ($i = 1; $i <= $admin_files_field_count; $i++)
@@ -627,7 +627,7 @@ $(function()
 		{
 			var file_name = $(this).parent().parent().children(':checkbox').attr('id');
 			var old_descr = $(this).parent().parent().children('label').children('em').text();
-			var form_code = '<div class="edit_descr" style="width: 100%;" style="display:none"><form action="" method="post">{$session}<input type="hidden" name="f_file_name" value="' + file_name + '"><textarea name="f_file_description" >' + old_descr + '</textarea><br><input type="submit" name="f_edit_submit" value="{$save_button}"></form></div>';
+			var form_code = '<div class="edit_descr" style="width: 100%;" style="display:none"><form method="post">{$session}<input type="hidden" name="f_file_name" value="' + file_name + '"><textarea name="f_file_description" >' + old_descr + '</textarea><br><input type="submit" name="f_edit_submit" value="{$save_button}"></form></div>';
 			$(this).parent().parent().append(form_code);
 		}
 		$(this).parent().parent().find('.edit_descr').slideDown('fast');
