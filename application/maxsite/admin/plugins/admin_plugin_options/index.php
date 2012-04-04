@@ -50,8 +50,8 @@ function admin_plugin_options_admin($args = array())
 		return $args;
 	}
 	
-	mso_hook_add_dinamic( 'mso_admin_header', ' return $args . "' . t('Настройка опций плагинов') . '"; ' );
-	mso_hook_add_dinamic( 'admin_title', ' return "' . t('Настройка опций плагинов') . ' - " . $args; ' );
+	mso_hook_add_dinamic( 'mso_admin_header', ' return $args . "' . t('Настройка плагина') . '"; ' );
+	mso_hook_add_dinamic( 'admin_title', ' return "' . t('Настройка плагина') . ' - " . $args; ' );
 	
 	if ($plugin = mso_segment(3))
 	{
@@ -63,7 +63,7 @@ function admin_plugin_options_admin($args = array())
 		
 		if (!function_exists($plugin . '_mso_options'))
 		{
-			echo t('Для данного плагина настроек опций не предусмотрено.');
+			echo t('Для данного плагина настроек не предусмотрено.');
 			return $args;
 		}
 		else 
@@ -173,7 +173,13 @@ function mso_admin_plugin_options($key, $type, $ar, $title = '', $info = '', $te
 			
 			if (!isset($options[$m])) $options[$m] = $val['default'];
 			
-			// обрамление грурры опций
+			$group_start = (isset($val['group_start'])) ? $val['group_start'] : '';
+			
+			$group_end = (isset($val['group_end'])) ? $val['group_end'] : '';
+		
+			
+			/*
+			// обрамление группы опций
 			if (isset($val['group_start']))
 			{
 				if ($val['group_start']) $group_start = '<div class="admin_plugin_options">';
@@ -188,6 +194,7 @@ function mso_admin_plugin_options($key, $type, $ar, $title = '', $info = '', $te
 			}
 			else $group_end = '</div>';
 			
+			*/
 			
 			if ($val['description']) $val['description'] = '<p class="nop"><span class="fhint">' . $val['description'] . '</span></p>';
 			

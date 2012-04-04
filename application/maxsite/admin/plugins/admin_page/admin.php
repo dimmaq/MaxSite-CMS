@@ -130,10 +130,19 @@
 		
 		if (mso_segment(3) == 'category') $cat_segment_id = (int) mso_segment(4);
 		
-		echo '<p><strong>'
-				. t('Фильтр по рубрикам') 
-				. ':</strong> <a href="' . getinfo('site_admin_url') . 'page">'
-				. t('Без фильтра') . '</a> ';
+		echo '<p class="admin_page_filtr"><strong>'
+				. t('Фильтр по рубрикам')
+				. ':</strong> ';
+				
+		if (mso_segment(3) and mso_segment(3) != 'next')
+		{
+			echo '<a class="no_filtr" href="' . getinfo('site_admin_url') . 'page">' . t('Без фильтра') . '</a> ';
+		}
+		else
+		{
+			echo '<a class="current" href="' . getinfo('site_admin_url') . 'page">' . t('Без фильтра') . '</a> ';
+		
+		}
 		
 		require_once( getinfo('common_dir') . 'category.php' ); // функции рубрик
 		$all_cats = mso_cat_array_single('page', 'category_id', 'ASC', ''); // все рубрики для вывода кол-ва записей
@@ -143,13 +152,13 @@
 		{
 			if ($cat_segment_id != $nav['category_id']) 
 			{
-				echo '| <a href="' . getinfo('site_admin_url'). 'page/category/' . $nav['category_id'] .'">'
+				echo ' <a href="' . getinfo('site_admin_url'). 'page/category/' . $nav['category_id'] .'">'
 					. $nav['category_name'] 
-					. ' ('.  count($all_cats[$nav['category_id']]['pages']) . ')</a> ';
+					. ' <small>('.  count($all_cats[$nav['category_id']]['pages']) . ')</small></a> ';
 			} 
 			else 
 			{
-				echo '| <a href="' . getinfo('site_admin_url') . 'page/category/' . $nav['category_id'] . '"><strong>' . $nav['category_name'] . ' ('.  count($all_cats[$nav['category_id']]['pages']) . ')</strong></a> ';
+				echo ' <a class="current" href="' . getinfo('site_admin_url') . 'page/category/' . $nav['category_id'] . '">' . $nav['category_name'] . ' <small>('.  count($all_cats[$nav['category_id']]['pages']) . ')</small></a> ';
 			}
 		}
 		echo '</p>';
@@ -169,41 +178,40 @@
 			$type_segment_id = (int) mso_segment(4); 
 			$type_segment_name = '';
 		}
-		echo '<p><strong>'
+		echo '<p class="admin_page_filtr"><strong>'
 				. t('Фильтр по типам')
-				. ':</strong> <a href="' . getinfo('site_admin_url') . 'page">'
-				. t('Без фильтра') . '</a> ';
+				. ':</strong> ';
 		
 		foreach ($query->result_array() as $nav) 
 		{
 			if ($type_segment_id != $nav['page_type_id']) 
 			{
-				echo '| <a href="' . getinfo('site_admin_url') . 'page/type/' . $nav['page_type_id'] . '">' . $nav['page_type_name']. '</a> ';
+				echo ' <a href="' . getinfo('site_admin_url') . 'page/type/' . $nav['page_type_id'] . '">' . $nav['page_type_name']. '</a> ';
 			}
 			else 
 			{
 				$type_segment_name = $nav['page_type_name'];
-				echo '| <a href="' . getinfo('site_admin_url') . 'page/type/' . $nav['page_type_id'] . '"><strong>' . $nav['page_type_name'] . '</strong></a> ';
+				
+				echo ' <a class="current" href="' . getinfo('site_admin_url') . 'page/type/' . $nav['page_type_id'] . '">' . $nav['page_type_name'] . '</a> ';
 		 }
 		}
 		echo '</p>';
 	}
 	
-	echo '<p><strong>'
+	echo '<p class="admin_page_filtr"><strong>'
 				. t('Фильтр по статусу')
-				. ':</strong> <a href="' . getinfo('site_admin_url') . 'page">'
-				. t('Без фильтра') . '</a> ';
+				. ':</strong> ';
 	
 	$all_status = array('publish', 'draft', 'private');
 	foreach($all_status as $status)
 	{
 		if (mso_segment(4) == $status)
-			echo '| <a href="' . getinfo('site_admin_url') . 'page/status/' . $status . '"><strong>' . t($status) . '</strong></a> ';
+			echo '<a class="current" href="' . getinfo('site_admin_url') . 'page/status/' . $status . '">' . t($status) . '</a> ';
 		else
-			echo '| <a href="' . getinfo('site_admin_url') . 'page/status/' . $status . '">' . t($status) . '</a> ';
+			echo '<a href="' . getinfo('site_admin_url') . 'page/status/' . $status . '">' . t($status) . '</a> ';
 	}
 	echo '</p>';	
-				
+	
 
 	if (mso_segment(3) == 'category') 
 	{
@@ -283,40 +291,45 @@
 			$CI->table->add_row($page['page_id'], $title, $date_p, 
 					$page['page_type_name'], $page['page_status'], $page['users_nik']);
 		}
+	
+
+		$pagination['type'] = '';
+		$pagination['range'] = 10;
+		mso_hook('pagination', $pagination);
+	
+	
+		echo mso_load_jquery('jquery.tablesorter.js') . '
+			<script>
+			$(function() {
+				$("table.tablesorter").tablesorter();
+			});
+			</script>';
+	
+
+		echo $CI->table->generate(); // вывод подготовленной таблицы
+	
+
+		// добавляем форму для удаления записи
+		$all_pages = form_dropdown('f_page_delete', $all_pages, -1, '');
+		
+
+		$pagination['type'] = '';
+		$pagination['range'] = 10;
+		//echo '<br>';
+		mso_hook('pagination', $pagination);
+
+		
+		echo '<form method="post">' . mso_form_session('f_session_id');
+		echo '<h2 class="br">' . t('Удалить страницу') . '</h2><p>';
+		echo $all_pages;
+		echo ' <input type="submit" name="f_submit" value="' . t('Удалить') . '" onClick="if(confirm(\'' . t('Удалить страницу?') . '\')) {return true;} else {return false;}" ></p>';
+		echo '</form>';
+
 	}
-	
-
-	$pagination['type'] = '';
-	$pagination['range'] = 10;
-	mso_hook('pagination', $pagination);
-	//echo  '<br>';
-	
-	
-	echo mso_load_jquery('jquery.tablesorter.js') . '
-		<script>
-		$(function() {
-			$("table.tablesorter").tablesorter();
-		});
-		</script>';
-	
-
-	echo $CI->table->generate(); // вывод подготовленной таблицы
-
-	// добавляем форму для удаления записи
-	$all_pages = form_dropdown('f_page_delete', $all_pages, -1, '');
-	
-
-	$pagination['type'] = '';
-	$pagination['range'] = 10;
-	//echo '<br>';
-	mso_hook('pagination', $pagination);
-
-	
-	echo '<form method="post">' . mso_form_session('f_session_id');
-	echo '<h2 class="br">' . t('Удалить страницу') . '</h2><p>';
-	echo $all_pages;
-	echo ' <input type="submit" name="f_submit" value="' . t('Удалить') . '" onClick="if(confirm(\'' . t('Удалить страницу?') . '\')) {return true;} else {return false;}" ></p>';
-	echo '</form>';
-	
+	else
+	{
+		echo '<h2>' . t('Страниц не найдено') . '</h2>';
+		
+	}
 	
 ?>

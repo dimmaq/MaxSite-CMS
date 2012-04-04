@@ -4,6 +4,7 @@
 ?>
 
 <h1><?= t('Комментаторы') ?></h1>
+
 <p class="info"><?= t('Список комментаторов сайта') ?></p>
 
 <?php
@@ -139,7 +140,7 @@
 	echo '
 		<p class="br">' . t('C отмеченными:') . '
 		<input type="submit" name="f_delete_submit" onClick="if(confirm(\'' . t('Уверены?') . '\')) {return true;} else {return false;}" value="' . t('Удалить') . '"></p></form>';
-	//echo '<br>';
+	
 	mso_hook('pagination', $pag);
 
 # End of file

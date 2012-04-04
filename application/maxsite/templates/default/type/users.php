@@ -44,12 +44,21 @@ if ($comuser_info)
 		
 		// выводим все данные
 		if ($comusers_date_registr) echo '<p><strong>'. tf('Дата регистрации'). ':</strong> ' . $comusers_date_registr . '</p>';
+		
 		if ($comusers_nik) echo '<p><strong>'. tf('Ник'). ':</strong> ' . $comusers_nik . '</p>';
+		
 		if ($comusers_count_comments) echo '<p><strong>'. tf('Комментариев'). ':</strong> ' . $comusers_count_comments . '</p>';
+		
 		if ($comusers_url) echo '<p><strong>'. tf('Сайт'). ':</strong> <a rel="nofollow" href="' . $comusers_url . '">' . $comusers_url . '</a></p>';
+		
 		if ($comusers_icq) echo '<p><strong>'. tf('ICQ'). ':</strong> ' . $comusers_icq . '</p>';
+		
 		if ($comusers_msn) echo '<p><strong>'. tf('Twitter'). ':</strong> <a rel="nofollow" href="http://twitter.com/' . $comusers_msn . '">@' . $comusers_msn . '</a></p>';
+		
 		if ($comusers_jaber) echo '<p><strong>'. tf('Jabber'). ':</strong> ' . $comusers_jaber . '</p>';
+		
+		if ($comusers_skype) echo '<p><strong>'. tf('Skype'). ':</strong> ' . $comusers_skype . '</p>';
+		
 		if ($comusers_date_birth and $comusers_date_birth!='1970-01-01 00:00:00' and $comusers_date_birth!='0000-00-00 00:00:00'   ) 
 				echo '<p><strong>'. tf('Дата рождения'). ':</strong> ' . $comusers_date_birth . '</p>';
 		

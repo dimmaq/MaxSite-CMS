@@ -12,7 +12,7 @@
 body {background: #F0F0F0;}
 
 a {
-	color: #035984;
+	color: #0063B7;
 	text-decoration: none;
 	
 	&:hover {
@@ -141,7 +141,7 @@ div.admin-footer {
 ul.admin-menu {
 	list-style: none;
 	margin-left: 0;
-	font-family: Arial, sans-serif;
+	// font-family: Arial, sans-serif;
 	
 	li {
 		line-height: 1.5em;
@@ -353,6 +353,7 @@ table.tablesorter {
 	
 }
 
+// создание и редактирование записей
 table.new_or_edit {
 	
 	td {
@@ -367,6 +368,9 @@ table.new_or_edit {
 			width: 99%;
 			font-size: 1.5em;
 			margin: 5px 0;
+			padding: 3px;
+			background: #F0F0F0;
+			.border(#3C769D);
 		}
 		
 		
@@ -438,7 +442,7 @@ table.new_or_edit {
 				margin: 0 0 5px 0;
 				
 				li {
-					margin: 5px 5px 0 0;
+					margin: 5px 5px 0 3px;
 					font-weight: bold;
 				}
 				
@@ -450,15 +454,19 @@ table.new_or_edit {
 				
 				li label {
 					display: block;
+					margin-left: -3px;
+					padding-left: 3px;
 				}
 				
 				li label:hover {
 					background: #C7C7C7;
 					.border_radius(5px);
 	
-					margin-left: -20px;
-					padding-left: 20px;
+				//	margin-left: -3px;
+				//	padding-left: 3px;
 				}
+				
+				
 			}
 		}
 	}
@@ -711,4 +719,64 @@ table.cats {
 		input[type="submit"]{
 			width: 100%;
 		}
+}
+
+// системные сообщения 
+div.update {
+	padding: 10px; 
+	background: #C7F3A6; 
+	margin: 5px 0;
+	.border_radius(10px);
+	
+	/*
+	&:hover {
+		background: none;
+		-moz-transition: background 2s ease 0s;
+	}
+	*/
+}
+
+div.error {
+	padding: 10px; 
+	background: #FFD2D2; 
+	margin: 5px 0;
+	.border_radius(10px);
+}
+
+p.info {
+	color: #6D6D6D;
+}
+
+// список записей - фильтры
+p.admin_page_filtr {
+	
+	line-height: 2em; 
+	font-size: .8em;
+	
+	a {
+		background: #E7ECEF;
+		.border_radius(3px);
+		padding: 3px 5px;
+		//margin-right: 5px;
+		white-space: nowrap;
+		
+		&:hover, &.current {
+			background: #6C8A99;
+			text-decoration: none;
+			color: white;
+		}
+		
+		&.no_filtr {
+			background: none;
+			
+			&:hover {
+				color: #6C8A99;
+			}
+		}
+	}
+}
+
+// подсветка несуществующих опций
+span.red {
+	color: red;
 }

@@ -1246,6 +1246,9 @@ function mso_comuser_edit($args = array())
 			
 			if (!isset($post['f_comusers_notify'])) $post['f_comusers_notify'] = '0';
 			
+			if (!isset($post['f_comusers_skype'])) $post['f_comusers_skype'] = ''; // скайп
+			
+			
 			
 			$post = mso_clean_post(array(
 				'f_comusers_nik' => 'base',
@@ -1253,6 +1256,7 @@ function mso_comuser_edit($args = array())
 				'f_comusers_icq' => 'base',
 				'f_comusers_msn' => 'base',
 				'f_comusers_jaber' => 'base',
+				'f_comusers_skype' => 'base',
 				'f_comusers_date_birth' => 'base',
 				'f_comusers_description' => 'base',
 				'f_comusers_notify' => 'int',
@@ -1265,6 +1269,7 @@ function mso_comuser_edit($args = array())
 				'comusers_icq' =>	strip_tags($post['f_comusers_icq']),
 				'comusers_msn' =>	strip_tags($post['f_comusers_msn']),
 				'comusers_jaber' =>	strip_tags($post['f_comusers_jaber']),
+				'comusers_skype' =>	strip_tags($post['f_comusers_skype']),
 				'comusers_date_birth' =>	strip_tags($post['f_comusers_date_birth']),
 				'comusers_description' =>	strip_tags($post['f_comusers_description']),
 				'comusers_avatar_url' =>	$f_comusers_avatar_url,

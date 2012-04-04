@@ -72,7 +72,9 @@
 
 ?>
 <h1><?= t('Комментарии') ?></h1>
+
 <p class="info"><?= t('Последние комментарии') ?></p>
+
 <p><strong><?= t('Фильтр:') ?></strong> <a href="<?= getinfo('site_admin_url') ?>comments/all"><?= t('Все') ?></a> | <a href="<?= getinfo('site_admin_url') ?>comments/moderation"><?= t('Только требующие модерации') ?></a></p>
 
 
@@ -181,30 +183,35 @@
 			
 			$CI->table->add_row($id, $id_out, $comments_approved, $out);
 		}
-	}
 	
 
-	echo '<form  method="post" class="fform admin_comments">' . mso_form_session('f_session_id');
-	
-
-	echo $CI->table->generate();
-	
-	echo '
-		<p class="br">' . t('C отмеченными:') . '
-		<input type="submit" name="f_aproved_submit" value="' . t('Разрешить') . '">
-		<input type="submit" name="f_unaproved_submit" value="' . t('Запретить') . '">
-		<input type="submit" name="f_delete_submit" onClick="if(confirm(\'' . t('Уверены?') . '\')) {return true;} else {return false;}" value="' . t('Удалить') . '"></p><br>
-		';
-	echo '</form>';
-	
-	echo mso_load_jquery('jquery.tablesorter.js') . '
-		<script>
-		$(function() {
-			$("table.tablesorter").tablesorter( {headers: { 1: {sorter: false}, 2: {sorter: false}, 3: {sorter: false} }});
-		});
-		</script>';
+		echo '<form  method="post" class="fform admin_comments">' . mso_form_session('f_session_id');
 		
-	mso_hook('pagination', $pagination);
+
+		echo $CI->table->generate();
+		
+		echo '
+			<p class="br">' . t('C отмеченными:') . '
+			<input type="submit" name="f_aproved_submit" value="' . t('Разрешить') . '">
+			<input type="submit" name="f_unaproved_submit" value="' . t('Запретить') . '">
+			<input type="submit" name="f_delete_submit" onClick="if(confirm(\'' . t('Уверены?') . '\')) {return true;} else {return false;}" value="' . t('Удалить') . '"></p><br>
+			';
+		echo '</form>';
+		
+		echo mso_load_jquery('jquery.tablesorter.js') . '
+			<script>
+			$(function() {
+				$("table.tablesorter").tablesorter( {headers: { 1: {sorter: false}, 2: {sorter: false}, 3: {sorter: false} }});
+			});
+			</script>';
+			
+		mso_hook('pagination', $pagination);
+	}
+	else
+	{
+		echo '<h3>' . t('Нет комментариев') . '</h3>';  
+	
+	}
 
 	
 ?>

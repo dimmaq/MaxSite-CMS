@@ -34,6 +34,12 @@
 	
 	$admin_css = getinfo('admin_url') . 'template/' . mso_get_option('admin_template', 'general', 'default') . '/style.css';
 	$admin_css = mso_hook('admin_css', $admin_css);
+	
+	$admin_css_profile = mso_get_option('admin_template_profile', 'general', '');
+	
+	if ($admin_css_profile) 
+		$admin_css_profile = '<link rel="stylesheet" href="' . getinfo('admin_url') . 'template/' . mso_get_option('admin_template', 'general', 'default') . '/profiles/' .$admin_css_profile . '" type="text/css" media="screen">';
+	
 	$admin_title = t('Админ-панель') . ' - ' . mso_hook('admin_title', mso_head_meta('title'));
 		
 	
@@ -43,6 +49,7 @@
 	<title><?= $admin_title ?></title>
 	<link rel="shortcut icon" href="<?= getinfo('siteurl') ?>favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="<?= $admin_css ?>" type="text/css" media="screen">
+	<?= $admin_css_profile ?>
 	<?= mso_load_jquery() ?>
 	<?php mso_hook('admin_head') ?>
 </head>

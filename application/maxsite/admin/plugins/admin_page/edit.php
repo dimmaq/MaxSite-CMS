@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <h1><?= t('Редактирование страницы') ?></h1>
-<p class="ret-to-pages"><a href="<?= $MSO->config['site_admin_url'] . 'page' ?>"><?= t('Вернуться к списку страниц') ?></a>
+<p class="ret-to-pages"><a href="<?= $MSO->config['site_admin_url'] . 'page' ?>"><?= t('Cписок записей') ?></a>
 
 <?php
 	
@@ -229,7 +229,7 @@
 				{
 					$url = '<a href="' 
 							. mso_get_permalink_page($result['result'][0])
-							. '">' . t('Посмотреть запись') . '</a> | (<a target="_blank" href="' 
+							. '">' . t('Посмотреть запись') . '</a> (<a target="_blank" href="' 
 							. mso_get_permalink_page($result['result'][0]) . '">' . t('в новом окне') . '</a>)';		
 						//	. ' | <a href="' . $MSO->config['site_admin_url'] . 'page_edit/' . $result['result'][0] . '">Изменить</a>';
 

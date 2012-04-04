@@ -105,11 +105,17 @@ if ($comuser_info)
 				echo '<p><span class="ffirst ftitle">'. tf('Отображаемый ник'). '</span><span><input type="text" name="f_comusers_nik" value="' . $comusers_nik . '"></span></p>';
 				
 				echo '<p><span class="ffirst ftitle">'. tf('Сайт (с http://)'). '</span><span><input type="text" name="f_comusers_url" value="' . $comusers_url . '"></p>';
+				
 				echo '<p><span class="ffirst ftitle">'. tf('Аватарка (с http://, 80x80px)'). '</span><span><input type="text" name="f_comusers_avatar_url" value="' . $comusers_avatar_url . '"></p>';
 				
 				echo '<p><span class="ffirst ftitle">'. tf('ICQ'). '</span><span><input type="text" name="f_comusers_icq" value="' . $comusers_icq . '"></p>';
+				
 				echo '<p><span class="ffirst ftitle">'. tf('Twitter'). '</span><span><input type="text" name="f_comusers_msn" value="' . $comusers_msn . '"></p>';
+				
 				echo '<p><span class="ffirst ftitle">'. tf('Jabber'). '</span><span><input type="text" name="f_comusers_jaber" value="' . $comusers_jaber . '"></p>';
+				
+				echo '<p><span class="ffirst ftitle">'. tf('Skype'). '</span><span><input type="text" name="f_comusers_skype" value="' . $comusers_skype . '"></p>';
+				
 				echo '<p><span class="ffirst ftitle">'. tf('Дата рождения'). '</span><span><input type="text" name="f_comusers_date_birth" value="' . $comusers_date_birth . '"></p>';
 				
 				echo '<p><span class="ffirst ftitle ftop">'. tf('О себе'). ' ('. tf('HTML удаляется'). ')</span><span><textarea name="f_comusers_description">'. NR 
