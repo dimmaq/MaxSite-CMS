@@ -53,18 +53,15 @@ function xml_sitemap_custom($args = array())
 	$options = mso_get_option('plugin_xml_sitemap', 'plugins', array());
 	
 
-	if(!isset($options['page_hide'])) $options['page_hide'] = array();
-
+	if(!isset($options['page_hide'])) $options['page_hide'] = '';
 	$options['page_hide'] = mso_explode($options['page_hide']);
 	
 	
-	if(!isset($options['page_cats_hide'])) $options['page_cats_hide'] = array();
-
+	if(!isset($options['page_cats_hide'])) $options['page_cats_hide'] = '';
 	$options['page_cats_hide'] = mso_explode($options['page_cats_hide']);
 	
 	
-	if(!isset($options['categories_show'])) $options['categories_show'] = array();
-	
+	if(!isset($options['categories_show'])) $options['categories_show'] = '';
 	$options['categories_show'] = mso_explode($options['categories_show']);
 	
 	
@@ -95,7 +92,9 @@ function xml_sitemap_custom($args = array())
 	}
 		
 	// создание sitemap.xml
-	$t = "\t";
+	
+	// $t = "\t"; // табулятор для отступа
+	$t = ''; // отступ для красоты
 		
 	$CI = & get_instance();
 	$CI->load->helper('file'); // хелпер для работы с файлами
@@ -119,14 +118,26 @@ function xml_sitemap_custom($args = array())
 	$out = '<'
 	. '?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	<url>
-		<loc>' . $url . '</loc>
-		<lastmod>' . date('Y-m-d') . 'T' . date('H:i:s') . $time_zone . '</lastmod>
-		<changefreq>'.$options['freq_priority']['home']['changefreq'].'</changefreq>
-		<priority>'.$options['freq_priority']['home']['priority'].'</priority>
-	</url>
+<url>
+<loc>' . $url . '</loc>
+<lastmod>' . date('Y-m-d') . 'T' . date('H:i:s') . $time_zone . '</lastmod>
+<changefreq>' . $options['freq_priority']['home']['changefreq'] . '</changefreq>
+<priority>' . $options['freq_priority']['home']['priority'] . '</priority>
+</url>
 ';
 
+	// временная зона для запросов с page_date_publish
+	$tz = getinfo('time_zone');
+	if ($tz < 10 and $tz > 0) $tz = '0' . $tz;
+	elseif ($tz > -10 and $tz < 0) 
+	{ 
+		$tz = '0' . $time_zone; 
+		$tz = str_replace('0-', '-0', $time_zone); 
+	}
+	else $tz = '00.00';
+	$tz = str_replace('.', ':', $tz);
+		
+		
 
 	// страницы не blog
 	$CI->db->select('page.page_id, page_slug, page_date_publish');
@@ -144,7 +155,9 @@ function xml_sitemap_custom($args = array())
 	
 	$CI->db->where('page_type_name !=', 'blog');
 	$CI->db->where('page_status', 'publish');
-	$CI->db->where('page_date_publish <', mso_date_convert('Y-m-d H:i:s', date('Y-m-d H:i:s')));
+	$CI->db->where('page_date_publish < ', 'DATE_ADD(NOW(), INTERVAL "' . $tz . '" HOUR_MINUTE)', false);
+	//$CI->db->where('page_date_publish <', mso_date_convert('Y-m-d H:i:s', date('Y-m-d H:i:s')));
+	
 	$CI->db->join('page_type', 'page_type.page_type_id = page.page_type_id', 'left');
 	$CI->db->order_by('page_date_publish', 'desc');
 	$CI->db->group_by('page.page_id');
@@ -182,7 +195,7 @@ function xml_sitemap_custom($args = array())
 	
 	$CI->db->where('page_type_name', 'blog');
 	$CI->db->where('page_status', 'publish');
-	$CI->db->where('page_date_publish <', mso_date_convert('Y-m-d H:i:s', date('Y-m-d H:i:s')));
+	$CI->db->where('page_date_publish < ', 'DATE_ADD(NOW(), INTERVAL "' . $tz . '" HOUR_MINUTE)', false);
 	$CI->db->join('page_type', 'page_type.page_type_id = page.page_type_id', 'left');
 	$CI->db->group_by('page.page_id');
 	$CI->db->order_by('page_date_publish', 'desc');
@@ -198,8 +211,8 @@ function xml_sitemap_custom($args = array())
 			$out .= $t . '<url>' . NR;
 			$out .= $t . $t . '<loc>' . $url . 'page/' . $row['page_slug'] . '</loc>' . NR;
 			$out .= $t . $t . '<lastmod>' . $date . '</lastmod>' . NR;
-			$out .= $t . $t . '<changefreq>'.$options['freq_priority']['blog']['changefreq'].'</changefreq>' . NR;
-			$out .= $t . $t . '<priority>'.$options['freq_priority']['blog']['priority'].'</priority>' . NR;
+			$out .= $t . $t . '<changefreq>' . $options['freq_priority']['blog']['changefreq'] . '</changefreq>' . NR;
+			$out .= $t . $t . '<priority>' . $options['freq_priority']['blog']['priority'] . '</priority>' . NR;
 			$out .= $t . '</url>' . NR;
 		}
 	}
@@ -221,8 +234,8 @@ function xml_sitemap_custom($args = array())
 			$out .= $t . '<url>' . NR;
 			$out .= $t . $t . '<loc>' . $url . 'category/' . $row['category_slug'] . '</loc>' . NR;
 			$out .= $t . $t . '<lastmod>' . $date . '</lastmod>' . NR;
-			$out .= $t . $t . '<changefreq>'.$options['freq_priority']['category']['changefreq'].'</changefreq>' . NR;
-			$out .= $t . $t . '<priority>'.$options['freq_priority']['category']['priority'].'</priority>' . NR;
+			$out .= $t . $t . '<changefreq>' . $options['freq_priority']['category']['changefreq'] . '</changefreq>' . NR;
+			$out .= $t . $t . '<priority>'.$options['freq_priority']['category']['priority'] . '</priority>' . NR;
 			$out .= $t . '</url>' . NR;
 		}
 	}		
@@ -239,8 +252,8 @@ function xml_sitemap_custom($args = array())
 			$out .= $t . '<url>' . NR;
 			$out .= $t . $t . '<loc>' . $url . 'tag/' . htmlentities(urlencode($tag)) . '</loc>' . NR;
 			$out .= $t . $t . '<lastmod>' . $date . '</lastmod>' . NR;
-			$out .= $t . $t . '<changefreq>'.$options['freq_priority']['tag']['changefreq'].'</changefreq>' . NR;
-			$out .= $t . $t . '<priority>'.$options['freq_priority']['tag']['priority'].'</priority>' . NR;
+			$out .= $t . $t . '<changefreq>' . $options['freq_priority']['tag']['changefreq'] . '</changefreq>' . NR;
+			$out .= $t . $t . '<priority>' . $options['freq_priority']['tag']['priority'] . '</priority>' . NR;
 			$out .= $t . '</url>' . NR;
 		}
 	}
@@ -259,8 +272,8 @@ function xml_sitemap_custom($args = array())
 				$out .= $t . '<url>' . NR;
 				$out .= $t . $t . '<loc>' . $url . 'users/' . $row['comusers_id'] . '</loc>' . NR;
 				$out .= $t . $t . '<lastmod>' . $date . '</lastmod>' . NR;
-				$out .= $t . $t . '<changefreq>'.$options['freq_priority']['comuser']['changefreq'].'</changefreq>' . NR;
-				$out .= $t . $t . '<priority>'.$options['freq_priority']['comuser']['priority'].'</priority>' . NR;
+				$out .= $t . $t . '<changefreq>'.$options['freq_priority']['comuser']['changefreq'] . '</changefreq>' . NR;
+				$out .= $t . $t . '<priority>'.$options['freq_priority']['comuser']['priority'] . '</priority>' . NR;
 				$out .= $t . '</url>' . NR;
 			}
 		}
@@ -280,8 +293,8 @@ function xml_sitemap_custom($args = array())
 				$out .= $t . '<url>' . NR;
 				$out .= $t . $t . '<loc>' . $url . 'author/' . $row['users_id'] . '</loc>' . NR;
 				$out .= $t . $t . '<lastmod>' . $date . '</lastmod>' . NR;
-				$out .= $t . $t . '<changefreq>'.$options['freq_priority']['user']['changefreq'].'</changefreq>' . NR;
-				$out .= $t . $t . '<priority>'.$options['freq_priority']['user']['priority'].'</priority>' . NR;
+				$out .= $t . $t . '<changefreq>' . $options['freq_priority']['user']['changefreq'] . '</changefreq>' . NR;
+				$out .= $t . $t . '<priority>' . $options['freq_priority']['user']['priority'] . '</priority>' . NR;
 				$out .= $t . '</url>' . NR;
 			}
 		}
