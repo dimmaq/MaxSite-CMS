@@ -8,7 +8,7 @@
 
 $info = array(
 	'name' => tf('My Template', __FILE__),
-	'description' => tf('Шаблон для MaxSite CMS', __FILE__),
+	'description' => t('Шаблон для MaxSite CMS', __FILE__),
 	'version' => '1.0',
 	'author' => '',
 	'template_url' => 'http://site.com/',

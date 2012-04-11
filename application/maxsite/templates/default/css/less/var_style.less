@@ -71,7 +71,9 @@ div.content {
 	float: left;
 }
 
-div.content-wrap {margin: 20px 30px 10px 20px;}
+div.content-wrap {
+	margin: 20px 30px 10px 20px;
+}
 
 div.sidebar {
 	width: @sidebar_width; 
@@ -79,7 +81,9 @@ div.sidebar {
 	margin: 20px 0 0 -@sidebar_width;
 }
 
-div.sidebar1-wrap {margin-right: 10px;}
+div.sidebar1-wrap {
+	margin-right: 10px;
+}
 
 div.footer {
 	width: 100%; 
@@ -88,10 +92,15 @@ div.footer {
 	font-size: 0.9em; 
 	color: white;
 	
-	a {color: white;}
+	a {
+		color: white;
+	}
 }
 
-div.footer-wrap {padding: 10px; margin: 0 auto;}
+div.footer-wrap {
+	padding: 10px; 
+	margin: 0 auto;
+}
 
 
 // МЕНЮ ВЫПАДАЮЩЕЕ (только обрамляющий блок)
@@ -103,67 +112,20 @@ div.MainMenu {
 
 // верхние пункты меню
 ul.menu li { 
-	a {margin-right: 8px; color: white;}
-	a:hover {background: #3A4356; color: white;}
-	&.selected a {background: #374973;}
-}
-
-/*
-// типовой блок стилей меню
-ul.menu {
-	background: #AAA; // фон меню
-	
-	@menu_color1: white; // цвет верхнего пункта
-	
-	@select_color: red; // цвет при наведении и выбранного пункта
-	@select_background: #BBB; // фон при наведении и выбранного пункта
-	
-	@height_menu: 32px; // высота меню
-	
-	li {
-		height: @height_menu;
-		line-height: @height_menu;
-		
-		a {
-			font-weight: normal; // начертание
-			color: @menu_color1; // цвет пункта
-			padding: 0 10px 0 10px; // отступ между пунктами
-			
-			// при наведении
-			&:hover {
-				background: @select_background; 
-				color: @select_color;
-			}
-		}
-		
-		// выделенный пункт
-		&.selected a {
-			background: @select_background;
-			color: @select_color;
-		}
-		
-		// подпункты
-		&.group ul li a {
-			padding: 0 5px 0 10px; // внутренние отступы
-			background: #EEE; // фон
-			color: #404040;  // цвет
-			border-top: 1px solid #BBB; // верхняя границы 
-			// font-weight: normal; // начертание
-
-			// при наведении
-			&:hover {
-				color: white; // цвет
-				background: #CCC; // фон
-			}
-		}
-		
-		// тень для выпадающего подпункта
-		&.group ul {
-			.box_shadow(1px, 1px, 2px, gray);
-		}
+	a {
+		margin-right: 8px; 
+		color: white;
 	}
-} // end стили меню
-*/
+	
+	a:hover {
+		background: #3A4356; 
+		color: white;
+	}
+	
+	&.selected a {
+		background: #374973;
+	}
+}
 
 
 // ЗАПИСИ ПО ТЕМЕ И КОЛ-ВО КОММЕНТАРИЕВ 
@@ -188,11 +150,22 @@ div.pagination strong {
 
 // ПЛАГИН ТАБЫ 
 ul.tabs-nav li {
-	&.elem {background: #EEE; color: #888;}
-	&.elem:hover, &.tabs-current {color: #3F454B; background: #BFC0CD;}
+	&.elem {
+		background: #EEE; 
+		color: #888;
+	}
+	
+	&.elem:hover, 
+	&.tabs-current {
+		color: #3F454B; 
+		background: #BFC0CD;
+	}
 }
 
 // вывод рубрик на главной
 div.type_home_cat_block {
-	div.header_home_cat {.border_radius(10px);}
+	
+	div.header_home_cat {
+		.border_radius(10px);
+	}
 }
