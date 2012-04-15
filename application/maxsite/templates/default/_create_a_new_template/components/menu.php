@@ -2,7 +2,7 @@
 
 	if (!mso_hook_present('main_menu')) // для отладки убрать ! в условии
 	{ ?>
-		<div id="MainMenu" class="MainMenu">
+		<div id="MainMenu" class="MainMenu"><div class="wrap">
 			<ul class="menu">
 				<?php
 
@@ -49,7 +49,7 @@
 					if ($menu) echo mso_menu_build($menu, 'selected', false);
 				?>
 			</ul>
-	</div><!-- div id="MainMenu" -->
+	</div><!-- div class=wrap --></div><!-- div id="MainMenu" -->
 	<?php 
 	} 
 	else 

@@ -317,7 +317,7 @@
 		<div class="upload_file">
 		<h2>' . t('Загрузка файлов') . '</h2>
 		<p>' . t('Для загрузки файла нажмите кнопку «Обзор», выберите файл на своем компьютере. После этого нажмите кнопку «Загрузить». Размер файла не должен превышать') . ' ' . ini_get ('post_max_size') . '.</p>
-		<form method="post" enctype="multipart/form-data">' . mso_form_session('f_session2_id') .
+		<form method="post" enctype="multipart/form-data" class="admin_uploads_form">' . mso_form_session('f_session2_id') .
 		'<p>';
 	
 	for ($i = 1; $i <= $admin_files_field_count; $i++)
@@ -329,7 +329,7 @@
 	
 	
 	echo '&nbsp;<input type="submit" name="f_upload_submit" value="' . t('Загрузить') . '">&nbsp;<input type="reset" value="' . t('Сбросить') . '"></p>
-		<p>' . t('Описание файла:') . ' <input type="text" name="f_userfile_title" class="description_file" value=""></p>
+		<p>' . t('Описание файла:') . ' <input type="text" name="f_userfile_title" class="description_file" value="" size="80"></p>
 
 		<p><label><input type="checkbox" name="f_userfile_resize" ' . $f_userfile_resize . 'value=""> ' . t('Для изображений изменить размер до') . '</label>
 			<input type="text" name="f_userfile_resize_size" style="width: 50px" maxlength="4" value="' . $resize_images . '"> ' . t('px (по максимальной стороне).') . '</p>

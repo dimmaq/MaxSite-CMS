@@ -622,7 +622,7 @@ function _mso_sql_build_home($r, &$pag)
 	if ($exclude_page_id)
 			$CI->db->where_not_in('page.page_id', $r['exclude_page_id']);
 
-	// блядское экранирование CodeIgniter! Они там что мухоморов объелись?! Приходится делать свои замены! 
+	// экранирование CodeIgniter! Они там что мухоморов объелись?! Приходится делать свои замены! 
 	if ($r['page_id']) $CI->db->order_by('FIELD(page_id_MSO_ZAP_' . implode('_MSO_ZAP_', $r['page_id']) . ')');
 			else $CI->db->order_by($r['order'], $r['order_asc']);
 	

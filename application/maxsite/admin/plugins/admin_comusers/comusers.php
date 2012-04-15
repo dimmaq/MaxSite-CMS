@@ -115,7 +115,7 @@
 				. $nik . '</a> [<a href="' . getinfo('siteurl') . 'users/' . $id . '" target="_blank">' . t('Просмотр') . '</a>]';
 
 		if ($row['comusers_date_registr'] != $row['comusers_last_visit'])
-			$date = '<span style="color: gray" title="Дата регистрации">' . $row['comusers_date_registr']
+			$date = '<span style="color: gray; white-space: nowrap;" title="'. t('Дата регистрации') . '">' . $row['comusers_date_registr']
 					. '</span><br>' . $row['comusers_last_visit'];
 		else
 			$date = $row['comusers_date_registr'];

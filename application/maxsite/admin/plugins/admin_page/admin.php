@@ -78,7 +78,7 @@
 
 ?>
 <h1><?= t('Страницы') ?></h1>
-<p class="info"><?= t('Список всех страниц') ?></p>
+<p class="info"><?= t('Список всех записей') ?></p>
 
 <?php
 
@@ -106,15 +106,16 @@
 	
 	
 	$par = array( 
-			'limit' => 50, // колво записей на страницу
+			'limit' => 30, // колво записей на страницу
 			'type' => false, // любой тип страниц
 			'custom_type' => 'home', // запрос как в home
 			'order' => 'page_date_publish', // запрос как в home
 			'order_asc' => 'desc', // в обратном порядке
 			'page_status' => false, // статус любой
 			'date_now' => false, // любая дата
-			'content'=> false, // без содержания
+			//'content'=> false, // без содержания
 			'page_id_autor'=> $current_users_id, // только указанного автора
+			'cut' => ' ',
 			);
 	
 	$CI->db->select('category_id, category_name');
@@ -203,6 +204,7 @@
 				. ':</strong> ';
 	
 	$all_status = array('publish', 'draft', 'private');
+	
 	foreach($all_status as $status)
 	{
 		if (mso_segment(4) == $status)
@@ -235,6 +237,7 @@
 		}
 	}
 	
+	mso_remove_hook('content'); // удаляем все хуки по content
 	
 	$pages = mso_get_pages($par, $pagination); // получим все - второй параметр нужен для сформированной пагинации
 	
@@ -253,6 +256,16 @@
 			// $act = '<a href="' . $this_url . $page['page_id'] . '">Изменить</a>';
 			
 			$page['page_title'] = htmlspecialchars($page['page_title']);
+			
+			$qhint = strip_tags($page['page_content']);
+			
+			if (mb_strlen($qhint) > 250)
+			{
+				$qhint = mb_substr($qhint, 0, 250, 'UTF-8') . '...';
+			}
+			
+			$qhint = htmlspecialchars(str_replace("\n", "", $qhint));
+			
 			
 			if (!$page['page_title']) $page['page_title'] = 'no-title';
 			
@@ -273,7 +286,8 @@
 			foreach ($page['page_tags'] as $val)
 			{
 				$tags .= '<a href="' . $view_url_tag . $val . '">' . $val . '</a>  ';
-			}			
+			}
+			
 			$tags = str_replace('  ', ', ', trim($tags));
 			
 			$title = '<a class="title" href="' . $this_url . $page['page_id'] . '">' . $page['page_title'] . '</a>'
@@ -283,6 +297,8 @@
 			
 			if ($cats) $title .= '<br>' . t('Рубрика:') . ' ' . $cats;
 			if ($tags) $title .= '<br>' . t('Метки:') . ' ' . $tags;
+			
+			$title .= '<p class="admin_page_qhint"><small>' . $qhint . '</small></p>';
 			
 			// $date_p = '<span title="Дата и время сохранения записи">' . $page['page_date_publish'] . '</span>'; // это время публикации как установлено на сервере
 			

@@ -69,7 +69,7 @@ function admin_menu_menu($args = array())
 					$selected = ' class="admin-menu-' . mso_slug($url) . '"';
 				}
 				
-				$out .= $nr . '      <li' . $selected . '><a href="' . $admin_url . $url . '">' . _mso_del_menu_pod($name) . '</a></li>';
+				$out .= $nr . '      <li' . $selected . ' title="' . _mso_del_menu_pod($name) . '"><a href="' . $admin_url . $url . '">' . _mso_del_menu_pod($name) . '</a></li>';
 			}
 			$out .= $nr . '    </ul>';
 		}

@@ -399,8 +399,15 @@ form.fform p label.nocell {
   width: auto;
   padding: 0;
 }
+form.fform p label.fwrap {
+  display: table;
+  width: 100%;
+}
 form.fform p.nop {
   padding-top: 0;
+}
+form.fform p.hr {
+  margin-top: 10px;
 }
 /* ссылки */
 a.current_url {
@@ -562,12 +569,12 @@ ul.is_link ul {
 }
 ul.is_link li {
   margin: 0;
-  background: url("../images/li1.png") no-repeat 0 7px;
+  background: url("../images/li1.png") no-repeat 0 5px;
   padding: 0 0 0 14px;
 }
 ul.is_link li li {
   margin-left: 10px;
-  background: url("../images/li2.png") no-repeat 0 7px;
+  background: url("../images/li2.png") no-repeat 0 6px;
 }
 ul.category {
   color: gray;

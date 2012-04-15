@@ -12,6 +12,7 @@
 
 
 /*
+ * ver. 10/04/2012
  * ver.  5/02/2012
  * ver.  1/02/2012
  * ver. 25/01/2012
@@ -238,7 +239,7 @@ if (!function_exists('mso_default_head_section'))
 		// ob_start(); # задел на будущее - буферизация
 	// <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=8"><![endif]-->
 		echo '<!DOCTYPE HTML>
-<html><head>
+<html><head>' . mso_hook('head-start') . '
 	<meta charset="UTF-8">
 	<title>' . mso_head_meta('title') . '</title>
 	<meta name="generator" content="MaxSite CMS">
@@ -322,12 +323,14 @@ if (!function_exists('mso_default_head_section'))
 			echo '	<script type="text/javascript" src="' . getinfo('template_url') . 'js/my.js"></script>';
 		
 		if ($my_style = mso_get_option('my_style', 'templates', '')) echo NR . '<!-- custom css-my_style -->' . NR . '<style>' . NR . $my_style . '</style>';
-	
+		
+		mso_hook('head-end');
+		
 		/*
 		# буферизация на будущее
-		$header = ob_get_contents();
+		$head = ob_get_contents();
 		ob_end_clean();
-		echo $header;
+		echo $head;
 		*/
 		
 		echo NR . '</head>';
