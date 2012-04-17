@@ -157,6 +157,7 @@
 			</div>
 			
 			<div>
+				' . mso_hook('admin_page_form_pre_all_meta') . '
 				<div class="block_page page_meta">
 					<h3>' . t('Дополнительные поля') . '</h3>
 					' . $all_meta . '

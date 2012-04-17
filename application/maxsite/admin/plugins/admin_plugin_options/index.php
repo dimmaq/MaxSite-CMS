@@ -200,15 +200,34 @@ function mso_admin_plugin_options($key, $type, $ar, $title = '', $info = '', $te
 			
 			if ($val['type'] == 'text')
 			{
-				$form .= $group_start . '<p><label><b>' 
-						. $val['name'] . '</b>'
-						. '<br><input type="text" value="'
-						. htmlspecialchars($options[$m]) 
-						. '" name="'
-						. $key . '-' . $type . '[' . $m . ']'
-						. '"></label></p>' 
-						. $val['description']
-						. $group_end . NR;
+				
+				if (isset($val['itype'])) $itype = $val['itype'];
+					else $itype = 'text';
+				
+				if ($itype = 'hidden')
+				{
+					$form .= $group_start . '<p><b>' 
+							. $val['name'] . '</b>'
+							. '<input type="' . $itype . '" value="'
+							. htmlspecialchars($options[$m]) 
+							. '" name="'
+							. $key . '-' . $type . '[' . $m . ']'
+							. '"></p>' 
+							. $val['description']
+							. $group_end . NR;
+				}
+				else
+				{
+					$form .= $group_start . '<p><label><b>' 
+							. $val['name'] . '</b>'
+							. '<br><input type="' . $itype . '" value="'
+							. htmlspecialchars($options[$m]) 
+							. '" name="'
+							. $key . '-' . $type . '[' . $m . ']'
+							. '"></label></p>' 
+							. $val['description']
+							. $group_end . NR;
+				}
 			}
 			elseif ($val['type'] == 'textarea')
 			{

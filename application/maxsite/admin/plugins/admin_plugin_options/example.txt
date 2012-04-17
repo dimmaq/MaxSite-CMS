@@ -11,6 +11,14 @@ mso_admin_plugin_options('my_plugin', 'plugins',
 						'default' => ''
 					),
 					
+		'f1_hidden' => array(
+						'type' => 'text',
+						'itype' => 'hidden', // скрытый input hidden; можно другие типы
+						'name' => 'название', 
+						'description' => 'описание', 
+						'default' => ''
+					),					
+					
 		'f2' => array(
 						'type' => 'textarea', 
 						'name' => 'название', 
@@ -43,6 +51,7 @@ mso_admin_plugin_options('my_plugin', 'plugins',
 						'values' => '0.00||Гринвич (0) # 1.00||что-то # 2.00||Киев (+2) # 3.00||Москва (+3)',  // правила для select как в ini-файлах
 						'default' => '2.00'
 					),
+					
 		'f5' => array(
 						'type' => 'radio', 
 						'name' => 'название', 

@@ -31,7 +31,10 @@
 		if ($current_dir_h2) $current_dir_h2 = '/' . $current_dir_h2;
 	}
 
-	echo '<h2>' . t('Текущий каталог:') . ' uploads' . $current_dir_h2 . '</h2>';
+	//echo '<h2>' . t('Текущий каталог:') . ' uploads' . $current_dir_h2 . '</h2>';
+	
+	
+	
 
 
 	# новый каталог - создаем до того, как отобразить навигацию
@@ -67,18 +70,36 @@
 	$all_dirs = directory_map(getinfo('uploads_dir'), true); // только в uploads
 	asort($all_dirs);
 	$out = '';
+	
+	
+	echo '<p class="admin_files_nav"><b>' . t('Каталог:') . '</b> ';
+	
+	echo '<select class="admin_file_filtr">';
+	
+	$selected = (mso_segment(3)) ? '' : ' selected';
+	
+	echo '<option value="' . getinfo('site_admin_url') . 'files"' . $selected . '>uploads</option>';
+	
 	foreach ($all_dirs as $d)
 	{
 		// это каталог
 		if (is_dir( getinfo('uploads_dir') . $d) and $d != '_mso_float' and $d != 'mini' and $d != '_mso_i' and $d != 'smiles')
 		{
+			
+			$selected = (mso_segment(3) == $d) ? ' selected' : '';
+			
+			echo '<option value="' . getinfo('site_admin_url'). 'files/' . $d .'"' . $selected . '>' . $d . '</option>';
+			
+			
+			/*
 			if (mso_segment(3) == $d)
 				$out .= '<a href="'. $MSO->config['site_admin_url'] . 'files/' . $d . '"><strong>' . $d . '</strong></a> | ';
 			else
 				$out .= '<a href="'. $MSO->config['site_admin_url'] . 'files/' . $d . '">' . $d . '</a> | ';
+			*/
 		}
 	}
-	
+	/*
 	if ($out)
 	{
 		if (!mso_segment(3))
@@ -89,8 +110,19 @@
 		$out = '<div class="admin_files_nav"><span>' . t('Навигация:') . '</span> ' . $out . '</div>';
 		echo $out;
 	}
-
-
+	
+	*/
+	echo '</select></p>';
+	
+	
+	//  переход на указанный url
+	echo '<script>
+	$("select.admin_file_filtr").change(function(){
+		window.location = $(this).val();
+	});
+	</script>';
+	
+	
 	// нужно создать в этом каталоге _mso_i и mini если нет
 	if ( ! is_dir($path . '_mso_i') ) @mkdir($path . '_mso_i', 0777); // нет каталога, пробуем создать
 	if ( ! is_dir($path . 'mini') ) @mkdir($path . 'mini', 0777); // нет каталога, пробуем создать
@@ -255,9 +287,9 @@
 
 	// форма нового каталога
 	echo '
-		<div class="new_cat_upload"><h2>'. t('Новый каталог'). '</h2>
+		<div class="new_cat_upload">
 		<form method="post">' . mso_form_session('f_session3_id') .
-		'<p>'. t('Имя каталога'). ': <input type="text" name="f_cat_name" value="">
+		'<p><b>'. t('Новый каталог'). ':</b> <input type="text" name="f_cat_name" value="">
 		<input type="submit" name="f_newcat_submit" value="'. t('Создать'). '" onClick="if(confirm(\'' . t('Создать каталог в uploads?') . '\')) {return true;} else {return false;}" ></p>
 		</form></div>';
 
@@ -366,7 +398,7 @@
 		<option value="5"'.(($watermark_type == 5)?(' selected="selected"'):('')).'>' . t('В правом нижнем углу') . '</option>
 		</select></p>
 		</form>
-		</div>
+		</div><hr>
 		';
 
 	// как выводим файлы

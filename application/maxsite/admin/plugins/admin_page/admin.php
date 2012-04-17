@@ -132,9 +132,10 @@
 		if (mso_segment(3) == 'category') $cat_segment_id = (int) mso_segment(4);
 		
 		echo '<p class="admin_page_filtr"><strong>'
-				. t('Фильтр по рубрикам')
+				. t('Рубрика')
 				. ':</strong> ';
-				
+		
+		/*
 		if (mso_segment(3) and mso_segment(3) != 'next')
 		{
 			echo '<a class="no_filtr" href="' . getinfo('site_admin_url') . 'page">' . t('Без фильтра') . '</a> ';
@@ -144,13 +145,28 @@
 			echo '<a class="current" href="' . getinfo('site_admin_url') . 'page">' . t('Без фильтра') . '</a> ';
 		
 		}
+		*/
+		
 		
 		require_once( getinfo('common_dir') . 'category.php' ); // функции рубрик
+		
 		$all_cats = mso_cat_array_single('page', 'category_id', 'ASC', ''); // все рубрики для вывода кол-ва записей
 		# pr($all_cats);
-
+		
+		echo '<select class="admin_page_filtr">';
+		
+		$selected = (mso_segment(3) and mso_segment(3) != 'next') ? '' : ' selected';
+		
+		echo '<option value="' . getinfo('site_admin_url') . 'page"' . $selected . '>' . t('Любая') . '</option>';
+		
 		foreach ($query->result_array() as $nav) 
 		{
+			
+			$selected = ($cat_segment_id != $nav['category_id']) ? '' : ' selected';
+			
+			echo '<option value="' . getinfo('site_admin_url'). 'page/category/' . $nav['category_id'] .'"' . $selected . '>' . $nav['category_name'] . ' ('. count($all_cats[$nav['category_id']]['pages']) . ')</option>';
+		
+			/*
 			if ($cat_segment_id != $nav['category_id']) 
 			{
 				echo ' <a href="' . getinfo('site_admin_url'). 'page/category/' . $nav['category_id'] .'">'
@@ -161,10 +177,14 @@
 			{
 				echo ' <a class="current" href="' . getinfo('site_admin_url') . 'page/category/' . $nav['category_id'] . '">' . $nav['category_name'] . ' <small>('.  count($all_cats[$nav['category_id']]['pages']) . ')</small></a> ';
 			}
+			*/
 		}
-		echo '</p>';
+
+		echo '</select>';
 	}
 
+	
+	
 	$CI->db->select('page_type_id, page_type_name');
 	$CI->db->order_by('page_type_name');
 	
@@ -172,19 +192,35 @@
 	
 	if ($query->num_rows() > 0) 
 	{
-		//echo '<h1>Страницы по типам</h1>';
 		$type_segment_id = 0;
+
 		if (mso_segment(3) == 'type') 
 		{
 			$type_segment_id = (int) mso_segment(4); 
 			$type_segment_name = '';
 		}
-		echo '<p class="admin_page_filtr"><strong>'
-				. t('Фильтр по типам')
+		
+		echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>'
+				. t('Тип')
 				. ':</strong> ';
+		
+		echo '<select class="admin_page_filtr">';
+		
+		$selected = (mso_segment(3) and mso_segment(3) != 'next') ? '' : ' selected';
+		
+		echo '<option value="' . getinfo('site_admin_url') . 'page"' . $selected . '>' . t('Любой') . '</option>';
 		
 		foreach ($query->result_array() as $nav) 
 		{
+		
+			$selected = ($type_segment_id != $nav['page_type_id']) ? '' : ' selected';
+			
+			echo '<option value="' . getinfo('site_admin_url'). 'page/type/' . $nav['page_type_id'] .'"' . $selected . '>' . $nav['page_type_name'] . '</option>';
+			
+			if ($selected) $type_segment_name = $nav['page_type_name'];
+			
+			/*
+		
 			if ($type_segment_id != $nav['page_type_id']) 
 			{
 				echo ' <a href="' . getinfo('site_admin_url') . 'page/type/' . $nav['page_type_id'] . '">' . $nav['page_type_name']. '</a> ';
@@ -194,26 +230,54 @@
 				$type_segment_name = $nav['page_type_name'];
 				
 				echo ' <a class="current" href="' . getinfo('site_admin_url') . 'page/type/' . $nav['page_type_id'] . '">' . $nav['page_type_name'] . '</a> ';
-		 }
+			}
+			*/
+			
+			
 		}
-		echo '</p>';
+		
+		echo '</select>';
 	}
 	
-	echo '<p class="admin_page_filtr"><strong>'
-				. t('Фильтр по статусу')
-				. ':</strong> ';
+	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>'
+			. t('Статус')
+			. ':</strong> ';
 	
 	$all_status = array('publish', 'draft', 'private');
 	
+	echo '<select class="admin_page_filtr">';
+	
+	$selected = (!mso_segment(4) and mso_segment(3) != 'status') ? '' : ' selected';
+	
+	echo '<option value="' . getinfo('site_admin_url') . 'page"' . $selected . '>' . t('Любой') . '</option>';
+	
 	foreach($all_status as $status)
 	{
+		$selected = (mso_segment(4) == $status) ? ' selected' : '';
+			
+		echo '<option value="' . getinfo('site_admin_url'). 'page/status/' . $status .'"' . $selected . '>' . t($status) . '</option>';
+		
+		/*
 		if (mso_segment(4) == $status)
 			echo '<a class="current" href="' . getinfo('site_admin_url') . 'page/status/' . $status . '">' . t($status) . '</a> ';
 		else
 			echo '<a href="' . getinfo('site_admin_url') . 'page/status/' . $status . '">' . t($status) . '</a> ';
+		*/
+			
 	}
+	
+	echo '</select>';
+	
 	echo '</p>';	
 	
+	
+	//  переход на указанный url
+	echo '<script>
+	$("select.admin_page_filtr").change(function(){
+		window.location = $(this).val();
+	});
+	</script>';
+		
 
 	if (mso_segment(3) == 'category') 
 	{
