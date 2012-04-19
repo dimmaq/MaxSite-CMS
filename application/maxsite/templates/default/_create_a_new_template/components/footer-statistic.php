@@ -9,7 +9,7 @@
 	
 		if (is_login())
 			echo ' | <a href="' . getinfo('siteurl') . 'admin">' . tf('Управление') 
-					. '</a> | <a href="' . getinfo('siteurl') . 'logout'.'">' . tf('Выйти') . '</a>';
+					. '</a> | <a href="' . getinfo('siteurl') . 'logout' . '">' . tf('Выйти') . '</a>';
 		else
 			echo ' | <a href="' . getinfo('siteurl') . 'login">' . tf('Вход') . '</a>';
 

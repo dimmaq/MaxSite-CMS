@@ -391,19 +391,19 @@ function mso_view_ini($all = false)
 		if (cookieIndex != null && $('table').is('.section_'+cookieIndex)) // есть кука и есть соответсвующая ей таблица
 		{
 			$('table.section_'+cookieIndex).show();
-			$('#'+cookieIndex).css({'color': 'red'});
+			$('#'+cookieIndex).addClass('current');
 		}
 		else // если нет куки или соответвующей таблицы
 		{
 			$('table.page:first').show(); // показывем только первую таблицу
-			$('p.nav a:first').css({'color': 'red'}); // и подсвечиваем только первый пункт навигации
+			$('p.nav a:first').addClass('current'); // к первому пункту навигации добавляем класс
 		}
 
 		$('p.nav a').click(function(){
 			var id = $(this).attr('id');
 			$('table.page').hide();
 
-			$(this).css({'color': 'red'}).siblings().css({'color': ''}); // подсвечиваем кликнутый пункт, а у всех соседних сбрасывем оформление
+			$(this).addClass('current').siblings().removeClass(); // добавляем класс на кликнутый пункт, а у всех соседних удаляем
 			$('table.section_'+id).show();
 			$.cookie(NameCookie, id, {expires: 30, path: '/'});
 			return false;

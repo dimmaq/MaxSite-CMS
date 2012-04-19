@@ -274,7 +274,8 @@ legend {
   padding: 0 5px;
 }
 input,
-select {
+select,
+button {
   vertical-align: middle;
 }
 textarea {
@@ -295,11 +296,13 @@ input[type="checkbox"] {
   overflow: visible;
 }
 input::-webkit-input-placeholder,
-textarea::-webkit-input-placeholder {
+textarea::-webkit-input-placeholder,
+button::-webkit-input-placeholder {
   color: #999;
 }
 input:-moz-placeholder,
-textarea:-moz-placeholder {
+textarea:-moz-placeholder,
+button:-moz-placeholder {
   color: #999;
 }
 form.fform p {

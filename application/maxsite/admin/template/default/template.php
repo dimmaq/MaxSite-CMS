@@ -35,10 +35,17 @@
 	$admin_css = getinfo('admin_url') . 'template/' . mso_get_option('admin_template', 'general', 'default') . '/style.css';
 	$admin_css = mso_hook('admin_css', $admin_css);
 	
-	$admin_css_profile = mso_get_option('admin_template_profile', 'general', '');
+	$admin_css_profile = ''; // дополнительные css-файлы
 	
-	if ($admin_css_profile) 
-		$admin_css_profile = '<link rel="stylesheet" href="' . getinfo('admin_url') . 'template/' . mso_get_option('admin_template', 'general', 'default') . '/profiles/' .$admin_css_profile . '" type="text/css" media="screen">';
+	if ($admin_css_profile_s = mso_get_option('admin_template_profile', 'general', '')) 
+	{
+			$admin_css_profile_s = mso_explode($admin_css_profile_s, false);
+			
+			foreach ($admin_css_profile_s as $css)
+			{
+				$admin_css_profile .= '<link rel="stylesheet" href="' . getinfo('admin_url') . 'template/' . mso_get_option('admin_template', 'general', 'default') . '/profiles/' . $css . '" type="text/css" media="screen">';
+			}
+	}
 	
 	$admin_title = t('Админ-панель') . ' - ' . mso_hook('admin_title', mso_head_meta('title'));
 		

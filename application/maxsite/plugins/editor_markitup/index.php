@@ -9,6 +9,7 @@
 function editor_markitup_autoload($args = array())
 {
 	mso_hook_add('editor_custom', 'editor_markitup'); # хук на подключение своего редактора
+	//mso_hook_add('admin_page_form_q_files', 'editor_markitup_q_files'); # форма быстрой загрузки файлов
 }
 
 # функция выполняется при деинсталяции плагина
@@ -144,6 +145,16 @@ function editor_markitup_mso_options()
 			t('Укажите необходимые опции.')   // инфо
 	);
 
+}
+
+// форма быстрой загрузки файлов
+function editor_markitup_q_files($out = '')
+{
+	$out = '';
+	
+	
+	
+	return $out;
 }
 
 # end file

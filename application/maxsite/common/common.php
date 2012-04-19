@@ -1865,7 +1865,7 @@ function mso_login_form($conf = array(), $redirect = '', $echo = true)
 		</p>
 		
 		<p>
-			<span>{$submit}<input type="submit" name="flogin_submit" class="flogin_submit" value="{$submit_value}"></span>
+			<span>{$submit}<button type="submit" name="flogin_submit" class="flogin_submit">{$submit_value}</button></span>
 		</p>
 		
 		{$hook_login_form_auth}

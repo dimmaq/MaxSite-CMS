@@ -86,7 +86,8 @@
 								<span><input type="email" name="comments_email" class="comments_email" id="comments_email" onfocus="document.getElementById('comments_reg_2').checked = 'checked';"></span> 
 										
 								<span class="fempty"></span>
-								<span class="fbutton"><input type="button" class="comments_copy" title="<?= tf('Использовать email как пароль') ?>" value="&gt;" onclick="document.getElementById('comments_reg_2').checked = 'checked'; document.getElementById('comments_password').value=document.getElementById('comments_email').value; "></span>
+								
+								<span class="fbutton"><button type="button" class="comments_copy" title="<?= tf('Использовать email как пароль') ?>" onclick="document.getElementById('comments_reg_2').checked = 'checked'; document.getElementById('comments_password').value=document.getElementById('comments_email').value; ">&gt;</button></span>
 										
 								<label for="comments_password" class="ftitle"><?= tf('Пароль') ?></label>
 								<span><input type="password" name="comments_password" class="comments_password" id="comments_password" onfocus="document.getElementById('comments_reg_2').checked = 'checked';"></span>
@@ -128,7 +129,10 @@
 			<?php  } // залогирование ?>
 
 			<?php mso_hook('comments_content_end') ?>
-			<div><input name="comments_submit" type="submit" value="<?= tf('Отправить') ?>" class="comments_submit"></div>
+			<div>
+			<button name="comments_submit" type="submit" class="comments_submit"><?= tf('Отправить') ?></button>
+			</div>
+			
 		</div><!-- div class="comments-textarea" -->
 		
 	</form>
