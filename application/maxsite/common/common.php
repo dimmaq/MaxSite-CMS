@@ -3894,4 +3894,102 @@ function mso_widget_create_form($name = '', $input = '', $hint = '')
 	return $out;
 }
 
+# компилятор LESS в CSS
+# на выходе css-подключение, либо содержимое css-файла (переключается через $css_url)
+# $less_file - входной less-файл (полный путь на сервере)
+# $css_file - выходной css-файл (полный путь на сервере)
+# $css_url - полный http-адрес css-файла. Если $css_url = '', то отдается содержимое css-файла
+# $use_cache - разрешить использование кэширования LESS-файла (определяется по времени файлов)
+# $use_mini - использовать сжатие css-кода
+# $use_mini_n - если включено сжатие, то удалять переносы строк
+# пример использования см. в /default/css/less/compiling-less.zip/var_style.php
+
+function mso_lessc($less_file = '', $css_file = '', $css_url = '', $use_cache = false, $use_mini = true, $use_mini_n = false)
+{
+
+	if (!$less_file or !$css_file) return; // не указаны файлы
+	
+	if ($use_cache) // проверка кэша
+	{
+		if (file_exists($less_file) and file_exists($css_file))
+		{
+			if (filemtime($less_file) < filemtime($css_file))
+			{
+				// отдаём из кэша
+				
+				if ($css_url) 
+				{
+					// в виде имени файла
+					return NT . '<link rel="stylesheet" href="' . $css_url . '" type="text/css">';
+				}
+				else
+				{
+					// в виде содержимого
+					return file_get_contents($css_file);
+				}
+			}
+		}
+	}
+
+	if (file_exists($less_file)) $fc_all = file_get_contents($less_file);
+		else return; // нет файла, выходим
+
+	if ($fc_all)
+	{
+		require_once(getinfo('common_dir') . 'less/lessc.inc.php');
+		
+		$compiler = new lessc();
+		$compiler->importDir = dirname($less_file);
+		$compiler->indentChar = "\t";
+		
+		try
+		{
+			$out = $compiler->parse($fc_all);
+		}
+		catch (Exception $ex) 
+		{
+			die("<pre>lessphp fatal error: " . $ex->getMessage() . '</pre>');
+		}
+		
+		// сжатие кода
+		if ($use_mini)
+		{
+			if ($use_mini_n)
+			{
+				$out = str_replace("\t", ' ', $out);
+				$out = str_replace(array("\r\n", "\r", "\n", '  ', '    '), '', $out);
+			}
+			
+			$out = str_replace("\n\t", '', $out);
+			$out = str_replace("\n}", '}', $out);
+			$out = str_replace('; ', ';', $out);
+			$out = str_replace(';}', '}', $out);
+			$out = str_replace(': ', ':', $out);
+			$out = str_replace('{ ', '{', $out);
+			$out = str_replace(' }', '}', $out);
+			$out = str_replace(' {', '{', $out);
+			$out = str_replace(', ', ',', $out);
+			$out = str_replace(' > ', '>', $out);		
+			$out = str_replace('} ', '}', $out);
+			$out = str_replace('  ', ' ', $out);
+		}
+		
+		$fp = fopen($css_file, "w");
+		fwrite($fp, $out);
+		fclose($fp);
+		
+		if ($css_url) 
+		{
+			return NT . '<link rel="stylesheet" href="' . $css_url . '" type="text/css">'; // в виде имени файла
+		}
+		else
+		{
+			// в виде содержимого
+			return '<pre>' . $out . '</pre>';
+		}
+	}
+}
+
+
+
 # end file

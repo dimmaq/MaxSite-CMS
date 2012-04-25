@@ -218,7 +218,7 @@ function theme_switch_widget_custom($options = array(), $num = 1)
 			. $options['header'] 
 			. '<form action="" method="post">' 
 			. mso_form_session('f_session_id') . $out 
-			. '<p><input type="submit" name="f_theme_switch_submit" class="submit" value="' . $options['submit'] . '"></p></form></div>';
+			. '<p><button type="submit" name="f_theme_switch_submit" class="submit">' . $options['submit'] . '</button></p></form></div>';
 	
 	return $out;	
 }
