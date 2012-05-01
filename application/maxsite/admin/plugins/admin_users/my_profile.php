@@ -1,8 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
-
-mso_cur_dir_lang('admin');
-	
-?>
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <h1><?= t('Мой профиль') ?></h1>
 <p class="info"></p>
@@ -257,7 +253,7 @@ mso_cur_dir_lang('admin');
 				
 			}
 			
-			echo '<form action="" method="post">' . mso_form_session('f_session_id');
+			echo '<form method="post">' . mso_form_session('f_session_id');
 			echo $CI->table->generate();
 			
 			if (mso_check_allow('edit_self_users')) // если разрешено менять анкету

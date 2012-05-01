@@ -5,8 +5,6 @@
  * (c) http://max-3000.com/
  */
 	
-	mso_cur_dir_lang('admin');
-	
 	$CI = & get_instance();
 	
 	// проверяем входящие данные
@@ -72,12 +70,12 @@
 			// потому что мы их будем там хранить
 			// это простой массив с именами виджетов
 			$options = mso_get_option('sidebars-' . mso_slug($name), 'sidebars', array());
-			$count_rows = count($options);
-			if ($count_rows < 4) $count_rows = 4;
+			$count_rows = count($options) + 1;
+			if ($count_rows < 5) $count_rows = 5;
 			$options = implode("\n", $options); // разделим по строкам 
 
 			$form .= '<h2>' . $sidebar['title'] . ':</h2>';
-			$form .= '<textarea id="f_sidebars[' . $name  . ']" name="f_sidebars[' . $name . ']" rows="' . $count_rows . '">';
+			$form .= '<textarea class="admin_sidebars" id="f_sidebars[' . $name  . ']" name="f_sidebars[' . $name . ']" rows="' . $count_rows . '">';
 			$form .= htmlspecialchars($options);
 			$form .= '</textarea>';
 			$all_name_sidebars[$name] = $sidebar['title'];
@@ -99,7 +97,7 @@
 	{ // есть виджеты
 	
 		$form .= '
-		<script type="text/javascript">
+		<script>
 			function addText(t, tarea)
 			{
 				var elem = document.getElementById(tarea);
@@ -116,7 +114,7 @@
 			
 			foreach($all_name_sidebars as $sid=>$sid_title)
 			{
-				$form .= '<td><input style="margin: 0 0px; border: 1px solid gray; font-size: .9em; cursor: pointer;" type="button" value=" ' . $sid_title . ' " title="' . t('Добавить') . ' «' . $function . '» ' . t('в') . ' «' . $sid_title 
+				$form .= '<td><input type="button" value=" ' . $sid_title . ' " title="' . t('Добавить') . ' «' . $function . '» ' . t('в') . ' «' . $sid_title 
 						. '»" onClick="addText(\'' . $function . '\', \'f_sidebars[' . $sid . ']\') ">&nbsp;&nbsp;</td>' . NR;
 			}
 			$form .= '<td><em>' . $function . '</em> </td></tr>' . NR;
@@ -131,7 +129,7 @@
 	if (!$error)
 	{
 		// добавляем форму, а также текущую сессию
-		echo '<form action="" method="post">' . mso_form_session('f_session_id');
+		echo '<form method="post">' . mso_form_session('f_session_id');
 		echo $form;
 		echo '<p class="br"><input type="submit" name="f_submit" value="' . t('Сохранить изменения') . '" ></p>';
 		echo '</form>';

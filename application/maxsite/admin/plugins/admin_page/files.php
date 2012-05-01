@@ -1,7 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
 	
-	mso_cur_dir_lang('admin');
-	
+
 	$CI = & get_instance();
 	$CI->load->helper('file'); // хелпер для работы с файлами
 	$CI->load->library('table');
@@ -156,7 +155,7 @@
 	{
 	
 		// добавляем форму, а также текущую сессию
-		//echo '<form action="" method="post">' . mso_form_session('f_session_id');
+		//echo '<form method="post">' . mso_form_session('f_session_id');
 		echo $CI->table->generate(); // вывод подготовленной таблицы
 		//echo '</form>';
 		
@@ -165,7 +164,7 @@
 		$mess = t('Предварительно нужно выделить файлы для галереи');
 		
 		echo <<<EOF
-		<script type="text/javascript">
+		<script>
 			$(function()
 			{
 				$('#gallerycodeclick').click(function()

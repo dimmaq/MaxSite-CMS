@@ -1,8 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-
-	mso_cur_dir_lang('admin');
-
-?>
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');?>
 
 <h1><?= t('Загрузки. Файлы. Галереи') ?></h1>
 <p class="info"><?= t('Здесь вы можете выполнить необходимые операции с файлами.') ?></p>
@@ -35,7 +31,10 @@
 		if ($current_dir_h2) $current_dir_h2 = '/' . $current_dir_h2;
 	}
 
-	echo '<h2>' . t('Текущий каталог:') . ' uploads' . $current_dir_h2 . '</h2>';
+	//echo '<h2>' . t('Текущий каталог:') . ' uploads' . $current_dir_h2 . '</h2>';
+	
+	
+	
 
 
 	# новый каталог - создаем до того, как отобразить навигацию
@@ -71,18 +70,36 @@
 	$all_dirs = directory_map(getinfo('uploads_dir'), true); // только в uploads
 	asort($all_dirs);
 	$out = '';
+	
+	
+	echo '<p class="admin_files_nav"><b>' . t('Каталог:') . '</b> ';
+	
+	echo '<select class="admin_file_filtr">';
+	
+	$selected = (mso_segment(3)) ? '' : ' selected';
+	
+	echo '<option value="' . getinfo('site_admin_url') . 'files"' . $selected . '>uploads</option>';
+	
 	foreach ($all_dirs as $d)
 	{
 		// это каталог
 		if (is_dir( getinfo('uploads_dir') . $d) and $d != '_mso_float' and $d != 'mini' and $d != '_mso_i' and $d != 'smiles')
 		{
+			
+			$selected = (mso_segment(3) == $d) ? ' selected' : '';
+			
+			echo '<option value="' . getinfo('site_admin_url'). 'files/' . $d .'"' . $selected . '>' . $d . '</option>';
+			
+			
+			/*
 			if (mso_segment(3) == $d)
 				$out .= '<a href="'. $MSO->config['site_admin_url'] . 'files/' . $d . '"><strong>' . $d . '</strong></a> | ';
 			else
 				$out .= '<a href="'. $MSO->config['site_admin_url'] . 'files/' . $d . '">' . $d . '</a> | ';
+			*/
 		}
 	}
-	
+	/*
 	if ($out)
 	{
 		if (!mso_segment(3))
@@ -93,8 +110,19 @@
 		$out = '<div class="admin_files_nav"><span>' . t('Навигация:') . '</span> ' . $out . '</div>';
 		echo $out;
 	}
-
-
+	
+	*/
+	echo '</select></p>';
+	
+	
+	//  переход на указанный url
+	echo '<script>
+	$("select.admin_file_filtr").change(function(){
+		window.location = $(this).val();
+	});
+	</script>';
+	
+	
 	// нужно создать в этом каталоге _mso_i и mini если нет
 	if ( ! is_dir($path . '_mso_i') ) @mkdir($path . '_mso_i', 0777); // нет каталога, пробуем создать
 	if ( ! is_dir($path . 'mini') ) @mkdir($path . 'mini', 0777); // нет каталога, пробуем создать
@@ -259,9 +287,9 @@
 
 	// форма нового каталога
 	echo '
-		<div class="new_cat_upload"><h2>'. t('Новый каталог'). '</h2>
-		<form action="" method="post">' . mso_form_session('f_session3_id') .
-		'<p>'. t('Имя каталога'). ': <input type="text" name="f_cat_name" value="">
+		<div class="new_cat_upload">
+		<form method="post">' . mso_form_session('f_session3_id') .
+		'<p><b>'. t('Новый каталог'). ':</b> <input type="text" name="f_cat_name" value="">
 		<input type="submit" name="f_newcat_submit" value="'. t('Создать'). '" onClick="if(confirm(\'' . t('Создать каталог в uploads?') . '\')) {return true;} else {return false;}" ></p>
 		</form></div>';
 
@@ -321,7 +349,7 @@
 		<div class="upload_file">
 		<h2>' . t('Загрузка файлов') . '</h2>
 		<p>' . t('Для загрузки файла нажмите кнопку «Обзор», выберите файл на своем компьютере. После этого нажмите кнопку «Загрузить». Размер файла не должен превышать') . ' ' . ini_get ('post_max_size') . '.</p>
-		<form action="" method="post" enctype="multipart/form-data">' . mso_form_session('f_session2_id') .
+		<form method="post" enctype="multipart/form-data" class="admin_uploads_form">' . mso_form_session('f_session2_id') .
 		'<p>';
 	
 	for ($i = 1; $i <= $admin_files_field_count; $i++)
@@ -333,7 +361,7 @@
 	
 	
 	echo '&nbsp;<input type="submit" name="f_upload_submit" value="' . t('Загрузить') . '">&nbsp;<input type="reset" value="' . t('Сбросить') . '"></p>
-		<p>' . t('Описание файла:') . ' <input type="text" name="f_userfile_title" class="description_file" value=""></p>
+		<p>' . t('Описание файла:') . ' <input type="text" name="f_userfile_title" class="description_file" value="" size="80"></p>
 
 		<p><label><input type="checkbox" name="f_userfile_resize" ' . $f_userfile_resize . 'value=""> ' . t('Для изображений изменить размер до') . '</label>
 			<input type="text" name="f_userfile_resize_size" style="width: 50px" maxlength="4" value="' . $resize_images . '"> ' . t('px (по максимальной стороне).') . '</p>
@@ -370,7 +398,7 @@
 		<option value="5"'.(($watermark_type == 5)?(' selected="selected"'):('')).'>' . t('В правом нижнем углу') . '</option>
 		</select></p>
 		</form>
-		</div>
+		</div><hr>
 		';
 
 	// как выводим файлы
@@ -446,14 +474,14 @@
 			if ($title) $title_f = '<br><em>' . htmlspecialchars($title) . '</em>';
 		}
 		
+		if (!$title) $title = $file;
+		
 		$datefile = preg_replace('!START(.*)END!', '', $datefile);
 
-		$sel = form_checkbox('f_check_files[]', $file, false,
-			'title="' . htmlspecialchars($title) . '" id="' . mso_strip($file) . '" class="f_check_files"')
-			. '<label for="' . mso_strip($file)
-			. '"> '
-			. $file . $title_f . '</label>'
-			. '<br><i>' . date("Y-m-d H:i:s", $datefile) . '</i>';
+		$sel = '<label title="' . htmlspecialchars($title) . '">'. form_checkbox('f_check_files[]', $file, false,
+			'class="f_check_files"')
+			. ' ' . $file . $title_f . '</label>'
+			. '<br><i class="date">' . date("Y-m-d H:i:s", $datefile) . '</i>';
 			
 
 		$cod1 = stripslashes(htmlspecialchars( $uploads_url . $file ) );
@@ -464,7 +492,7 @@
 		# $cod .= '<p><input type="text" style="width: 99%;" value="' . $cod1 . '">';
 
 		$cod .= '<a href="#"
-			onClick = "jAlert(\'<textarea cols=60 rows=4>' . $cod1 . '</textarea>\', \'Адрес файла\'); return false;">Адрес</a>';
+			onClick = "jAlert(\'<textarea cols=60 rows=4>' . $cod1 . '</textarea>\', \'' . t('Адрес файла') . '\'); return false;">' . t('Адрес') . '</a>';
 
 		# $cod .= '<p><textarea style="width: 99%;">' . $cod1 . '</textarea>';
 
@@ -509,7 +537,7 @@
       
       
 		$cod .= ' | <a href="#"
-			onClick = "jAlert(\'<textarea cols=60 rows=5>' . $cod2 . '</textarea>\', \'HTML-ссылка файла\'); return false;">HTML-ссылка</a>';
+			onClick = "jAlert(\'<textarea cols=60 rows=5>' . $cod2 . '</textarea>\', \'' . t('HTML-ссылка файла') . '\'); return false;">' . t('HTML-ссылка') . '</a>';
 
 
 		if ( $ext == 'jpg' or $ext == 'jpeg' or $ext == 'gif' or $ext == 'png'  )
@@ -545,13 +573,13 @@
 				$cod4 = stripslashes(htmlspecialchars( '[img]' . $uploads_url . $file . '[/img]') );
 			}
 
-			$cod .= ' | <a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod3 . '</textarea>\', \'Код [image] файла\'); return false;">[image]</a>';
+			$cod .= '<br><a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod3 . '</textarea>\', \'' . t('Код [image] файла') . '\'); return false;">[image]</a>';
 			
 			
-			$cod .= ' | <a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod4 . '</textarea>\', \'Код [img] файла\'); return false;">[img]</a>';
+			$cod .= ' | <a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod4 . '</textarea>\', \'' . t('Код [img] файла') . '\'); return false;">[img]</a>';
 			
 			if ($cod_prev)
-				$cod .= ' | <a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod_prev . '</textarea>\', \'Адрес превью (100x100)\'); return false;">Превью (100x100)</a>';			
+				$cod .= '<br><a href="#" onClick = "jAlert(\'<textarea cols=60 rows=6>' . $cod_prev . '</textarea>\', \'' . t('Адрес превью (100x100)') . '\'); return false;">' . t('Превью (100x100)') . '</a>';			
 
 			$predpr = '<a class="lightbox" href="' . $uploads_url . $file . '" target="_blank" title="' . htmlspecialchars($title) . ' ('. $file . ')' . '"><img class="file_img" alt="" src="' . $uploads_url . $_f . '"></a>';
 
@@ -563,7 +591,7 @@
 				$predpr = '<a href="' . $uploads_url . $file . '" target="_blank" title="' . $title . ' ('. $file . ')' . '"><img class="file_img" alt="" src="' . getinfo('admin_url') . 'plugins/admin_files/mp3.png"></a>';
 
 				$cod .= ' | <a href="#"
-			onClick = "jAlert(\'<textarea cols=60 rows=6>' . stripslashes(htmlspecialchars( '[audio=' . $uploads_url . $file . ']') ) . '</textarea>\', \'Код [audio] файла\'); return false;">Код [audio]</a>';
+			onClick = "jAlert(\'<textarea cols=60 rows=6>' . stripslashes(htmlspecialchars( '[audio=' . $uploads_url . $file . ']') ) . '</textarea>\', \'' . t('Код [audio] файла') . '\'); return false;">' . t('Код [audio]') . '</a>';
 
 			}
 			else
@@ -584,7 +612,7 @@
 	// добавляем форму, а также текущую сессию
 	if ($out_all != '') 
 	{
-		echo '<form action="" method="post">' . mso_form_session('f_session_id');
+		echo '<form method="post">' . mso_form_session('f_session_id');
 		if ($admin_view_files == 'table') 
 			echo $CI->table->generate(); // вывод подготовленной таблицы
 		else
@@ -606,7 +634,7 @@
 		$save_button = t('Сохранить');
 
 		echo <<<EOF
-<script type="text/javascript">
+<script>
 function toggleAll() {
 	var allCheckboxes = $("input.f_check_files:enabled");
 	var notChecked = allCheckboxes.not(':checked');
@@ -631,7 +659,7 @@ $(function()
 		{
 			var file_name = $(this).parent().parent().children(':checkbox').attr('id');
 			var old_descr = $(this).parent().parent().children('label').children('em').text();
-			var form_code = '<div class="edit_descr" style="width: 100%;" style="display:none"><form action="" method="post">{$session}<input type="hidden" name="f_file_name" value="' + file_name + '"><textarea name="f_file_description" >' + old_descr + '</textarea><br><input type="submit" name="f_edit_submit" value="{$save_button}"></form></div>';
+			var form_code = '<div class="edit_descr" style="width: 100%;" style="display:none"><form method="post">{$session}<input type="hidden" name="f_file_name" value="' + file_name + '"><textarea name="f_file_description" >' + old_descr + '</textarea><br><input type="submit" name="f_edit_submit" value="{$save_button}"></form></div>';
 			$(this).parent().parent().append(form_code);
 		}
 		$(this).parent().parent().find('.edit_descr').slideDown('fast');

@@ -9,11 +9,17 @@
 # функция автоподключения плагина
 function theme_switch_autoload($args = array())
 {
-	mso_create_allow('theme_switch_edit', t('Админ-доступ к редактированию Theme switch'));
 	mso_hook_add( 'admin_init', 'theme_switch_admin_init'); # хук на админку
-	mso_register_widget('theme_switch_widget', t('Theme switch')); # регистрируем виджет
+	mso_register_widget('theme_switch_widget', t('Шаблоны сайта')); # регистрируем виджет
 	mso_hook_add( 'init', 'theme_switch_init'); # хук на init
 	mso_hook_add( 'body_start', 'theme_switch_body_start'); # хук на body_start
+}
+
+# функция выполняется при активации (вкл) плагина
+function theme_switch_activate($args = array())
+{	
+	mso_create_allow('theme_switch_edit', t('Админ-доступ к редактированию Theme switch'));
+	return $args;
 }
 
 
@@ -158,11 +164,11 @@ function theme_switch_widget_form($num = 1)
 	// вывод самой формы
 	$CI = & get_instance();
 	$CI->load->helper('form');
-		
-	$form = '<p><div class="t150">' . t('Заголовок:') . '</div> '. 
-			form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ) ;
-	$form .= '<p><div class="t150">' . t('Надпись на кнопке:') . '</div> '. 
-			form_input( array( 'name'=>$widget . 'submit', 'value'=>$options['submit'] ) ) ;			
+	
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ), '');
+
+	$form .= mso_widget_create_form(t('Надпись на кнопке'), form_input( array( 'name'=>$widget . 'submit', 'value'=>$options['submit'] ) ), '');
+	
 	
 	return $form;
 }
@@ -212,7 +218,7 @@ function theme_switch_widget_custom($options = array(), $num = 1)
 			. $options['header'] 
 			. '<form action="" method="post">' 
 			. mso_form_session('f_session_id') . $out 
-			. '<p><input type="submit" name="f_theme_switch_submit" class="submit" value="' . $options['submit'] . '"></p></form></div>';
+			. '<p><button type="submit" name="f_theme_switch_submit" class="submit">' . $options['submit'] . '</button></p></form></div>';
 	
 	return $out;	
 }
@@ -292,7 +298,7 @@ function theme_switch_body_start($args = '')
 		</div></div><!-- div class=theme_switch_panel -->
 	</div><!-- div class=theme_switch_panel_main -->
 	
-	<script type="text/javascript">
+	<script>
 		$("div.theme_switch_panel").scrollTo("a.current img", 500);
 		$("div.theme_switch_panel").scrollTo("a.img' . $i_go . ' img", 800);
 	</script>

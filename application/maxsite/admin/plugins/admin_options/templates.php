@@ -1,8 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
-
-mso_cur_dir_lang('admin');
-
-?>
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <h1><?= t('Шаблоны для сайта') ?></h1>
 <p class="info"><?= t('Выберите нужный шаблон. Все шаблоны хранятся в каталоге <strong>«maxsite/templates»</strong>. Название шаблона совпадает с названием его каталога.') ?></p>
@@ -43,7 +39,7 @@ mso_cur_dir_lang('admin');
 	
 	if (file_exists($templates_dir . $current_template . '/screenshot.jpg'))
 	{
-		echo '<img src="' . $MSO->config['templates_url'] . $current_template . '/screenshot.jpg' . '" width="250" height="200" alt="" title="">';
+		echo '<img class="template_current" src="' . $MSO->config['templates_url'] . $current_template . '/screenshot.jpg' . '" width="250" height="200" alt="" title="">';
 	}	
 	
 	if (file_exists($templates_dir . $current_template . '/info.php'))
@@ -58,8 +54,8 @@ mso_cur_dir_lang('admin');
 	// все каталоги в массиве $dirs
 	$dirs = directory_map($templates_dir, true);
 	
-	echo '<form action="" method="post">' . mso_form_session('f_session_id');
-	echo '<div class="float-parent" style="width:100%">';
+	echo '<form method="post">' . mso_form_session('f_session_id');
+	echo '<div class="float-parent options_templates">';
 	
 	foreach ($dirs as $dir)
 	{
@@ -72,14 +68,14 @@ mso_cur_dir_lang('admin');
 		if (file_exists($index))
 		{
 			$out = '<div class="template">';
-			$out .= '<h2>' . $dir . '</h2>';
+			//$out .= '<h2>' . $dir . '</h2>';
 			
 			$screenshot = $templates_dir . $dir . '/screenshot.jpg';
 			
 			if (file_exists($screenshot))
 			{
 				$screenshot = $MSO->config['templates_url'] . $dir . '/screenshot.jpg';
-				$out .= '<img src="' . $screenshot . '" width="250" height="200" alt="" title="">';
+				$out .= '<img src="' . $screenshot . '" width="250" height="200" alt="' . $dir . '" title="' . $dir . '">';
 			}
 			else
 			{
@@ -105,4 +101,5 @@ mso_cur_dir_lang('admin');
 
 	echo '</div>';
 	echo '</form>';
+	
 ?>

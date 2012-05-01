@@ -5,13 +5,11 @@
  * (c) http://max-3000.com/
  */
 
-mso_cur_dir_lang('templates');
-
 ?>
 
 <div class="comment-form">
 
-	<form method="post">
+	<form method="post" class="fform">
 		<input type="hidden" name="comments_page_id" value="<?= $page_id ?>">
 		<?= mso_form_session('comments_session') ?>
 
@@ -20,7 +18,7 @@ mso_cur_dir_lang('templates');
 			<?php  if (is_login()) { ?>
 				<input type="hidden" name="comments_user_id" value="<?= getinfo('users_id') ?>">
 				<div class="comments-user">
-					<?=t('Привет')?>, <?= getinfo('users_nik') ?>! <a href="<?= getinfo('siteurl') ?>logout"><?=t('Выйти')?></a>
+					<?= tf('Привет') ?>, <?= getinfo('users_nik') ?>! <a href="<?= getinfo('siteurl') ?>logout"><?= tf('Выйти') ?></a>
 				</div>
 			<?php } // автор ?>
 		
@@ -33,10 +31,10 @@ mso_cur_dir_lang('templates');
 				
 				<div class="comments-user comments-comuser">
 					<?php
-						if (!$comuser['comusers_nik']) echo t('Привет!');
-							else echo t('Привет,') . ' <a href="' .getinfo('siteurl') . 'users/' . $comuser['comusers_id'] . '">' . $comuser['comusers_nik'] . '</a>!';
+						if (!$comuser['comusers_nik']) echo tf('Привет!');
+							else echo tf('Привет,') . ' <a href="' .getinfo('siteurl') . 'users/' . $comuser['comusers_id'] . '">' . $comuser['comusers_nik'] . '</a>!';
 					?> 
-					<a href="<?= getinfo('siteurl') ?>logout"><?=t('Выйти')?></a>
+					<a href="<?= getinfo('siteurl') ?>logout"><?= tf('Выйти') ?></a>
 				</div>
 			<?php }  // комюзер ?>
 		
@@ -47,61 +45,82 @@ mso_cur_dir_lang('templates');
 
 			<div class="comments-auth">
 				
-						<?php if ($allow_comment_anonim = mso_get_option('allow_comment_anonim', 'general', '1') ) { ?>
+						<?php if (mso_get_option('allow_comment_anonim', 'general', '1') ) { ?>
 						
-							<p class="radio">
-							
-							<?php if (mso_get_option('allow_comment_comusers', 'general', '1')) { ?>
-								<label><input type="radio" name="comments_reg" id="comments_reg_1" value="noreg" checked="checked"> <?=t('Ваше имя')?></label> 
-							<?php } else { ?>
-								<input type="hidden" name="comments_reg" value="noreg"><?=t('Ваше имя')?> 
-							<?php } ?>
+							<p>
 								
-							<input type="text" name="comments_author" class="comments_author" onfocus="document.getElementById('comments_reg_1').checked = 'checked';"> <small><?php
-								if (mso_get_option('new_comment_anonim_moderate', 'general', '1') )
-									echo mso_get_option('form_comment_anonim_moderate', 'general', t('Комментарий будет опубликован после проверки'));
-								else
-									echo mso_get_option('form_comment_anonim', 'general', t('Используйте нормальные имена'));
-							?></small></p>
+								<?php $t_hidden = mso_get_option('allow_comment_comusers', 'general', '1') ? 'type="radio" checked="checked"' : 'type="hidden"'; ?>
+								
+								<label class="ffirst"><input <?= $t_hidden ?> name="comments_reg" id="comments_reg_1" value="noreg"> <?= tf('Ваше имя') ?></label>
+								
+								<span><input type="text" name="comments_author" class="comments_author" onfocus="document.getElementById('comments_reg_1').checked = 'checked';"> </span>
+							</p>
+								
+							<p>
+								<span class="ffirst"></span>
+								<span class="fhint">
+									<?php
+									if (mso_get_option('new_comment_anonim_moderate', 'general', '1') )
+										echo mso_get_option('form_comment_anonim_moderate', 'general', tf('Комментарий будет опубликован после проверки'));
+									else
+										echo mso_get_option('form_comment_anonim', 'general', tf('Используйте нормальные имена'));
+									?>
+								</span>
+							</p>
 						
 						<?php } ?>
 					
 						
 						<?php if (mso_get_option('allow_comment_comusers', 'general', '1')) { ?>
 						
-							<p class="radio">
+							<p>
 							
-							<?php if ($allow_comment_anonim = mso_get_option('allow_comment_anonim', 'general', '1') ) { ?>
-								<label><input type="radio" name="comments_reg" id="comments_reg_2" value="reg"> <?=t('Вход/регистрация')?></label>
-							<?php } else { ?>
-								<input type="hidden" name="comments_reg" id="comments_reg_2" value="reg" checked="checked">
-								<?=t('Вход/регистрация')?> 
-							<?php } ?>
-							(<a href="<?= getinfo('siteurl') ?>login">войти без комментирования</a>)
+								<?php $t_hidden = mso_get_option('allow_comment_anonim', 'general', '1') ? 'type="radio"' : 'type="hidden" checked="checked"'; ?>
+							
+								<label><input <?= $t_hidden ?> name="comments_reg" id="comments_reg_2" value="reg"> <?= tf('Вход/регистрация') ?> <a href="<?= getinfo('siteurl') ?>login"><?= tf('(войти без комментирования)') ?></a></label>
+
 							</p>
 							
-							<p><label>
-									<span class="indent"><?=t('E-mail')?></span><input type="email" name="comments_email" class="comments_email" id="comments_email" onfocus="document.getElementById('comments_reg_2').checked = 'checked';"></label> 
+							<p>
+								<label for="comments_email" class="ffirst ftitle"><?= tf('E-mail') ?></label>
+								<span><input type="email" name="comments_email" class="comments_email" id="comments_email" onfocus="document.getElementById('comments_reg_2').checked = 'checked';"></span> 
 										
-									<input type="button" class="comments_copy" title="<?=t('Использовать email как пароль')?>" value="&gt;" onclick="document.getElementById('comments_reg_2').checked = 'checked'; document.getElementById('comments_password').value=document.getElementById('comments_email').value; "> 
-										
-									<label><?=t('Пароль')?> <input type="password" name="comments_password" class="comments_password" id="comments_password" onfocus="document.getElementById('comments_reg_2').checked = 'checked';"></label>
+								<span class="fempty"></span>
+								
+								<span class="fbutton"><button type="button" class="comments_copy" title="<?= tf('Использовать email как пароль') ?>" onclick="document.getElementById('comments_reg_2').checked = 'checked'; document.getElementById('comments_password').value=document.getElementById('comments_email').value; ">&gt;</button></span>
+								
+								<span class="fempty"></span>
+								
+								<label for="comments_password" class="ftitle"><?= tf('Пароль') ?></label>
+								<span><input type="password" name="comments_password" class="comments_password" id="comments_password" onfocus="document.getElementById('comments_reg_2').checked = 'checked';"></span>
+								
 							</p>
 							
-							<p><label><span class="indent"><?=t('Ваше имя')?></span><input type="text" name="comments_comusers_nik" class="comments_comusers_nik" onfocus="document.getElementById('comments_reg_2').checked = 'checked';"></label> 
-							<label><?=t('Сайт')?> <input type="text" name="comments_comusers_url" class="comments_comusers_url" onfocus="document.getElementById('comments_reg_2').checked = 'checked';"></label>
+							<p>
+								<label for="comments_comusers_nik" class="ffirst ftitle"><?= tf('Ваше имя') ?></label>
+								
+								<span><input type="text" name="comments_comusers_nik" class="comments_comusers_nik" id="comments_comusers_nik" onfocus="document.getElementById('comments_reg_2').checked = 'checked';"></span> 
+								
+								<label for="comments_comusers_url" class="ftitle"><?= tf('Сайт') ?></label>
+								<span><input type="url" name="comments_comusers_url" class="comments_comusers_url" id="comments_comusers_url" onfocus="document.getElementById('comments_reg_2').checked = 'checked';"></span>
 							</p>
-							<p class="hint"><?=t('Имя и сайт используются только при регистрации')?></p>
+							
+							<p>
+								<span class="ffirst"></span>
+								<span class="fhint"><?= tf('Имя и сайт используются только при регистрации') ?></span>
+							</p>
 						
 						<?php } ?>
 			
-				<?php if ($form_comment_comuser = mso_get_option('form_comment_comuser', 'general', t('Если вы уже зарегистрированы как комментатор или хотите зарегистрироваться, укажите пароль и свой действующий email. При регистрации на указанный адрес придет письмо с кодом активации и ссылкой на ваш персональный аккаунт, где вы сможете изменить свои данные, включая адрес сайта, ник, описание, контакты и т.д., а также подписку на новые комментарии.'))) echo '<p class="hint">', $form_comment_comuser, '</p>'; ?>
+				<?php if ($form_comment_comuser = mso_get_option('form_comment_comuser', 'general', '')) 
+					echo '<p><span class="ffirst"></span><span class="fhint">', $form_comment_comuser, 
+					'</span></p>'; ?>
 			
 			
 				<?php 
 					if (mso_hook_present('page-comment-form')) 
 					{
-						echo '<p class="hint comments_auth">' . t('Авторизация:') . ' ';
+						echo '<p class="hint comments_auth"><span class="ffirst">' . tf('Авторизация') . '&nbsp;</span>';
 						mso_hook('page-comment-form');
 						echo '</p>';
 					}
@@ -112,7 +131,10 @@ mso_cur_dir_lang('templates');
 			<?php  } // залогирование ?>
 
 			<?php mso_hook('comments_content_end') ?>
-			<div><input name="comments_submit" type="submit" value="<?=t('Отправить')?>" class="comments_submit"></div>
+			<div>
+			<button name="comments_submit" type="submit" class="comments_submit"><?= tf('Отправить') ?></button>
+			</div>
+			
 		</div><!-- div class="comments-textarea" -->
 		
 	</form>

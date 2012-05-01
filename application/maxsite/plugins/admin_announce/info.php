@@ -3,7 +3,7 @@
 $info = array(
 	'name' => t('Админ-анонс'),
 	'description' => t('Позволяет на стартовой странице админки размещать… что-то.'),
-	'version' => '0.5.1',
+	'version' => '0.6',
 	'author' => 'Wave',
 	'plugin_url' => 'http://wave.fantregata.com/page/work-for-maxsite',
 	'author_url' => 'http://wave.fantregata.com/',
@@ -11,4 +11,4 @@ $info = array(
 	'options_url' => getinfo('site_admin_url') . 'plugin_admin_announce',
 );
 
-?>
+# end file

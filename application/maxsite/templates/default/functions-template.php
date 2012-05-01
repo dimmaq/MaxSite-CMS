@@ -12,6 +12,7 @@
 
 
 /*
+ * ver. 10/04/2012
  * ver.  5/02/2012
  * ver.  1/02/2012
  * ver. 25/01/2012
@@ -100,7 +101,7 @@ if (!function_exists('default_components'))
 		if ($all === false)
 			$all = get_path_files(getinfo('template_dir') . 'components/', getinfo('template_url') . 'components/', false, array('php'));
 			
-		return '0||' . t('Отсутствует', __FILE__) . '#' . implode($all, '#');
+		return '0||' . tf('Отсутствует') . '#' . implode($all, '#');
 	}
 }
 
@@ -147,7 +148,7 @@ if (!function_exists('default_header_image'))
 		
 		natsort($dirs);
 		
-		return '-template-||' . t('Каталог шаблона', __FILE__) . '#' . implode($dirs, '#');
+		return '-template-||' . tf('Каталог шаблона') . '#' . implode($dirs, '#');
 	}
 }
 
@@ -236,11 +237,10 @@ if (!function_exists('mso_default_head_section'))
 	{
 	
 		// ob_start(); # задел на будущее - буферизация
-	
+	// <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=8"><![endif]-->
 		echo '<!DOCTYPE HTML>
-<html><head>
+<html><head>' . mso_hook('head-start') . '
 	<meta charset="UTF-8">
-	<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=8"><![endif]-->
 	<title>' . mso_head_meta('title') . '</title>
 	<meta name="generator" content="MaxSite CMS">
 	<meta name="description" content="' . mso_head_meta('description') . '">
@@ -277,7 +277,7 @@ if (!function_exists('mso_default_head_section'))
 				}
 			}
 			
-		echo '" type="text/css" media="screen">';
+		echo '">';
 		
 		
 		// подключение var_style.css
@@ -298,10 +298,10 @@ if (!function_exists('mso_default_head_section'))
 			
 			// если var_style.css нулевой длины, то не подключаем его
 			if (filesize(getinfo('templates_dir') . $var_file))
-				echo NT . '<link rel="stylesheet" href="' . getinfo('templates_url') . $var_file . '" type="text/css" media="screen">';	
+				echo NT . '<link rel="stylesheet" href="' . getinfo('templates_url') . $var_file . '">';	
 		}
 		
-		echo NT . '<link rel="stylesheet" href="' . getinfo('template_url') . 'css/print.css" type="text/css" media="print">';
+		echo NT . '<link rel="stylesheet" href="' . getinfo('template_url') . 'css/print.css" media="print">';
 		
 		out_component_css();
 			
@@ -320,15 +320,17 @@ if (!function_exists('mso_default_head_section'))
 		if (function_exists('ushka')) echo ushka('head');
 		
 		if (file_exists(getinfo('template_dir') . 'js/my.js')) 
-			echo '	<script type="text/javascript" src="' . getinfo('template_url') . 'js/my.js"></script>';
+			echo '	<script src="' . getinfo('template_url') . 'js/my.js"></script>';
 		
 		if ($my_style = mso_get_option('my_style', 'templates', '')) echo NR . '<!-- custom css-my_style -->' . NR . '<style>' . NR . $my_style . '</style>';
-	
+		
+		mso_hook('head-end');
+		
 		/*
 		# буферизация на будущее
-		$header = ob_get_contents();
+		$head = ob_get_contents();
 		ob_end_clean();
-		echo $header;
+		echo $head;
 		*/
 		
 		echo NR . '</head>';
@@ -479,7 +481,7 @@ if (!function_exists('mso_add_file'))
 		{
 			$ext = substr(strrchr($fn, '.'), 1);// расширение файла
 			if ($ext == 'js') echo NT . '<script src="' . getinfo('template_url') . $fn . '"></script>';
-			elseif ($ext == 'css') echo NT . '<link rel="stylesheet" href="' . getinfo('template_url') . $fn . '" type="text/css">';
+			elseif ($ext == 'css') echo NT . '<link rel="stylesheet" href="' . getinfo('template_url') . $fn . '">';
 			elseif ($ext == 'less') echo NT . '<link rel="stylesheet/less" href="' . getinfo('template_url') . $fn . '" type="text/css">';
 			
 		}

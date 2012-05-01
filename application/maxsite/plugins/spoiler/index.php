@@ -34,14 +34,13 @@ function spoiler_uninstall($args = array())
 # функции плагина
 function spoiler_custom($text)
 {
-
 	// константа
 	$options_key = 'plugin_spoiler';
 
 	/* Настройки*/
 	$options = mso_get_option($options_key, 'plugins', array());
-	if ( !isset($options['hide']) ) $options['hide'] = t('Скрыть',__FILE__);
-	if ( !isset($options['show']) ) $options['show'] = t('Показать...',__FILE__);
+	if ( !isset($options['hide']) ) $options['hide'] = t('Скрыть');
+	if ( !isset($options['show']) ) $options['show'] = t('Показать...');
 	if ( !isset($options['comments']) ) $options['comments'] = 0;
 
 	$showtext = $options['show'];
@@ -91,8 +90,10 @@ function spoiler_custom($text)
 				$hidetext = $options['hide'];			
 			}
 			  
-			$html .= '<a class="spoiler_link_show" href="javascript:void(0)" onclick="SpoilerToggle(\'' . $id . '\', this, \'' . $showtext.'\', \'' . $hidetext . '\')">' . $showtext . '</a></p>';
+			$html .= '<p class="spoiler"><a class="spoiler_link_show" href="javascript:void(0)" onclick="SpoilerToggle(\'' . $id . '\', this, \'' . $showtext.'\', \'' . $hidetext . '\')">' . $showtext . '</a></p>';
+
 			$html .= '<div class="spoiler_div" id="' . $id . '" style="display:none"><p>' . $matches[3][$i] . '</p></div>';
+
 			//$text = str_replace($matches[0][$i], $html, $text);
 			
 			$text = preg_replace($pattern, $html, $text, 1);
@@ -112,11 +113,11 @@ function spoiler_head($args = array())
 	if ($options['style'] != '')
 	{
 		echo '
-		<link rel="stylesheet" href="' . getinfo('plugins_url') . 'spoiler/style/'.$options['style']. '" type="text/css" media="screen">';
+		<link rel="stylesheet" href="' . getinfo('plugins_url') . 'spoiler/style/'.$options['style']. '">';
 	}	
 	
 	echo '	
-	<script type="text/javascript">
+	<script>
 	
 	function SpoilerToggle(id, link, showtext, hidetext)
 	{
@@ -141,8 +142,8 @@ function spoiler_head($args = array())
 # функция отрабатывающая миниопции плагина (function плагин_mso_options)
 function spoiler_mso_options() 
 {
-	mso_cur_dir_lang(__FILE__);
-//// Взято из wp-converter
+
+	//// Взято из wp-converter
 	$CI = & get_instance();
 	// найдем все файлы по маске *.css
 	$CI->load->helper('directory');
@@ -197,4 +198,5 @@ function spoiler_mso_options()
 		t('<p>С помощью этого плагина вы можете скрывать текст под спойлер.<br>Для использования плагина обрамите нужный текст в код [spoiler]ваш текст[/spoiler]</p><p class="info">Также возможны такие варианты: <br>[spoiler=показать]ваш текст[/spoiler], [spoiler=показать/спрятать]ваш текст[/spoiler], [spoiler=/спрятать]ваш текст[/spoiler]</p>')  // инфа
     );
 }
-?>
+
+# end file

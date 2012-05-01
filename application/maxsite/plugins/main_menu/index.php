@@ -9,12 +9,17 @@
 # функция автоподключения плагина
 function main_menu_autoload()
 {
-	mso_create_allow('main_menu_edit', t('Админ-доступ к редактированию MainMenu'));
 	mso_hook_add( 'main_menu', 'main_menu_custom');
 	mso_hook_add( 'head', 'main_menu_head');
 	mso_hook_add( 'admin_init', 'main_menu_admin_init'); # хук на админку
 }
 
+# функция выполняется при активации (вкл) плагина
+function main_menu_activate($args = array())
+{	
+	mso_create_allow('main_menu_edit', t('Админ-доступ к редактированию MainMenu'));
+	return $args;
+}
 
 # функция выполняется при деинсталяции плагина
 function main_menu_uninstall($args = array())
@@ -39,27 +44,27 @@ function main_menu_mso_options()
 		array(
 			'menu_default' => array(
 							'type' => 'checkbox', 
-							'name' => 'Пункты меню задаются в «Настройках шаблона»', 
-							'description' => 'В этом случае пункты меню ниже не будут учитываться.', 
+							'name' => t('Пункты меню задаются в «Настройках шаблона»'), 
+							'description' => t('В этом случае пункты меню ниже не будут учитываться.'), 
 							'default' => '1'
 						),
 			'menu_admin' => array(
 							'type' => 'checkbox', 
-							'name' => 'Пункт Admin', 
-							'description' => 'Нужно ли добавлять пункт Admin в конце меню, если вы вошли в систему', 
+							'name' => t('Пункт Admin'), 
+							'description' => t('Нужно ли добавлять пункт Admin в конце меню, если вы вошли в систему'), 
 							'default' => '1'
 						),
 		
 			'menu' => array(
 							'type' => 'textarea', 
-							'name' => 'Пункты меню', 
-							'description' => 'Укажите полные адреса в меню и через | название ссылки. Каждый пункт в одной строчке.<br>Пример: http://maxsite.org/ | Блог Макса<br> Для группы меню используйте [ для открытия и ] для закрытия группы выпадающих пунктов. Например:<pre>[<br># | Медиа<br>audio | Аудио<br>video | Видео<br>photo | Фото<br>]</pre>', 
+							'name' => t('Пункты меню'), 
+							'description' => t('Укажите полные адреса в меню и через | название ссылки. Каждый пункт в одной строчке.<br>Пример: http://maxsite.org/ | Блог Макса<br> Для группы меню используйте [ для открытия и ] для закрытия группы выпадающих пунктов. Например:<pre>[<br># | Медиа<br>audio | Аудио<br>video | Видео<br>photo | Фото<br>]</pre>'), 
 							'default' => ''
 						),
 			
 			),
-		'Настройки плагина Main menu', // титул
-		'Укажите необходимые опции.'   // инфо
+		t('Настройки плагина Main menu'), // титул
+		t('Укажите необходимые опции.')   // инфо
 	);
 }
 

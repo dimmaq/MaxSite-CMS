@@ -47,25 +47,24 @@ function search_form_widget_form($num = 1)
 	if ( !isset($options['text']) ) $options['text'] = t('Что искать?');
 	if ( !isset($options['submit']) ) $options['submit'] = t('Поиск');
 	if ( !isset($options['style_text']) ) $options['style_text'] = '';
-	if ( !isset($options['style_submit']) ) $options['style_submit'] = 'margin-left: 5px; font-size: 8pt;';
+	if ( !isset($options['style_submit']) ) $options['style_submit'] = '';
 	if ( !isset($options['text_posle']) ) $options['text_posle'] = '';
 	
 	// вывод самой формы
 	$CI = & get_instance();
 	$CI->load->helper('form');
 	
-	$form = '<p><div class="t150">' . t('Заголовок:') . '</div> '. form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'] ) ) ;
+	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'])));
 	
-	$form .= '<p><div class="t150">' . t('Текст подсказки:') . '</div> '. form_input( array( 'name'=>$widget . 'text', 'value'=>$options['text'] ) ) ;
+	$form .= mso_widget_create_form(t('Текст подсказки'), form_input( array( 'name'=>$widget . 'text', 'value'=>$options['text'])));
 	
-	$form .= '<p><div class="t150">' . t('Текст на кнопке:') . '</div> '. form_input( array( 'name'=>$widget . 'submit', 'value'=>$options['submit'] ) ) ;
+	$form .= mso_widget_create_form(t('Текст на кнопке'), form_input( array( 'name'=>$widget . 'submit', 'value'=>$options['submit'])));
 	
-	$form .= '<p><div class="t150">' . t('CSS-стиль текста:') . '</div> '. form_input( array( 'name'=>$widget . 'style_text', 'value'=>$options['style_text'] ) ) ;
+	$form .= mso_widget_create_form(t('CSS-стиль текста'), form_input( array( 'name'=>$widget . 'style_text', 'value'=>$options['style_text'])));
 	
-	$form .= '<p><div class="t150">' . t('CSS-стиль кнопки:') . '</div> '. form_input( array( 'name'=>$widget . 'style_submit', 'value'=>$options['style_submit'] ) ) ;
+	$form .= mso_widget_create_form(t('CSS-стиль кнопки'), form_input( array( 'name'=>$widget . 'style_submit', 'value'=>$options['style_submit'])));
 	
-	$form .= '<p><div class="t150">' . t('Текст внизу:') . '</div> '. form_textarea( array( 'name'=>$widget . 'text_posle', 'value'=>$options['text_posle'], 'rows' => '3' ) ) ;
-	
+	$form .= mso_widget_create_form(t('Текст внизу'), form_textarea( array( 'name'=>$widget . 'text_posle', 'value'=>$options['text_posle'], 'rows' => '3')));
 	
 	
 	return $form;
@@ -102,7 +101,7 @@ function search_form_widget_custom($options = array(), $num = 1)
 	if ( !isset($options['text']) ) $options['text'] = t('Что искать?');
 	if ( !isset($options['submit']) ) $options['submit'] = t('Поиск');
 	if ( !isset($options['style_text']) ) $options['style_text'] = '';
-	if ( !isset($options['style_submit']) ) $options['style_submit'] = 'margin-left: 5px; font-size: 8pt;';
+	if ( !isset($options['style_submit']) ) $options['style_submit'] = '';
 	if ( !isset($options['text_posle']) ) $options['text_posle'] = '';
 	
 	if ($options['text_posle'])
@@ -114,8 +113,16 @@ function search_form_widget_custom($options = array(), $num = 1)
 	if ($options['style_text']) $options['style_text'] = ' style ="' . $options['style_text'] . '"';
 	
 	$out .= '
-	<form class="search_form_widget" name="f_search" method="get" onsubmit="location.href=\'' . getinfo('siteurl') . 'search/\' + encodeURIComponent(this.s.value).replace(/%20/g, \'+\'); return false;">
-	<input type="text" name="s"' . $options['style_text'] . ' class="search_text" onfocus="if (this.value == \'' . $options['text'] . '\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'' . $options['text'] . '\';}" value="' . $options['text'] . '"><input type="submit" name="Submit" value="' . $options['submit'] . '" style="' . $options['style_submit'] . '" class="search_submit">'
+	<form class="search_form_widget fform" name="f_search" method="get" onsubmit="location.href=\'' . getinfo('siteurl') . 'search/\' + encodeURIComponent(this.s.value).replace(/%20/g, \'+\'); return false;">
+	<p>
+	<span>
+	<input type="text" name="s"' . $options['style_text'] . ' class="search_text" onfocus="if (this.value == \'' . $options['text'] . '\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'' . $options['text'] . '\';}" value="' . $options['text'] . '">
+	</span>
+	<span class="fempty"></span>
+	<span>
+	<button type="submit" name="Submit" style="' . $options['style_submit'] . '" class="search_submit">' . $options['submit'] . '</button>
+	</span>
+	</p>'
 	. $options['text_posle']
 	.'</form>';
 	
@@ -124,3 +131,4 @@ function search_form_widget_custom($options = array(), $num = 1)
 	return $out;	
 }
 
+# end file

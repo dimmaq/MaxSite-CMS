@@ -6,8 +6,6 @@
  */
 
 
-mso_cur_dir_lang('templates');
-
 header('Content-type: text/html; charset=utf-8');
 header('Content-Type: application/rss+xml');
 
@@ -39,7 +37,7 @@ $feed_url = getinfo('siteurl');
 $language = 'en-ru';
 $generator = 'MaxSite CMS (http://max-3000.com/)';
 
-$par = array( 'limit'=>1, 'cut'=>t('Читать полностью'). ' »', 'type'=>false ); 
+$par = array( 'limit'=>1, 'cut' => tf('Читать полностью') . ' »', 'type'=>false ); 
 $pages = mso_get_pages($par, $pagination); 
 
 if ($pages) 
@@ -53,8 +51,8 @@ if ($pages)
 	$page = $pages[0];
 	extract($page);
 	
-	// $feed_name = mso_meta_title($page_title) . ' ('. t('Комментарии к странице'). ')';
-	$feed_name = mso_head_meta('title', $pages, '%page_title%', '', true ) . ' ('. t('комментарии к странице'). ')' ;
+	// $feed_name = mso_meta_title($page_title) . ' ('. tf('Комментарии к странице'). ')';
+	$feed_name = mso_head_meta('title', $pages, '%page_title%', '', true ) . ' ('. tf('комментарии к странице'). ')' ;
 	
 	$comments = mso_get_comments($page_id);
 ?>

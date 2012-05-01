@@ -1,7 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
 
-mso_cur_dir_lang('templates');
-
 mso_head_meta('title', t('Галерея') ); // meta title страницы
 
 
@@ -35,7 +33,8 @@ if (isset($options['all']))
 				
 				if (isset($gal[5])) $arg['filter'] = $gal[5];
 				
-				echo '<p><a href="' . getinfo('site_url') . $options['slug_gallery'] . '">Все галереи</a>';
+				echo '<p><a href="' . getinfo('site_url') . $options['slug_gallery'] . '">' . t('Все галереи') . '</a>';
+				
 				echo random_gal_widget_custom($arg);
 				
 				break;
@@ -62,4 +61,4 @@ if (isset($options['all']))
 # конечная часть шаблона
 require(getinfo('template_dir') . 'main-end.php');
 	
-?>
+# end file

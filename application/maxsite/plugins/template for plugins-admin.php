@@ -17,21 +17,14 @@ function %%%_autoload()
 # функция выполняется при активации (вкл) плагина
 function %%%_activate($args = array())
 {	
-	mso_create_allow('%%%_edit', t('Админ-доступ к настройкам') . ' ' . t('%%%'));
-	return $args;
-}
-
-# функция выполняется при деактивации (выкл) плагина
-function %%%_deactivate($args = array())
-{	
-	// mso_delete_option('plugin_%%%', 'plugins' ); // удалим созданные опции
+	mso_create_allow('%%%_edit', t('Админ-доступ к настройкам %%%'));
 	return $args;
 }
 
 # функция выполняется при деинсталяции плагина
 function %%%_uninstall($args = array())
 {	
-	// mso_delete_option('plugin_%%%', 'plugins' ); // удалим созданные опции
+	mso_delete_option('plugin_%%%', 'plugins' ); // удалим созданные опции
 	mso_remove_allow('%%%_edit'); // удалим созданные разрешения
 	return $args;
 }

@@ -20,7 +20,7 @@ function admin_files_admin_head($args = array())
 	#echo mso_load_jquery('ui/ui.core.packed.js');
 	#echo mso_load_jquery('ui/ui.draggable.packed.js');
 	echo mso_load_jquery('alerts/jquery.alerts.js');
-	echo mso_load_jquery('cornerz.js');
+	//echo mso_load_jquery('cornerz.js');
 	echo '	<link href="' . getinfo('common_url') . 'jquery/alerts/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen">';
 	return $args;
 }
@@ -42,7 +42,7 @@ function admin_files_admin_init($args = array())
 	# Третий - название ссылки	
 	# Четвертый - номер в меню
 	
-	mso_admin_menu_add('options', $this_plugin_url, '' . t('Загрузки'));
+	mso_admin_menu_add('page', $this_plugin_url, '' . t('Загрузки'), 3);
 
 	# прописываем для указаного admin_url_ + $this_plugin_url - (он будет в url) 
 	# связанную функцию именно она будет вызываться, когда 

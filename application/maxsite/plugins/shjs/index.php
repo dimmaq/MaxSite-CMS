@@ -119,9 +119,9 @@ function shjs_head($arg = array())
 
 	echo '
 	
-	<script type="text/javascript" src="' . getinfo('plugins_url') . 'shjs/sh_main.min.js"></script>
-	<link rel="stylesheet" href="' . getinfo('plugins_url') . 'shjs/css/' . $options['css'] . '.min.css" type="text/css" media="screen">
-	<script type="text/javascript">
+	<script src="' . getinfo('plugins_url') . 'shjs/sh_main.min.js"></script>
+	<link rel="stylesheet" href="' . getinfo('plugins_url') . 'shjs/css/' . $options['css'] . '.min.css">
+	<script>
 	$(document).ready(function() { 
 		sh_highlightDocument("' . getinfo('plugins_url') . 'shjs/lang/", ".min.js");
     });
@@ -160,9 +160,20 @@ function shjs_content($text = '')
 		$text = str_replace('[pre lang=html]', '[pre class="sh_html"]', $text);
 		$text = str_replace('<pre lang=html>', '<pre class="sh_html">', $text);
 		
+		
+		$text = preg_replace_callback('~<pre(.*?)>(.*?)<\/pre>~si', 'shjs_pre_callback', $text);
+		
 		return $text;
 	}
 
+}
+
+function shjs_pre_callback($matches)
+{
+	$m = str_replace("\t", '    ', $matches[2]);
+	$m = '<pre' . $matches[1] . '>' . $m . '</pre>';
+
+	return $m;
 }
 
 

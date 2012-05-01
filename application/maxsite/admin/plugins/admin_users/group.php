@@ -1,8 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
-
-mso_cur_dir_lang('admin');
-
-?>
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <h1><?= t('Группы пользователей') ?></h1>
 <p class="info"><?= t('Здесь вы можете настроить группы пользователей. Вы не можете удалить группы <strong>«admins»</strong> и <strong>«users»</strong>. Группе <strong>«admins»</strong> разрешены все действия.') ?></p>
@@ -134,13 +130,9 @@ mso_cur_dir_lang('admin');
 	$CI->load->library('table');
 	
 	$tmpl = array (
-				'table_open'		  => '<table class="page tablesorter"" border="0" width="99%" id="pagetable">',
+				'table_open'		  => '<table class="page tablesorter">',
 				'row_alt_start'		  => '<tr class="alt">',
 				'cell_alt_start'	  => '<td class="alt">',
-				'heading_row_start' 	=> NR . '<thead><tr>',
-				'heading_row_end' 		=> '</tr></thead>' . NR,
-				'heading_cell_start'	=> '<th style="cursor: pointer;">',
-				'heading_cell_end'		=> '</th>',
 		  );
 		  
 	$CI->table->set_template($tmpl); // шаблон таблицы
@@ -205,19 +197,15 @@ mso_cur_dir_lang('admin');
 		$dop = '<p class="br"><input type="submit" name="f_submit" value="' . t('Изменить разрешения') . '"></p>';
 		
 		
-		echo mso_load_jquery('jquery.tablesorter.js');
-		echo '
-		<script type="text/javascript">
+		echo mso_load_jquery('jquery.tablesorter.js') . '
+		<script>
 		$(function() {
-			$("table.tablesorter th").animate({opacity: 0.7});
-			$("table.tablesorter th").hover(function(){ $(this).animate({opacity: 1}); }, function(){ $(this).animate({opacity: 0.7}); });
-			$("#pagetable").tablesorter();
-		});	
-		</script>
-		';
+			$("table.tablesorter").tablesorter( {headers: { 2: {sorter: false}, 3: {sorter: false} }});
+		});
+		</script>';
 	
 		// добавляем форму, а также текущую сессию
-		echo '<form action="" method="post">' . mso_form_session('f_session_id');
+		echo '<form method="post">' . mso_form_session('f_session_id');
 		echo $CI->table->generate($data_table); // вывод подготовленной таблицы
 		echo $dop;
 		echo '</form>';
@@ -243,7 +231,7 @@ mso_cur_dir_lang('admin');
 		' . $delete . '</div>';
 		
 		// добавляем форму, а также текущую сессию
-		echo '<form action="" method="post">' . mso_form_session('f_session_id');
+		echo '<form method="post">' . mso_form_session('f_session_id');
 		echo $delete;
 		echo '</form>';
 	}

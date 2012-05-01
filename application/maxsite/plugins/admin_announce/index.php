@@ -9,12 +9,17 @@
 # функция автоподключения плагина
 function admin_announce_autoload($args = array())
 {
-	mso_create_allow('admin_announce_edit', t('Админ-доступ к административному анонсу'));
 	mso_hook_add( 'admin_init', 'admin_announce_admin_init'); # хук на админку
 	mso_hook_add( 'admin_home', 'admin_announce'); # хук на админ-анонс
 	mso_hook_add( 'admin_head', 'admin_announce_head');
 }
 
+# функция выполняется при активации (вкл) плагина
+function admin_announce_activate($args = array())
+{	
+	mso_create_allow('admin_announce_edit', t('Админ-доступ к административному анонсу'));
+	return $args;
+}
 
 # функция выполняется при деактивации (выкл) плагина
 function admin_announce_uninstall($args = array())
@@ -27,25 +32,7 @@ function admin_announce_uninstall($args = array())
 
 function admin_announce_head($args = array()) 
 {
-	echo NR . '<link rel="stylesheet" href="' . getinfo('plugins_url') . 'admin_announce/tabs.css" type="text/css" media="screen">' . NR;
-	echo mso_load_jquery();
-	echo mso_load_jquery('ui/ui.core.packed.js');
-	echo mso_load_jquery('ui/ui.tabs.packed.js');
-
-	echo mso_load_jquery('jquery.tablesorter.js');
-	echo '
-		<script type="text/javascript">
-			$(function() {
-				$("#tabs-widget > ul").tabs({ fx: { height: "toggle", opacity: "toggle", duration: "fast" } });
-				$("table.tablesorter th").animate({opacity: 0.7});
-				$("table.tablesorter th").hover(function(){ $(this).animate({opacity: 1}); }, function(){ $(this).animate({opacity: 0.7}); });
-				$("#table-0").tablesorter();
-				$("#table-1").tablesorter();
-				$("#table-2").tablesorter();
-				$("#table-3").tablesorter();
-			});	
-			</script>
-	';
+	echo NR . '<link rel="stylesheet" href="' . getinfo('plugins_url') . 'admin_announce/tabs.css">' . NR;
 
 	return $args;
 }
@@ -283,10 +270,33 @@ function admin_announce($args = array())
 			$out .= NR . '<div id="tabs-widget-fragment-' . $key . '" class="tabs-widget-fragment">' . $tab[1] . '</div>' . NR;
 		$out .= '</div>' . NR;
 	}
+	
+	echo mso_load_jquery();
+	echo mso_load_jquery('ui/ui.core.packed.js');
+	echo mso_load_jquery('ui/ui.tabs.packed.js');
 
+	# КОНФЛИКТ по tablesorter!!!
+	echo mso_load_jquery('jquery.tablesorter.js');
+	echo '
+		<script>
+			$(function() {
+				$("#tabs-widget > ul").tabs({ fx: { height: "toggle", opacity: "toggle", duration: "fast" } });
+				
+			// 	$("table.tablesorter th").animate({opacity: 0.7});
+			// 	$("table.tablesorter th").hover(function(){ $(this).animate({opacity: 1}); }, function(){ $(this).animate({opacity: 0.7}); });
+			//	$("#table-0").tablesorter();
+			//	$("#table-1").tablesorter();
+			//	$("#table-2").tablesorter();
+			//	$("#table-3").tablesorter();
+			
+			});	
+			</script>
+	';
+	
+	
 	echo $out;
 	return $args;
 }
 
 
-?>
+# end file

@@ -1831,10 +1831,10 @@ function mso_login_form($conf = array(), $redirect = '', $echo = true)
 	$login = (isset($conf['login'])) ? $conf['login'] : '';
 	$password = (isset($conf['password'])) ? $conf['password'] : '';
 	$submit = (isset($conf['submit'])) ? $conf['submit'] : '';
-	$submit_value = (isset($conf['submit_value'])) ? $conf['submit_value'] : t('Войти');
+	$submit_value = (isset($conf['submit_value'])) ? $conf['submit_value'] : tf('Войти');
 	$form_end = (isset($conf['form_end'])) ? $conf['form_end'] : '';
 	
-	$login_form_auth_title = (isset($conf['login_form_auth_title'])) ? $conf['login_form_auth_title'] : t('Вход через:') . ' ';
+	$login_form_auth_title = (isset($conf['login_form_auth_title'])) ? $conf['login_form_auth_title'] : tf('Вход через:') . ' ';
 
 	$action = $MSO->config['site_url'] . 'login';
 	$session_id = $MSO->data['session']['session_id'];
@@ -1848,12 +1848,26 @@ function mso_login_form($conf = array(), $redirect = '', $echo = true)
 	}
 	
 	$out = <<<EOF
-	<form method="post" action="{$action}" name="flogin" class="flogin">
+	<form method="post" action="{$action}" name="flogin" class="flogin fform">
 		<input type="hidden" value="{$redirect}" name="flogin_redirect">
 		<input type="hidden" value="{$session_id}" name="flogin_session_id">
-		<p class="flogin_user"><label class="flogin_user"><span>{$login}</span><input type="text" value="" name="flogin_user" class="flogin_user"></label></p>
-		<p class="flogin_password"><label class="flogin_password"><span>{$password}</span><input type="password" value="" name="flogin_password" class="flogin_password"></label></p>
-		<p class="flogin_submit">{$submit}<input type="submit" name="flogin_submit" class="flogin_submit" value="{$submit_value}"></p>
+		
+		<p>
+			<label><span class="nocell ftitle">{$login}</span>
+			<input type="text" value="" name="flogin_user" class="flogin_user">
+			</label>
+		</p>
+		
+		<p>
+			<label><span class="nocell ftitle">{$password}</span>
+			<input type="password" value="" name="flogin_password" class="flogin_password">
+			</label>
+		</p>
+		
+		<p>
+			<span>{$submit}<button type="submit" name="flogin_submit" class="flogin_submit">{$submit_value}</button></span>
+		</p>
+		
 		{$hook_login_form_auth}
 		{$form_end}
 	</form>
@@ -2648,18 +2662,18 @@ function mso_load_jquery($plugin = '', $path = '')
 		{
 			if ($path)
 			{
-				return '<script type="text/javascript" src="' . $path . $plugin . '"></script>' . NR;
+				return '<script src="' . $path . $plugin . '"></script>' . NR;
 			}
 			else
 			{
-				return '<script type="text/javascript" src="'. getinfo('common_url') . 'jquery/' . $plugin . '"></script>' . NR;
+				return '<script src="'. getinfo('common_url') . 'jquery/' . $plugin . '"></script>' . NR;
 			}
 		}
 		else
 		{
 			$jquery_type = mso_get_option('jquery_type', 'general', 'self');
 			
-			$version = '1.7.1';
+			$version = '1.7.2';
 			
 			if ($jquery_type == 'google') $url = 'http://ajax.googleapis.com/ajax/libs/jquery/' . $version . '/jquery.min.js'; // Google Ajax API CDN 
 			elseif ($jquery_type == 'microsoft') $url = 'http://ajax.aspnetcdn.com/ajax/jQuery/jquery-' . $version . '.min.js'; // Microsoft CDN
@@ -2667,7 +2681,7 @@ function mso_load_jquery($plugin = '', $path = '')
 			elseif ($jquery_type == 'huyandex') $url = 'http://yandex.st/jquery/' . $version . '/jquery.min.js';
 			else $url = getinfo('common_url') . 'jquery/jquery-' . $version . '.min.js';
 			
-			return '<script type="text/javascript" src="' . $url . '"></script>' . NR;
+			return '<script src="' . $url . '"></script>' . NR;
 		}
 	}
 }
@@ -3045,6 +3059,7 @@ function mso_create_list($a = array(), $options = array(), $child = false)
 
 # устанавливаем $MSO->current_lang_dir в которой хранится
 # текущий каталог языка. Это второй параметр функции t()
+# в связи с изменением алгоритма перевода, функция считается устаревшей
 function mso_cur_dir_lang($dir = false)
 {
 	global $MSO;
@@ -3052,29 +3067,54 @@ function mso_cur_dir_lang($dir = false)
 }
 
 
-# функция трансляции (языковой перевод)
-# первый параметр - переводимое слово - учитывается регистр полностью
-# второй параметр - __FILE__ (по нему вычисляется каталог перевода), либо спец-каталог 
-# либо путь к каталогу относительно application/maxsite/
-# например:
-#	для плагина ушки это plugins/ushki
-# 	для админ - admin
-#	для общего - common (используется по-умолчанию)
-# файл перевода должен находится в каталоге $file/language/язык.php
-# всегда подключается перевод из 
-#	+ common/language/
-#	+ common/language/plugins
-#	+ common/language/templates
-#	+ templates/ТЕКУЩИЙ-ШАБЛОН/
-#   + подключение согласно __FILE__
-#	если это админка, то подключается common/admin/language/
-#   если это инсталяция $file = 'install', то подключается common/language/install
+# Языковой перевод MaxSite CMS
+# Описание см. ниже для _t()
+# перевод только для frontend - фраз сайта.
+function tf($w = '', $file = false)
+{
+	return _t($w, $file);
+}
+
+# перевод только для админки
 function t($w = '', $file = false)
+{
+	return _t($w, $file);
+}
+
+
+# функция трансляции (языковой перевод)
+# не использовать эту функцию!
+# первый параметр - переводимое слово - учитывается регистр полностью
+# второй паарметр:
+#  __FILE__ (по нему вычисляется каталог перевода)
+#  mytemplate - текущий каталог
+# 
+#  Всегда подключается  /common/language/ЯЗЫК-f.php
+#  если это админка, то подключается еще и /common/language/ЯЗЫК.php
+#  Если вторым паарметром указан __FILE__ то подключается перевод из каталога language
+#  откуда была вызвана функция t() или tf().
+#  Если второй параметр это mytemplate, то подключается language текущего шаблона
+#  Если второй параметр это install, то подключается /common/language/install/ЯЗЫК.php
+function _t($w = '', $file = false)
 {
 	global $MSO;
 	
 	static $langs = array(); // общий массив перевода
 	static $file_langs = array(); // список уже подключенных файлов
+	
+	
+	// только для получения переводимых фраз и отладки!
+	// ОПИСАНИЕ см. в common/language/readme.txt
+	if (defined('MSO__PLEASE__RETURN__LANGS'))
+	{
+		static $all_w = array();
+		
+		if ($w === '__please__return__langs__') return $langs; 
+		if ($w === '__please__return__w__') return array_unique ($all_w);
+		if ($w === '__please__return__file_langs__') return array_unique ($file_langs);
+		
+		if ($w) $all_w[] = $w;
+	}
 	
 	if (!isset($MSO->language)) return $w; // язык вообще не существует, выходим
 	if (!($current_language = $MSO->language)) return $w; // есть, но не указан язык, выходим
@@ -3082,23 +3122,25 @@ function t($w = '', $file = false)
 	// проверим перевод, возможно он уже есть
 	if (isset($langs[$w]) and $langs[$w]) return $langs[$w]; // проверка перевода
 	
-
+	/*
+		на примере en
+		
+		/common/language/en-f.php - перевод для frontend (функция tf )
+		/common/language/en.php - перевод для админки (функция t )
+		
+		всегда загружается ($file_langs['common'])
+			/common/language/en-f.php
+			
+		если это админка, ($file_langs['admin']) то 
+			/common/language/en.php - перевод для админки (функция t )
+			
+		если __FILE__, то загружаем и его.
+	*/
+	
 	if (!isset($file_langs['common'])) // common был не подключен
 	{
-		$langs = _t_add_file_to_lang($langs, 'common/language/', $current_language);
-		$file_langs['common'] = true;
-	}
-	
-	if (!isset($file_langs['plugins'])) // plugins был не подключен
-	{
-		$langs = _t_add_file_to_lang($langs, 'common/language/plugins/', $current_language);
-		$file_langs['plugins'] = true;
-	}
-	
-	if (!isset($file_langs['templates'])) // templates был не подключен
-	{
-		$langs = _t_add_file_to_lang($langs, 'common/language/templates/', $current_language);
-		$file_langs['templates'] = true;
+		$langs = _t_add_file_to_lang($langs, 'common/language/', $current_language . '-f'); // front
+		$file_langs['common'] = 'common/language/' . $current_language . '-f';
 	}
 	
 	// в админке подключаем свой перевод
@@ -3106,8 +3148,8 @@ function t($w = '', $file = false)
 	{
 		if (!isset($file_langs['admin'])) // admin был не подключен
 		{
-			$langs = _t_add_file_to_lang($langs, 'admin/language/', $current_language);
-			$file_langs['admin'] = true;
+			$langs = _t_add_file_to_lang($langs, 'common/language/', $current_language);
+			$file_langs['admin'] = 'common/language/' . $current_language;
 		}
 	}
 	
@@ -3117,18 +3159,19 @@ function t($w = '', $file = false)
 		if (!isset($file_langs['install'])) // install был не подключен
 		{
 			$langs = _t_add_file_to_lang($langs, 'common/language/install/', $current_language);
-			$file_langs['install'] = true;
+			$file_langs['install'] = 'common/language/install/' . $current_language;
 		}
 	}
-
-	if (!isset($file_langs['mytemplate'])) // mytemplate был не подключен
+	
+	if ($file == 'mytemplate' and !isset($file_langs['mytemplate'])) // mytemplate был не подключен
 	{
 		$langs = _t_add_file_to_lang($langs, 'templates/' . $MSO->config['template'] . '/language/', $current_language);
-		$file_langs['mytemplate'] = true;
+		// $file_langs['mytemplate'] = true;
+		$file_langs['mytemplate'] = 'templates/' . $MSO->config['template'] . '/language/' . $current_language;
 	}
 	
-	
 	// возможно указан свой каталог в __FILE__
+	// условия оставляю для совместимости со старым переводом
 	if ($file and $file != 'admin' and $file != 'plugins' and $file != 'templates' and $file != 'install' and $file != 'mytemplate')
 	{
 		// ключ = $file так меньше вычислений
@@ -3145,8 +3188,8 @@ function t($w = '', $file = false)
 			{
 				$fn = str_replace($bd, '', $fn);
 				$fn = dirname($file) . '/language/';
-				
-				$langs = _t_add_file_to_lang($langs, $fn, $current_language);
+
+				$langs = _t_add_file_to_lang($langs, $fn, $current_language, true);
 			}
 			
 			$file_langs[$file] = true;
@@ -3162,13 +3205,17 @@ function t($w = '', $file = false)
 
 }
 
-# служебная функция для t()
+# служебная функция для _t()
 # нигде не использовать!
-function _t_add_file_to_lang($langs, $path, $current_language)
+function _t_add_file_to_lang($langs, $path, $current_language, $full_name = false)
 {
 	global $MSO;
 	
-	$fn = $MSO->config['base_dir'] . $path . $current_language . '.php';
+	if ($full_name) 
+		$fn = $path . $current_language . '.php';
+	else
+		$fn = $MSO->config['base_dir'] . $path . $current_language . '.php';
+	
 	
 	if (file_exists($fn))
 	{
@@ -3725,23 +3772,23 @@ function mso_sql_found_rows($limit = 20, $pagination_next_url = 'next')
 function mso_rss()
 {
 	$out = '<link rel="alternate" type="application/rss+xml" title="' 
-		. t('Все новые записи') . '" href="' 
+		. tf('Все новые записи') . '" href="' 
 		. getinfo('rss_url') . '">' . NR;
 
 	$out .= '	<link rel="alternate" type="application/rss+xml" title="' 
-		. t('Все новые комментарии') . '" href="' 
+		. tf('Все новые комментарии') . '" href="' 
 		. getinfo('rss_comments_url') . '">' . NR;
 
 	if (is_type('page'))
 	{
 		$out .= '	<link rel="alternate" type="application/rss+xml" title="' 
-				. t('Комментарии этой записи') . '" href="' 
+				. tf('Комментарии этой записи') . '" href="' 
 				. getinfo('site_url') . mso_segment(1) . '/' . mso_segment(2) . '/feed">' . NR;
 	}
 	elseif (is_type('category'))
 	{
 		$out .= '	<link rel="alternate" type="application/rss+xml" title="' 
-					. t('Записи этой рубрики') . '" href="' 
+					. tf('Записи этой рубрики') . '" href="' 
 					. getinfo('site_url') . mso_segment(1) . '/' . mso_segment(2) . '/feed">' . NR;
 	}
 
@@ -3829,5 +3876,120 @@ function mso_link_rel($rel = 'canonical', $add = '')
 	}
 	
 }
+
+# функция для виджетов формирует поля формы для form.fform с необходимой html-разметкой
+# каждый вызов функции - одна строчка + если есть $hint - вторая
+# $form = mso_widget_create_form('Название', поле формы, 'Подсказка');
+function mso_widget_create_form($name = '', $input = '', $hint = '')
+{
+	$out = '<p><span class="ffirst ftitle ftop">' . $name . '</span><label>'
+			. $input . '</label></p>';
+
+	if ($hint)
+	{
+		$out .= '<p class="nop"><span class="ffirst"></span><span class="fhint">'
+				. $hint . '</span></p>';
+	}
+	
+	return $out;
+}
+
+# компилятор LESS в CSS
+# на выходе css-подключение, либо содержимое css-файла (переключается через $css_url)
+# $less_file - входной less-файл (полный путь на сервере)
+# $css_file - выходной css-файл (полный путь на сервере)
+# $css_url - полный http-адрес css-файла. Если $css_url = '', то отдается содержимое css-файла
+# $use_cache - разрешить использование кэширования LESS-файла (определяется по времени файлов)
+# $use_mini - использовать сжатие css-кода
+# $use_mini_n - если включено сжатие, то удалять переносы строк
+# пример использования см. в /default/css/less/compiling-less.zip/var_style.php
+
+function mso_lessc($less_file = '', $css_file = '', $css_url = '', $use_cache = false, $use_mini = true, $use_mini_n = false)
+{
+
+	if (!$less_file or !$css_file) return; // не указаны файлы
+	
+	if ($use_cache) // проверка кэша
+	{
+		if (file_exists($less_file) and file_exists($css_file))
+		{
+			if (filemtime($less_file) < filemtime($css_file))
+			{
+				// отдаём из кэша
+				
+				if ($css_url) 
+				{
+					// в виде имени файла
+					return NT . '<link rel="stylesheet" href="' . $css_url . '">';
+				}
+				else
+				{
+					// в виде содержимого
+					return file_get_contents($css_file);
+				}
+			}
+		}
+	}
+
+	if (file_exists($less_file)) $fc_all = file_get_contents($less_file);
+		else return; // нет файла, выходим
+
+	if ($fc_all)
+	{
+		require_once(getinfo('common_dir') . 'less/lessc.inc.php');
+		
+		$compiler = new lessc();
+		$compiler->importDir = dirname($less_file);
+		$compiler->indentChar = "\t";
+		
+		try
+		{
+			$out = $compiler->parse($fc_all);
+		}
+		catch (Exception $ex) 
+		{
+			die("<pre>lessphp fatal error: " . $ex->getMessage() . '</pre>');
+		}
+		
+		// сжатие кода
+		if ($use_mini)
+		{
+			if ($use_mini_n)
+			{
+				$out = str_replace("\t", ' ', $out);
+				$out = str_replace(array("\r\n", "\r", "\n", '  ', '    '), '', $out);
+			}
+			
+			$out = str_replace("\n\t", '', $out);
+			$out = str_replace("\n}", '}', $out);
+			$out = str_replace('; ', ';', $out);
+			$out = str_replace(';}', '}', $out);
+			$out = str_replace(': ', ':', $out);
+			$out = str_replace('{ ', '{', $out);
+			$out = str_replace(' }', '}', $out);
+			$out = str_replace(' {', '{', $out);
+			$out = str_replace(', ', ',', $out);
+			$out = str_replace(' > ', '>', $out);		
+			$out = str_replace('} ', '}', $out);
+			$out = str_replace('  ', ' ', $out);
+		}
+		
+		$fp = fopen($css_file, "w");
+		fwrite($fp, $out);
+		fclose($fp);
+		
+		if ($css_url) 
+		{
+			return NT . '<link rel="stylesheet" href="' . $css_url . '">'; // в виде имени файла
+		}
+		else
+		{
+			// в виде содержимого
+			return '<pre>' . $out . '</pre>';
+		}
+	}
+}
+
+
 
 # end file

@@ -1,8 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
-
-mso_cur_dir_lang('admin');
-
-?>
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <h1><?= t('Редактирование комментатора') ?></h1>
 <p><a href="<?= $MSO->config['site_admin_url'] . 'comusers' ?>"><?= t('Вернуться к списку комментаторов') ?></a></p>
@@ -174,7 +170,7 @@ mso_cur_dir_lang('admin');
 				
 			}
 			
-			echo '<form action="" method="post">' . mso_form_session('f_session_id');
+			echo '<form method="post">' . mso_form_session('f_session_id');
 			echo $CI->table->generate();
 			echo '<p class="br"><input type="submit" name="f_submit[' . $id . ']" value="' . t('Изменить') . '"></p>';
 			echo '</form>';

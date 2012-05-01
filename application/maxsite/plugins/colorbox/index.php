@@ -2,11 +2,17 @@
 
 function colorbox_autoload($args = array())
 {
-	mso_create_allow('colorbox_edit', 'Админ-доступ к настройкам плагина ColorBox');
 	mso_hook_add( 'admin_init', 'colorbox_admin_init');
 	mso_hook_add( 'head', 'colorbox_head');
 	mso_hook_add( 'admin_head', 'colorbox_head');
 	mso_hook_add( 'content_out', 'colorbox_content');
+}
+
+# функция выполняется при активации (вкл) плагина
+function colorbox_activate($args = array())
+{	
+	mso_create_allow('colorbox_edit', 'Админ-доступ к настройкам плагина ColorBox');
+	return $args;
 }
 
 function colorbox_uninstall($args = array())
@@ -53,12 +59,12 @@ function colorbox_head($args = array())
 	if ( !isset($options['height']) ) $options['height'] = '75%';
 	if ( !isset($options['slideshowspeed']) ) $options['slideshowspeed'] = '2500';
 	
-	echo '<link type="text/css" rel="stylesheet" href="'.$url.'style/'.$options['style'].'/colorbox.css" media="screen">';
+	echo '<link rel="stylesheet" href="'.$url.'style/'.$options['style'].'/colorbox.css" media="screen">';
 	
 	$size = '';
 	if ($options['size'] == '1') $size = ',width:"'.$options['width'].'",height:"'.$options['height'].'"';
-	echo '<script type="text/javascript" src="'.$url.'js/jquery.colorbox-min.js"></script>
-<script type="text/javascript">
+	echo '<script src="'.$url.'js/jquery.colorbox-min.js"></script>
+<script>
 $(document).ready(function(){
 	$(".gallery,.slideshow").find("a[href$=\'.jpg\'],a[href$=\'.jpeg\'],a[href$=\'.png\'],a[href$=\'.gif\'],a[href$=\'.bmp\']").attr("rel","cb");
 	$("div.gallery a[rel=cb]").colorbox({rel:"true",transition:"'.$options['effect'].'"'.$size.',photo:"true"});

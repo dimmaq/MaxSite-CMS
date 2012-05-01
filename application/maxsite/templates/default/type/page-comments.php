@@ -5,9 +5,18 @@
  * (c) http://max-3000.com/
  */
 
-mso_cur_dir_lang('templates');
 
 # коммментарии
+
+
+$page_text_ok = true; // разрешить вывод текста комментария в зависимости отпароля записи
+
+if (isset($page['page_password']) and $page['page_password']) // есть пароль у страницы
+{
+	$page_text_ok = (isset($page['page_password_ok'])); // нет отметки, что пароль пройден
+}
+
+
 echo '<span><a id="comments"></a></span>';
 
 // получаем список комментариев текущей страницы
@@ -44,20 +53,24 @@ if (is_login()) $edit_link = getinfo('siteurl') . 'admin/comments/edit/';
 
 if ($comments or $page_comment_allow) echo NR . '<div class="type type_page_comments">' . NR;
 
-if ($comments) // есть страницы
+if ($page_text_ok and $comments) // есть страницы
 { 	
 
 	if ($f = mso_page_foreach('page-comments-do')) require($f); // подключаем кастомный вывод
 	else 
 	{
 		echo '<div class="comments">';
-		echo mso_get_val('page_comments_count_start', '<h3 class="comments">') . t('Комментариев') . ': ' . count($comments) . mso_get_val('page_comments_count_end', '</h3>');
+		echo mso_get_val('page_comments_count_start', '<h3 class="comments">') . tf('Комментариев') . ': ' . count($comments) . mso_get_val('page_comments_count_end', '</h3>');
 	}
 	
 	echo '<ol>';
 	
+	static $num_comment = 0; // номер комментария по порядку - если нужно выводить в type_foreach-файле
+	
 	foreach ($comments as $comment)  // выводим в цикле
 	{
+		$num_comment++;
+		
 		if ($f = mso_page_foreach('page-comments')) 
 		{
 			require($f); // подключаем кастомный вывод
@@ -74,24 +87,43 @@ if ($comments) // есть страницы
 		
 		$comments_date = mso_date_convert('Y-m-d в H:i:s', $comments_date);
 		
-		echo NR . '<li style="clear: both"' . $class . '><div class="comment-info"><span class="date"><a href="#comment-' . $comments_id . '" id="comment-' . $comments_id . '">' . $comments_date . '</a></span>';
-		echo ' | <span class="url">' . $comments_url . '</span>';
+		$comment_info = '';
+		echo NR . '<li style="clear: both"' . $class . '>';
+		
+		
+		$comment_info .= '<span class="date"><a href="#comment-' 
+			. $comments_id 
+			. '" id="comment-' . $comments_id . '">' . $comments_date . '</a></span>'
+			.' | <span class="url">' . $comments_url . '</span>';
 		
 		if ($comusers_url and mso_get_option('allow_comment_comuser_url', 'general', 0))
 		{
-			echo ' <a href="' . $comusers_url . '" rel="nofollow" class="outlink"><img src="' . getinfo('template_url') . 'images/outlink.png" width="16" height="16" alt="link" title="' . t('Сайт комментатора') . '"></a>';
+			$comment_info .= ' <a href="' 
+				. $comusers_url 
+				. '" rel="nofollow" class="outlink"><img src="' 
+				. getinfo('template_url') 
+				. 'images/outlink.png" width="16" height="16" alt="link" title="' 
+				. tf('Сайт комментатора') . '"></a>';
 		}
 		
-		if ($edit_link) echo ' | <a href="' . $edit_link . $comments_id . '">edit</a>';
+		if ($edit_link) $comment_info .= ' | <a href="' . $edit_link . $comments_id . '">edit</a>';
 		
-		if (!$comments_approved) echo ' | '. t('Ожидает модерации');
+		if (!$comments_approved) $comment_info .= ' | '. tf('Ожидает модерации');
 		
-		echo '</div>';
 		
-		echo '<div class="comments_content">' 
-			. mso_avatar($comment) 
-			. mso_comments_content($comments_content) 
-			. '</div>';
+		if ($f = mso_page_foreach('page-comments-out')) 
+		{
+			require($f); // подключаем кастомный вывод
+		}
+		else
+		{
+			echo '<div class="comment-info">' . $comment_info . '</div>';
+			
+			echo '<div class="comments_content">'
+				. mso_avatar($comment) 
+				. mso_comments_content($comments_content) 
+				. '</div>';
+		}
 		
 		echo '</li>'; 
 		
@@ -102,14 +134,14 @@ if ($comments) // есть страницы
 	echo '</div>' . NR;
 }
 
-if ($page_comment_allow)
+if ($page_comment_allow and $page_text_ok)
 {
 	// если запрещены комментарии и от анонимов и от комюзеров, то выходим
 	if ( mso_get_option('allow_comment_anonim', 'general', '1') 
 		or mso_get_option('allow_comment_comusers', 'general', '1') )  
 	{
 		if ($f = mso_page_foreach('page-comment-form-do')) require($f); // подключаем кастомный вывод
-		else echo '<div class="break"></div>' . mso_get_val('leave_a_comment_start', '<h3 class="comments">') . mso_get_option('leave_a_comment', 'templates', t('Оставьте комментарий!')). mso_get_val('leave_a_comment_end', '</h3>');
+		else echo '<div class="break"></div>' . mso_get_val('leave_a_comment_start', '<h3 class="comments">') . mso_get_option('leave_a_comment', 'templates', tf('Оставьте комментарий!')). mso_get_val('leave_a_comment_end', '</h3>');
 		
 		if ($f = mso_page_foreach('page-comment-form')) 
 		{

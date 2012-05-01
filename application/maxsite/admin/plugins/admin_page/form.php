@@ -5,17 +5,12 @@
  * (c) http://max-3000.com/
  */
 	
-	mso_cur_dir_lang('admin');
-	
 	# Форма - работает совместно с edit и new
 	
-	$page_files = '';
-	$page_admin_files = '';
 	
 	# до 
 	$do = '
-	<script type="text/javascript">
-	//$(function(){
+	<script>
 	
 		function shsh()
 		{
@@ -113,6 +108,25 @@
 		{
 			select_page_type();
 		});
+		
+		$("#set_current_time").click(function()
+		{
+			var d = new Date();
+			
+			$("select[name=f_date_y]").val(d.getFullYear());
+			$("select[name=f_date_m]").val(1 + d.getMonth());
+			$("select[name=f_date_d]").val(d.getDate());
+			$("select[name=f_time_h]").val(d.getHours());
+			$("select[name=f_time_m]").val(d.getMinutes());
+			$("select[name=f_time_s]").val(d.getSeconds());
+			
+			$("#f_date_change").attr("checked", "checked");
+
+
+			return false;
+		});		
+		
+		
 	});
 	
 	</script>
@@ -139,21 +153,14 @@
 				<input type="submit" name="' . $name_submit . '" value="' . t('Готово') . '" class="wymupdate"> <span class="autosave-editor"></span>
 			</div>
 			
-			<div>
-				<div class="block_page page_meta">
+			<div>' 
+				. mso_hook('admin_page_form_q_files') 
+				. mso_hook('admin_page_form_pre_all_meta') 
+				. '<div class="block_page page_meta">
 					<h3>' . t('Дополнительные поля') . '</h3>
 					' . $all_meta . '
 					' . mso_hook('admin_page_form_add_all_meta') . '
 				</div>
-				<!--
-				<div class="block_page page_files">
-					<h3>' . t('Файлы') . '</h3>
-					' . $page_admin_files . '
-					<div class="frame">
-					' . $page_files . '
-					</div>
-				</div>
-				-->
 			</div>
 		</td>
 		
@@ -184,7 +191,11 @@
 
 			<div class="block_page page_date">
 				<h3>' . t('Дата публикации') . '</h3>
-				<p><label><input name="f_date_change" type="checkbox" ' . $f_date_change . '> ' . t('Изменить дату публикации') . '</label></p>
+				<p><label><input name="f_date_change" id="f_date_change" type="checkbox" ' . $f_date_change . '> ' . t('Изменить дату') . '</label> 
+				
+				<a href="#" style="font-size: 1.2em; text-decoration: none;" id="set_current_time" title="' . t('Уставновить текущее время компьютера') . '">&#9685;</a>
+				
+				</p>
 				<p>' . $date_y . ' - ' . $date_m . ' - ' . $date_d . '</p>
 				<p>' . $time_h . ' : ' . $time_m . ' : ' . $time_s . '</p>
 				<p><em>' . $date_time . '</em></p>
