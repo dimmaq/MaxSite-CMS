@@ -298,7 +298,7 @@ function theme_switch_body_start($args = '')
 		</div></div><!-- div class=theme_switch_panel -->
 	</div><!-- div class=theme_switch_panel_main -->
 	
-	<script type="text/javascript">
+	<script>
 		$("div.theme_switch_panel").scrollTo("a.current img", 500);
 		$("div.theme_switch_panel").scrollTo("a.img' . $i_go . ' img", 800);
 	</script>

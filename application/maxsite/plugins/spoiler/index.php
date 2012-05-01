@@ -113,11 +113,11 @@ function spoiler_head($args = array())
 	if ($options['style'] != '')
 	{
 		echo '
-		<link rel="stylesheet" href="' . getinfo('plugins_url') . 'spoiler/style/'.$options['style']. '" type="text/css" media="screen">';
+		<link rel="stylesheet" href="' . getinfo('plugins_url') . 'spoiler/style/'.$options['style']. '">';
 	}	
 	
 	echo '	
-	<script type="text/javascript">
+	<script>
 	
 	function SpoilerToggle(id, link, showtext, hidetext)
 	{

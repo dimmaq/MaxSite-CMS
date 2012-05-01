@@ -2662,11 +2662,11 @@ function mso_load_jquery($plugin = '', $path = '')
 		{
 			if ($path)
 			{
-				return '<script type="text/javascript" src="' . $path . $plugin . '"></script>' . NR;
+				return '<script src="' . $path . $plugin . '"></script>' . NR;
 			}
 			else
 			{
-				return '<script type="text/javascript" src="'. getinfo('common_url') . 'jquery/' . $plugin . '"></script>' . NR;
+				return '<script src="'. getinfo('common_url') . 'jquery/' . $plugin . '"></script>' . NR;
 			}
 		}
 		else
@@ -2681,7 +2681,7 @@ function mso_load_jquery($plugin = '', $path = '')
 			elseif ($jquery_type == 'huyandex') $url = 'http://yandex.st/jquery/' . $version . '/jquery.min.js';
 			else $url = getinfo('common_url') . 'jquery/jquery-' . $version . '.min.js';
 			
-			return '<script type="text/javascript" src="' . $url . '"></script>' . NR;
+			return '<script src="' . $url . '"></script>' . NR;
 		}
 	}
 }
@@ -3920,7 +3920,7 @@ function mso_lessc($less_file = '', $css_file = '', $css_url = '', $use_cache = 
 				if ($css_url) 
 				{
 					// в виде имени файла
-					return NT . '<link rel="stylesheet" href="' . $css_url . '" type="text/css">';
+					return NT . '<link rel="stylesheet" href="' . $css_url . '">';
 				}
 				else
 				{
@@ -3980,7 +3980,7 @@ function mso_lessc($less_file = '', $css_file = '', $css_url = '', $use_cache = 
 		
 		if ($css_url) 
 		{
-			return NT . '<link rel="stylesheet" href="' . $css_url . '" type="text/css">'; // в виде имени файла
+			return NT . '<link rel="stylesheet" href="' . $css_url . '">'; // в виде имени файла
 		}
 		else
 		{
