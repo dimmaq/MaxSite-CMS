@@ -7,7 +7,7 @@
 
 class Maxsite_lib 
 {
-	var $version = '0.714';
+	var $version = '0.718';
 	var $config = array();
 	var $data = array();
 	var $hooks = array();
@@ -19,6 +19,7 @@ class Maxsite_lib
 	var $keywords = '';
 	var $language = false;
 	var $current_lang_dir = false;
+	var $cache = array();
 	
 	
 	public function __construct()
