@@ -126,8 +126,30 @@
 			return false;
 		});		
 		
-		
 	});
+	
+	
+	// фоновое сохранение
+	$(function(){	
+		$("#bsave").click(function()
+		{
+			$("div.bsave_result").html("' . t('Сохранение...') . '");
+			
+			$.post(
+				"' . getinfo('ajax') . base64_encode('admin/plugins/admin_page/bsave-post-ajax.php') . '",
+				{
+					params: $("#form_editor").serialize(),
+					id: ' . mso_segment(3) . ',
+				},
+				function(data)
+				{
+					// Здесь мы получаем данные,
+					$("div.bsave_result").html(data);
+				}
+			);
+		});
+	});
+	
 	
 	</script>
 	
@@ -150,7 +172,7 @@
 				</p>
 									
 				' . $f_return . '
-				<input type="submit" name="' . $name_submit . '" value="' . t('Готово') . '" class="wymupdate"> <span class="autosave-editor"></span>
+				<input type="submit" name="' . $name_submit . '" value="' . t('Готово') . '" class="wymupdate"> ' . $f_bsave . ' <span class="autosave-editor"></span>
 			</div>
 			
 			<div>' 
@@ -162,6 +184,8 @@
 					' . mso_hook('admin_page_form_add_all_meta') . '
 				</div>
 			</div>
+			<input type="submit" name="' . $name_submit . '" value="' . t('Готово') . '" class="wymupdate">
+			
 		</td>
 		
 		<td class="page_info">

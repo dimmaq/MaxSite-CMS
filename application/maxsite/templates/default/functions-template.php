@@ -3,39 +3,13 @@
 /*
  * (c) MaxSite CMS
  * http://max-3000.com/
-*/
+ *
+ * Функции для работы с шаблоном
+ * Не копируйте этот файл в свой шаблон!
+ *
+ */
 
-
-# файл functions-template.php
-# функции для работы с шаблоном
-# не копируйте этот файл в свой шаблон
-
-
-/*
- * ver.  9/06/2012
- * ver. 10/04/2012
- * ver.  5/02/2012
- * ver.  1/02/2012
- * ver. 25/01/2012
- * ver. 23/01/2012
- * ver. 17/01/2012
- * ver. 10/01/2012
- * ver.  6/01/2012
- * ver.  3/01/2012
- * ver. 27/12/2011
- * ver. 26/12/2011
- * ver. 22/12/2011
- * ver.  7/12/2011
- * ver.  5/12/2011
- * ver.  1/12/2011
- * ver. 19/11/2011
- * ver.  6/11/2011
- * ver. 17/10/2011
- * ver. 10/09/2011
- * ver. 21/08/2011
-*/
-
-
+ 
 
 # функция возвращает массив $path_url-файлов по указанному $path - каталог на сервере
 # $full_path - нужно ли возвращать полный адрес (true) или только имя файла (false)
@@ -203,13 +177,15 @@ if (!function_exists('get_component_fn'))
 				return (getinfo('template_dir') . 'components/' . $fn); // да
 			else
 			{
+				// нет, проверяем $def_file
 				if (file_exists(getinfo('template_dir') . 'components/' . $def_file))
 				{
 					if ($def_file) return getinfo('template_dir') . 'components/' . $def_file;
-					else return false;
+						else return false;
 				}
 			}
 		}
+		
 		return false; // ничего нет
 	}
 }
@@ -296,7 +272,7 @@ if (!function_exists('mso_default_head_section'))
 			}
 			
 		echo '">';
-		
+
 		
 		// подключение var_style.css
 		
@@ -320,6 +296,13 @@ if (!function_exists('mso_default_head_section'))
 		}
 		
 		echo NT . '<link rel="stylesheet" href="' . getinfo('template_url') . 'css/print.css" media="print">';
+		
+		// если есть fonts.css, то подключаем его - подумать ещё
+		// файл специально исползуется для подгрузки шрифтов через @import 
+		mso_add_file('css/fonts.css');
+		
+		// и import.css для каких-то других @import
+		mso_add_file('css/import.css');
 		
 		out_component_css();
 			

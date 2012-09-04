@@ -8,7 +8,7 @@
 # функция автоподключения плагина
 function run_php_autoload($args = array())
 {
-	mso_hook_add( 'content', 'run_php_custom'); # хук на вывод контента
+	mso_hook_add('content_content', 'run_php_custom'); # хук на вывод контента
 }
 
 # callback-функция 

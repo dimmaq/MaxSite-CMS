@@ -24,7 +24,7 @@
 	});
 </script>
 
-<form method="post" <?= $editor_config['action'] ?> enctype="multipart/form-data">
+<form method="post" <?= $editor_config['action'] ?> enctype="multipart/form-data" id="form_editor">
 <?= $editor_config['do'] ?>
 <textarea id="f_content" name="f_content" rows="25" cols="80" style="height: <?= $editor_config['height'] ?>px;" ><?= $editor_config['content'] ?></textarea>
 <?= $editor_config['posle'] ?>

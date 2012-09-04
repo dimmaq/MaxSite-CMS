@@ -602,7 +602,7 @@ function is_page_cat($slug = '', $and_id = true, $and_name = true)
 {
 	global $MSO, $page;
 
-	if (!$slug) return false; // slaug не указан
+	if (!$slug) return false; // slug не указан
 	if (!is_type('page')) return false; // тип не page
 	if (!isset($page['page_categories_detail'])) return false; // нет информации о рубриках
 
@@ -613,7 +613,7 @@ function is_page_cat($slug = '', $and_id = true, $and_name = true)
 	{
 		if ( $val['category_slug'] == $slug ) $result = true; // slug совпал
 		if ( !$result and $and_id and $id == $slug ) $result = true; // можно искать по $id
-		if ( !$result and $val['category_name'] == $slug ) $result = true; // category_name совпал
+		if ( !$result and $and_name and $val['category_name'] == $slug ) $result = true; // category_name совпал
 
 		if ($result) break;
 	}
@@ -2712,7 +2712,7 @@ function mso_load_jquery($plugin = '', $path = '')
 		{
 			$jquery_type = mso_get_option('jquery_type', 'general', 'self');
 			
-			$version = '1.7.2';
+			$version = '1.8.1';
 			
 			if ($jquery_type == 'google') $url = 'http://ajax.googleapis.com/ajax/libs/jquery/' . $version . '/jquery.min.js'; // Google Ajax API CDN 
 			elseif ($jquery_type == 'microsoft') $url = 'http://ajax.aspnetcdn.com/ajax/jQuery/jquery-' . $version . '.min.js'; // Microsoft CDN
@@ -3860,7 +3860,9 @@ function mso_rss()
 # Функция использует глобальный одномерный массив
 # который используется для получения значения указанного ключа $key
 # Если в массиве ключ не определён, то используется значение $default
-function mso_get_val($key = '', $default = '')
+# если $array = true, то возвращаем значение ключа массива $key[$default]
+# см. примеры к mso_set_val()
+function mso_get_val($key = '', $default = '', $array = false)
 {
 	global $MSO;
 	
@@ -3871,12 +3873,31 @@ function mso_get_val($key = '', $default = '')
 		return $default;
 	}
 	
-	// возвращаем значение или дефаулт
-	return (isset($MSO->key_options[$key])) ? $MSO->key_options[$key] : $default; 
+	
+	if ($array !== false and $default and isset($MSO->key_options[$key][$default]))
+	{
+		return $MSO->key_options[$key][$default]; 
+	}
+	else
+	{
+		// возвращаем значение или дефаулт
+		return (isset($MSO->key_options[$key])) ? $MSO->key_options[$key] :	$default; 
+	}
 }
 
 # Функция обратная mso_get_val() - задаёт для ключа $key значение $val 
-function mso_set_val($key, $val)
+# если $val_val == null, значит присваиваем всему $key значание $val
+# если $val_val != null, значит $val - это ключ массива
+# mso_set_val('type_home', 'cache_time');
+#		[type_home]=>'cache_time'
+#
+# mso_set_val('type_home', 'cache_time', 900); 
+#		[type_home] => Array
+#		(
+#            [cache_time] => 900
+#		)
+#
+function mso_set_val($key, $val, $val_val = null)
 {
 	global $MSO;
 	
@@ -3886,8 +3907,27 @@ function mso_set_val($key, $val)
 		$MSO->key_options = array();
 	}
 	
-	// записали значение
-	$MSO->key_options[$key] = $val;
+
+	if ($val_val !== null)
+	{
+		$MSO->key_options[$key][$val] = $val_val;
+	}
+	else
+	{
+		$MSO->key_options[$key] = $val; // записали значение
+	}
+	
+}
+
+# Функция удаляет ключ $key 
+function mso_unset_val($key)
+{
+	global $MSO;
+	
+	if (isset($MSO->key_options[$key])) 
+	{
+		unset($MSO->key_options[$key]);
+	}
 }
 
 # функция формирует <link rel="$REL" $ADD>
@@ -3910,13 +3950,42 @@ function mso_link_rel($rel = 'canonical', $add = '')
 			
 			$url = '';
 			
-			if (is_type('page') or is_type('category') or is_type('tag') or is_type('author'))
+			if (is_type('page') 
+				or is_type('category') 
+				or is_type('tag') 
+				or is_type('author')
+				or is_type('users')
+				or (mso_segment(1) == 'sitemap')
+				or (mso_segment(1) == 'contact')
+				)
 			{
-				$url = getinfo('site_url') . mso_segment(1) . '/' . mso_segment(2);
+				if (mso_segment(2))
+				{
+					$url = getinfo('site_url') . mso_segment(1) . '/' . mso_segment(2);
+				}
+				else
+				{
+					$url = getinfo('site_url') . mso_segment(1);
+				}
 			}
 			elseif (is_type('home'))
 			{
 				$url = getinfo('site_url');
+			}
+			
+			// echo $url;
+			
+			// пагинация
+			if (($cur = mso_current_paged()) > 1) 
+			{
+				if (is_type('home'))
+				{
+					$url .= 'home/next/' . $cur;
+				}
+				else
+				{
+					$url .= '/next/' . $cur;
+				}
 			}
 
 			if ($url) 
@@ -3998,12 +4067,14 @@ function mso_lessc($less_file = '', $css_file = '', $css_url = '', $use_cache = 
 		require_once(getinfo('common_dir') . 'less/lessc.inc.php');
 		
 		$compiler = new lessc();
-		$compiler->importDir = dirname($less_file);
+		// $compiler->importDir = dirname($less_file); // старый API
+		$compiler->addImportDir(dirname($less_file)); // новый 0.3.7 api
 		$compiler->indentChar = "\t";
 		
 		try
 		{
-			$out = $compiler->parse($fc_all);
+			//$out = $compiler->parse($fc_all); // старый API
+			$out = $compiler->compile($fc_all); // новый 0.3.7 api
 		}
 		catch (Exception $ex) 
 		{
@@ -4080,7 +4151,7 @@ function _mso_profiler_start($point = 'first', $echo = false)
 		pr('start ' . $point . ': ' . $_points[$point]['mem0'] . 'MB');
 }
 
-# профмилирование конец
+# профилирование конец
 function _mso_profiler_end($point = 'first', $echo = true)
 {
 	global $_points;

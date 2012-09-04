@@ -431,7 +431,10 @@
 	
 	$f_return = '<input name="f_return" type="checkbox" title="' . t('После сохранения вернуться к редактированию') . '">';
 										// checked="checked"
-
+	
+	// быстрое сохранение только в режиме редактирования
+	$f_bsave = '';
+	
 	# форма вынесена в отдельный файл, поскольку она одна и таже для new и edit
 	# из неё получается $do и $posle
 	require($MSO->config['admin_plugins_dir'] . 'admin_page/form.php');

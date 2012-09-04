@@ -19,6 +19,7 @@ $res_post = mso_comuser_edit();
 # получим всю информацию о комюзере из сессии или url
 $comuser_info = mso_get_comuser();
 
+
 # отображение формы залогирования
 $login_form = !is_login_comuser();
 
@@ -45,7 +46,7 @@ if ($comuser_info)
 {
 	extract($comuser_info[0]);
 	
-	//pr($comuser_info[0]);
+	// pr($comuser_info[0]);
 	if ($f = mso_page_foreach('users-form')) require($f); // подключаем кастомный вывод
 	else
 	{
@@ -122,40 +123,58 @@ if ($comuser_info)
 					. htmlspecialchars(strip_tags($comusers_description)) . '</textarea></span></p>';
 				
 				
+				/*
+				// если включено любое уведомление, то меняем флаг на «Подписаться»
 				
-				echo '<p><span class="ffirst ftitle">'. tf('Уведомления'). '</span><span>' . form_dropdown('f_comusers_notify', array('0'=> tf('Без уведомлений'), '1'=> tf('Подписаться')), $comusers_notify, '') . '</span></p>';
+				echo '<p><span class="ffirst ftitle">'. tf('Уведомления'). '</span><span>' 
+						
+						. form_dropdown('f_comusers_notify', 
+						
+							array('0'=> tf('Без уведомлений'), '1'=> tf('Подписаться')), $comusers_notify, '') 
+						
+						. '</span></p>';
+				*/
+
+
 				
 				// поскольку чекбоксы не передаются, если они не отмечены, 
 				// то передаем скрытно их дефолтные значения
 
 				echo '<input type="hidden" value="0" name="f_comusers_meta[subscribe_my_comments]">';
 				
+				$check = (isset($comusers_meta['subscribe_my_comments']) and $comusers_meta['subscribe_my_comments']=='1') ? ' checked="checked"' : '';
 				
-				$check = (isset($comusers_meta['subscribe_my_comments']) and $comusers_meta['subscribe_my_comments']=='1');
 				
-				echo '<p class="nop"><span class="ffirst"></span><label>' 
-					. form_checkbox('f_comusers_meta[subscribe_my_comments]', '1', $check) 
+				echo '<p><span class="ffirst ftitle">'. tf('Уведомления'). '</span><label>' 
+					. '<input type="checkbox" name="f_comusers_meta[subscribe_my_comments]" value="1"' . $check . '>'
 					. ' '. tf('новые комментарии, где я участвую') . '</label></p>';
 				
 				
 				echo '<input type="hidden" value="0" name="f_comusers_meta[subscribe_other_comments]">';
-				$check = (isset($comusers_meta['subscribe_other_comments']) and $comusers_meta['subscribe_other_comments']=='1');
+				
+				
+				$check = (isset($comusers_meta['subscribe_other_comments']) and $comusers_meta['subscribe_other_comments']=='1') ? ' checked="checked"' : '';
+				
 				echo '<p class="nop"><span class="ffirst"></span><label>' 
-					. form_checkbox('f_comusers_meta[subscribe_other_comments]', '1', $check) 
+					. '<input type="checkbox" name="f_comusers_meta[subscribe_other_comments]" value="1"' . $check . '>'
 					. ' '. tf('новые комментарии, где я не участвую') . '</label>';
 				
 				
 				echo '<input type="hidden" value="0" name="f_comusers_meta[subscribe_new_pages]">';
-				$check = (isset($comusers_meta['subscribe_new_pages']) and $comusers_meta['subscribe_new_pages']=='1');
+				
+				$check = (isset($comusers_meta['subscribe_new_pages']) and $comusers_meta['subscribe_new_pages']=='1') ? ' checked="checked"' : '';
+				
 				echo '<p class="nop"><span class="ffirst"></span><label>' 
-					. form_checkbox('f_comusers_meta[subscribe_new_pages]', '1', $check) 
+					. '<input type="checkbox" name="f_comusers_meta[subscribe_new_pages]" value="1"' . $check . '>'
 					. ' '. tf('новые записи сайта') . '</label></p>';
 					
 					
 				echo '<input type="hidden" value="0" name="f_comusers_meta[subscribe_admin]">';
-				$check = (isset($comusers_meta['subscribe_admin']) and $comusers_meta['subscribe_admin']=='1');
+				
+				$check = (isset($comusers_meta['subscribe_admin']) and $comusers_meta['subscribe_admin']=='1') ? ' checked="checked"' : '';
+				
 				echo '<p class="nop"><span class="ffirst"></span><label>' 
-					. form_checkbox('f_comusers_meta[subscribe_admin]', '1', $check) 
+					. '<input type="checkbox" name="f_comusers_meta[subscribe_admin]" value="1"' . $check . '>'
 					. ' '. tf('рассылка администратора') . '</label></p>';
 					
 			}

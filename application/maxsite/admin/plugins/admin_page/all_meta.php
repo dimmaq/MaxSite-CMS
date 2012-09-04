@@ -57,6 +57,11 @@
 		if ($meta_templ) $all = array_merge($all, $meta_templ);
 	}
 	
+	// описание см. default/custom/_my_meta.php
+	if (file_exists(getinfo('template_dir') . 'custom/my_meta.php'))
+	{
+		require( getinfo('template_dir') . 'custom/my_meta.php' );
+	}
 	
 	// pr($all);
 	// проходимся по всем ini-опциям
@@ -127,8 +132,8 @@
 					if ($value == trim($val)) $checked = 'checked="checked"';
 						else $checked = '';
 						
-					$f .= '<input type="radio" name="' . $name_f . '" value="' . trim($val) . '" ' 
-							. $checked . '> ' . trim($val) . $delimer . NR;
+					$f .= '<label><input type="radio" name="' . $name_f . '" value="' . trim($val) . '" ' 
+							. $checked . '> ' . trim($val) . '</label>' . $delimer . NR;
 				}
 			}
 		}

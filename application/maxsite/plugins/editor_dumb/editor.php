@@ -2,7 +2,7 @@
 
 <?php echo '<script src="'. getinfo('plugins_url') . 'editor_dumb/editor_zero.js"></script>'; ?>
 
-<form method="post" <?= $editor_config['action'] ?> enctype="multipart/form-data">
+<form method="post" <?= $editor_config['action'] ?> enctype="multipart/form-data" id="form_editor">
 <?= $editor_config['do'] ?>
 <p class="editor_button">
 	<input type="button" value="B" title="<?= t('Полужирный') ?>" onClick="addText('<b>', '</b>') ">

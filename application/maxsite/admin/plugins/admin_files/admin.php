@@ -657,7 +657,8 @@ $(function()
 	{
 		if (!$(this).parent().parent().children('.edit_descr').size())
 		{
-			var file_name = $(this).parent().parent().children(':checkbox').attr('id');
+			var file_name = $(this).parent().parent().children('label').children('input:checkbox').val();
+			
 			var old_descr = $(this).parent().parent().children('label').children('em').text();
 			var form_code = '<div class="edit_descr" style="width: 100%;" style="display:none"><form method="post">{$session}<input type="hidden" name="f_file_name" value="' + file_name + '"><textarea name="f_file_description" >' + old_descr + '</textarea><br><input type="submit" name="f_edit_submit" value="{$save_button}"></form></div>';
 			$(this).parent().parent().append(form_code);

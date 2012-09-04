@@ -125,6 +125,15 @@ function range_url_init($arg = array())
 	$current_url = mso_current_url(); // текущий адрес
 	if ($current_url === '') return $arg; // главная
 	
+	
+	// отдельно правило для главной
+	// если это home, но без next, то 301-редиректим на главную
+	if (mso_segment(1) == 'home' and mso_segment(2) != 'next')
+	{
+		mso_redirect('', false, 301);
+	}
+	
+	
 	if (!isset($options['templates']) ) $options['templates'] = '';
 	$templates = explode("\n", trim($options['templates'])); // разобъем по строкам
 	
@@ -213,6 +222,7 @@ function range_url_init($arg = array())
 	if (!isset($options['min-count-segment']) ) $options['min-count-segment'] = 1; // минимальное количество сегментов
 	$options['min-count-segment'] = (int) $options['min-count-segment'];
 	
+	
 	if (count(explode('/', $current_url)) <= $options['min-count-segment']) return $arg; // адрес имеет менее N сегментов
 
 	$allow = false; // результат 
@@ -236,6 +246,8 @@ function range_url_init($arg = array())
 	}
 	
 	// pr($allow);
+	
+
 	
 	if (!$allow)
 	{

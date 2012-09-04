@@ -6,56 +6,7 @@
  * Класс для формирования thumb-изображений
  * указывается url входящего изображения
  * на выходе url нового изображения
- 
-			require_once(getinfo('template_dir') . 'stock/thumb/thumb.php');
-			
-			// адрес должен быть в uploads!!!
-			$img = 'http://сайт/uploads/файл';
-			
-			// первый параметр - адрес сайта 
-			// второй постфикс для нового файла
-			$t = new Thumb($img, '-205-145');
-			
-			if ($t->init === true) // уже есть готовое изображение в кэше
-			{
-				$new_img = $t->new_img; // сразу получаем новый адрес
-			}
-			elseif($t->init === false) // входящий адрес ошибочен
-			{
-				$new_img = false; // ошибка
-			}
-			else
-			{	
-				// работаеаем с изображением
-				
-				# $t->resize(205); // пропорциональное изменение по ширине
-				
-				# $t->resize(0, 145); // пропорция по высоте
-				
-				# $t->resize(205, 145); // точный размер
-				
-				# $t->crop(205, 145); // обрезка ширина - высота - от левого верхнего угла
-				
-				# $t->crop(205, 145, 30, 50); // смещение по x=30 y=50
-				
-				# $t->crop_center(205, 145); // кроп по центру
-				
-				# $t->resize_crop(205, 145); // вначале уменьшение по ширине, после обрезка от верхнего угла
-				
-				# $t->resize_crop(205, 145, 30, 50); // со смещением
-				
-				# $t->resize_crop_сenter(205, 145); // уменьшение по ширине, после кроп по центру
-				
-				$new_img = $t->new_img; // url-адрес готового изображения
-			}
-
-			unset($t); // удалим созданный объект
-			
-			if ($new_img)
-			{
-				// адрес нового изображения
-			}
-
+ 			
 */
 
 
@@ -155,7 +106,7 @@ class Thumb
 		// пропорции
 		$image_info = GetImageSize(getinfo('uploads_dir') . $file); // информация о файле исходном
 		
-		// если задана только ширина, то высоту расчитываем пропорцей от исходного файла
+		// если задана только ширина, то высоту расчитываем пропорцией от исходного файла
 		if ($height === 0)
 		{
 			//$image_info[0] - ширина  $image_info[1] - высота
@@ -235,7 +186,7 @@ class Thumb
 	
 	// вначале пропорциональная ширина
 	// после обрезка кроп до указанных размеров по центру
-	function resize_crop_сenter($width = 0, $height = 0)
+	function resize_crop_center($width = 0, $height = 0)
 	{
 		$this->resize($width, 0);
 		
@@ -244,7 +195,47 @@ class Thumb
 		$y = round($image_info[1]/ 2 - $height / 2);
 		
 		return $this->crop($width, $height, $x, $y, $this->new_file, $this->new_file);
+	}
+	
+	// вначале пропорциональная высота(!)
+	// после обрезка кроп до указанных размеров по центру
+	function resize_h_crop_center($width = 0, $height = 0)
+	{
+		$this->resize(0, $height);
+		
+		$image_info = GetImageSize(getinfo('uploads_dir') . $this->new_file);
+		$x = round($image_info[0] / 2 - $width / 2);
+		$y = round($image_info[1]/ 2 - $height / 2);
+		
+		return $this->crop($width, $height, $x, $y, $this->new_file, $this->new_file);
+	}
+	
+	// вначале пропорциональная высота/ширина 
+	// после обрезка кроп до указанных размеров по центру
+	// высота или ширина выбирается та, что больше, чтобы не было пустот в итоге
+	function resize_full_crop_center($width = 0, $height = 0)
+	{
+		// определяем пропорции реальные к требуемым
+		// от них и скачем
+		$w = $this->image_info[0] / $width;
+		$h = $this->image_info[1] / $height;
+	
+		if ($w > $h)
+		{
+			$this->resize(0, $height);
+		}
+		else
+		{
+			$this->resize($width, 0);
+		}
+		
+		$image_info = GetImageSize(getinfo('uploads_dir') . $this->new_file);
+		$x = round($image_info[0] / 2 - $width / 2);
+		$y = round($image_info[1]/ 2 - $height / 2);
+		
+		return $this->crop($width, $height, $x, $y, $this->new_file, $this->new_file);
 	}	
+	
 	
 	# функция готовит превьюшку в _mso_i 
 	function preview()
@@ -281,7 +272,9 @@ class Thumb
 
 
 // вспомогательные функции для использования в шаблоне
-function thumb_generate($img, $width, $height, $def_img = false, $replace_file = false)
+// тип формирования указывается в $type_resize
+
+function thumb_generate($img, $width, $height, $def_img = false, $type_resize = 'resize_full_crop_center', $replace_file = false)
 {
 	// указана картинка, нужно сделать thumb заданного размера
 	if ($img) 
@@ -299,8 +292,35 @@ function thumb_generate($img, $width, $height, $def_img = false, $replace_file =
 		else
 		{	
 			// получаем изображение
-			// уменьшение по ширине, после кроп по центру
-			$t->resize_crop_сenter($width, $height);
+			
+			if ($type_resize == 'resize_crop')
+			{
+				$t->resize_crop($width, $height);
+			}
+			elseif ($type_resize == 'crop_center')
+			{
+				$t->crop_center($width, $height);
+			}
+			elseif ($type_resize == 'crop')
+			{
+				$t->crop($width, $height);
+			}
+			elseif ($type_resize == 'resize')
+			{
+				$t->resize($width, $height);
+			}
+			elseif ($type_resize == 'resize_h_crop_center')
+			{
+				$t->resize_h_crop_center($width, $height);
+			}
+			elseif ($type_resize == 'resize_crop_center')
+			{
+				$t->resize_crop_center($width, $height);
+			}
+			else
+			{
+				$t->resize_full_crop_center($width, $height);
+			}
 			
 			$img = $t->new_img; // url-адрес готового изображения
 		}

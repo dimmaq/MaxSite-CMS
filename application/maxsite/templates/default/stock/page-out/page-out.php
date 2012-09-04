@@ -4,152 +4,6 @@
  * MaxSite CMS
  * (c) http://maxsite.org/
  * Класс для вывода записи
- 
-	# пример 1
-	
-	// подготавливаем объект для вывода записей
-	$p = new Page_out;
- 
-	if ( $pages = mso_get_pages(array(параметры получения записей), $pagination) )
-	{
-		// зададим формат вывода каждого элемента
-		// делать перед циклом поскольку он не меняется внутри
-		
-		// сброс формата к дефолтному, если необходимо
-		$p->reset_format();
-		
-		// первым параметром указывается элемент
-		// указаны дефолтные значения
-		// если параметр совпадает с дефолтным, его можно не указывать
-		
-		# $p->format('title', '<h1>', '</h1>', true); // до, после, формировать ссылку
-		# $p->format('date', 'Y-m-d H:i:s', '', ''); // формат даты, до, после
-		# $p->format('cat', ', ', '', ''); // разделитель, до, после
-		# $p->format('tag', ', ', '', ''); // разделитель, до, после
-		# $p->format('feed', 'Подписаться', '', ''); // титул, до, после
-		# $p->format('author', '', ''); // до, после
-		# $p->format('edit', 'Редактировать', '', ''); // титул, до, после
-		# $p->format('read', 'Читать дальше', '', ''); // титул, до, после
-		# $p->format('comments', 'Обсудить', 'Посмотреть комментарии', '', ''); // без комментариев, есть комментарии, до, после
-		
-		
-		// можно задать вывод по echo (по-умолчанию) или return
-		# $p->echo = false; // данные будут возвращаться по return
-		
-		// напримре сменим вывод заголовка записи
-		$p->format('title', '<h4>', '</h4>');
-		
-		// цикла вывода записей
-		foreach ($pages as $page)
-		{
-			$p->load($page); // загружаем данные записи
-			
-			# 	Каждый вывод фо формату это line().
-			# 	второй и третий параметры - до, после
-			
-			# 	[title] - заголовок записи
-			# 	[date] - дата
-			# 	[autor] - автор
-			# 	[comments] - ссылка на комментарии
-			# 	[cat] - рубрики
-			# 	[tag] - метки
-			# 	[edit] - ссылка на редактирование записи
-			# 	[feed] - rss
-			# 	[read] - аля-читать далее
-			
-			$p->line('[title]'); 
-			$p->line('[date] | [autor] | [comments]', '<p>', '</p>');
-			$p->line('[cat]', '<p>', '</p>');
-			$p->line('[tag]', '<p>', '</p>');
-			$p->line('[edit]', '<p>', '</p>');
-			$p->line('[feed]', '<p>', '</p>');
-			$p->line('[read]', '<p>', '</p>');
-			
-
-			// вывод контента - это отдельная функция
-			// можно указать дополнительно до и после
-			// до = <div class="page_content">  после = </div> 
-			
-			$p->content(); // просто обычный вывод 
-			# $p->content_words(10); // обрезка по кол-ву слов
-			# $p->content_chars(100); // обрезка по кол-ву символов
-			
-			// вывод указанной мета
-			$p->meta('title', 'Титул: ');
-			
-			
-			// можно получить значение указанной meta для дальнейшей работы
-			# $meta_title = $p->meta_val('title');
-			
-			// можно получить значение любого ключа из $page
-			# $id = $p->val('page_id')
-			
-			// можно вывести произвольный текст/html 
-			# $p->html('<hr>');
-			
-			// аналог $p->line, только всегда возвращает результат по return
-			# $cat = $p->line_r('[cat]');
-			
-			// можно вывести блок, обрамленный до, после, при условии, непустого содержимого
-			# $bl = 'какой-то текст';
-			# $p->block('<p>', '</p>', $bl); // если бы $bl == '', то ничего не выведет
-			
-			// можно вывести заголовок отдельной функцией
-			# $p->title(NR . '<li>', '</li>');
-		}
-	}
- 
-	# пример 2
-	
-	$p = new Page_out;
- 
-	if ( $pages = mso_get_pages(array(параметры получения записей), $pagination) )
-	{
-		// цикла вывода записей
-		foreach ($pages as $page)
-		{
-			$p->load($page); // загружаем данные записи
-
-			$p->line('[title]'); 
-			$p->line('[date] | [autor] | [comments] [edit]', '<p>', '</p>');
-			
-			// рубрики и метки выведем одним блоком (это пример использования line_r и block)
-			$bl = $p->line_r('[cat]', 'Рубрики: ');
-			$bl .= $p->line_r('[tag]', 'Метки: ');
-			$p->block('<p>', '</p>', $bl);
-			
-			$p->line('[feed]', '<p>', '</p>');
-			$p->line('[read]', '<p>', '</p>');
-
-			$p->content();
-
-			$p->meta('title', 'Титул: ');
-			
-			$p->html('hr');
-			
-		}
-
-	}
- 
-	# пример 3 использование счетчика
-	
-	$p->reset_counter(count($pages)); // сбросить счетчик и утановить всего записей в цикле
-	
-	foreach()
-	{
-		$p->load($page);
-		
-		// можно сменить заголовок записи
-		$p->page['page_title'] = '№' . $p->num . ' «' . $p->page['page_title'] . '»';
-		
-		$p->line('[title]');
-		
-		...
-		
-	
-		if (!$p->last) $p->html('<hr>'); // если не последняя запись
-	}
-
 */
 
 
@@ -251,7 +105,7 @@ class Page_out
 		$this->page = $page;
 		
 		$this->num++; // счетчик увеличим
-		$this->last = ($this->num >= $this->max); // ставим признак true, если это последняя запись
+		$this->last = ($this->num >= $this->max) ; // ставим признак true, если это последняя запись
 	}
 	
 	// сбросить счетчики
@@ -481,19 +335,19 @@ class Page_out
 	// вывод контента
 	function content($do = '<div class="page_content">', $posle = '</div>')
 	{
-		return $this->out($do . $this->val('page_content') . $posle);
+		return $this->out(NR . $do . $this->val('page_content') . $posle);
 	}
 	
 	// обрезка контента по кол-ву слов
 	function content_words($max_words = 15, $cut = '', $do = '<div class="page_content">', $posle = '</div>')
 	{
-		return $this->out($do . mso_str_word(strip_tags($this->val('page_content')), $max_words) . $cut . $posle);
+		return $this->out(NR . $do . mso_str_word(strip_tags($this->val('page_content')), $max_words) . $cut . $posle);
 	}
 	
 	// обрезка контента по кол-ву символов
 	function content_chars($max_chars = 100, $cut = '', $do = '<div class="page_content">', $posle = '</div>')
 	{
-		return $this->out($do . mb_substr(strip_tags($this->val('page_content')), 0, $max_chars, 'UTF-8') . $cut . $posle);
+		return $this->out(NR . $do . mb_substr(strip_tags($this->val('page_content')), 0, $max_chars, 'UTF-8') . $cut . $posle);
 	}
 	
 	// вывод мета - только значение мета
@@ -516,7 +370,16 @@ class Page_out
 	// вывод произвольного html
 	function html($text = '')
 	{
-		$this->out($text);
+		return $this->out($text);
+	}
+	
+	// вывод div с указанным css-классом
+	// или можно указать 
+	function div($text = '', $class = '', $tag = 'div')
+	{
+		if ($class) $class = ' class="' . $class . '"';
+		
+		return $this->out('<' . $tag . $class . '>' . $text . '</' . $tag . '>');
 	}
 	
 	// функция равна line, только всегда отдает по return
@@ -553,7 +416,6 @@ class Page_out
 		}
 	}
 	
-	
 	// возвращает адрес записи
 	// если $html_link = true, то формирует <a href="адрес">
 	function page_url($html_link = false)
@@ -563,6 +425,63 @@ class Page_out
 		else
 			return mso_page_url($this->val('page_slug'));
 	}
+	
+	
+	# формирование таблиц из строк и ячеек аля-таблица
+	// если $rows1 = true, то сразу открываем row поскольку она одна
+	function box_start($class = '', $rows1 = true)
+	{
+		if ($class) $class = ' ' . $class;
+		
+		if ($rows1) $text = NR . '<div class="box' . $class . '"><div class="row">';
+		else $text = NR . '<div class="box' . $class . '">';
+	
+		return $this->out($text);
+	}
+	
+	// закрываем блок
+	function box_end($rows1 = true)
+	{
+		if ($rows1) $text = NR . '</div></div>' . NR;
+		else $text = NR . '</div>' . NR;
+	
+		return $this->out($text);
+	}	
+	
+	// открываем row
+	function row_start()
+	{
+		return $this->out(NR . '<div class="row">');
+	}	
+	
+	// закрываем row
+	function row_end()
+	{
+		return $this->out('</div>');
+	}		
+	
+	// выводим содержимое ячейки
+	function cell($text = '', $class = '')
+	{
+		if ($class) $class = ' ' . $class;
+		
+		return $this->out(NR . '<div class="cell' . $class . '"><div class="wrap">' . $text . '</div></div>');
+	}
+	
+	// старт cell
+	function cell_start($class = '')
+	{
+		if ($class) $class = ' ' . $class;
+		
+		return $this->out(NR . '<div class="cell' . $class . '"><div class="wrap">');
+	}
+	
+	// завершение cell
+	function cell_end()
+	{
+		return $this->out(NR . '</div></div>');
+	}
+	
 	
 	
 } // end  class Page_out 

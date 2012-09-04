@@ -1,5 +1,6 @@
-            Спасибо тем, кто помогал и помогает делать MaxSite CMS!
---------------------------------------------------------------------------------
+Спасибо тем, кто помогал и помогает делать MaxSite CMS!
+-------------------------------------------------------
+
 Максим (MAX) - http://maxsite.org/, http://max-3000.com/ 
 Юрий Белотицкий (Ю.Б.) - http://blog.portal.kharkov.ua/
 Сергей Волков (Volkman) - http://forum.maxsite.org/profile.php?id=3
@@ -15,3 +16,5 @@
 Дмитрий (dimonich110) - http://d51x.ru/
 Иван (UmFal) - 	http://askname.ru/
 Sadovnik - http://filimonov.com.ua/
+Сергей (searchingman) - http://wpcodex.ru/
+ 

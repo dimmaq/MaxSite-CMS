@@ -1193,10 +1193,10 @@ div.page_content ul.tabs-nav {
 .bg-yellow {
   background-color: yellow;
 }
-.left {
+div.left {
   float: left;
 }
-.right {
+div.right {
   float: right;
 }
 .text-left {
