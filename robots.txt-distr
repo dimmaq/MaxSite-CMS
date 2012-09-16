@@ -3,6 +3,7 @@ Disallow: /system
 Disallow: /admin
 Disallow: /login
 Disallow: /logout
+Disallow: /registration
 Disallow: /search
 Disallow: /users/*/edit
 Disallow: /users/*/lost

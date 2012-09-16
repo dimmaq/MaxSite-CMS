@@ -161,7 +161,14 @@ function mso_admin_plugin_options($key, $type, $ar, $title = '', $info = '', $te
 		{
 			if ($val['type'] == 'info')
 			{
-				$form .= '<div class="admin_plugin_options_info">'; 
+				
+				if (isset($val['id'])) $tag_id = ' id="' . $val['id'] . '"';
+					else $tag_id= '';
+				
+				if (isset($val['class'])) $tag_class = ' class="' . $val['class'] . '"';
+					else $tag_class= '';
+				
+				$form .= '<div class="admin_plugin_options_info' . $tag_class . '"' . $tag_id . '>'; 
 				
 				if (isset($val['title'])) $form .= '<h3>' . $val['title'] . '</h3>'; 
 				if (isset($val['text'])) $form .= '<p>' . $val['text'] . '</p>'; 

@@ -44,7 +44,9 @@
 		<?php  if (!is_login() and (!$comuser = is_login_comuser())) { // нет залогирования ?>
 
 			<div class="comments-auth">
-				
+			
+				<?php if (!mso_get_option('form_comment_easy', 'general', '0') ) { // обычная форма ?>
+						
 						<?php if (mso_get_option('allow_comment_anonim', 'general', '1') ) { ?>
 						
 							<p>
@@ -115,8 +117,54 @@
 				<?php if ($form_comment_comuser = mso_get_option('form_comment_comuser', 'general', '')) 
 					echo '<p><span class="ffirst"></span><span class="fhint">', $form_comment_comuser, 
 					'</span></p>'; ?>
-			
-			
+				
+				<?php } else { // form_comment_easy ?>
+				
+						<?php if (mso_get_option('allow_comment_anonim', 'general', '1') ) { ?>
+							<input type="hidden" name="comments_reg" id="comments_reg_1" value="noreg">
+							<p>
+								<label class="ffirst" for="comments_author"> <?= tf('Ваше имя') ?></label>
+								
+								<span><input type="text" name="comments_author" id="comments_author" class="comments_author"></span>
+							</p>
+								
+							<p>
+								<span class="ffirst"></span>
+								<span class="fhint">
+									<?php
+									if (mso_get_option('new_comment_anonim_moderate', 'general', '1') )
+										echo mso_get_option('form_comment_anonim_moderate', 'general', tf('Комментарий будет опубликован после проверки'));
+									else
+										echo mso_get_option('form_comment_anonim', 'general', tf('Используйте нормальные имена'));
+									?>
+								</span>
+							</p>
+						
+						<?php } ?>
+						
+						<?php if (mso_get_option('allow_comment_comusers', 'general', '1')) { ?>
+							
+							<p>
+								<span>
+									<?php 
+										
+										
+										$s = tf('Вы можете <a href="#LOG#">войти</a> под своим логином или <a href="#REG#"> зарегистрироваться</a> на сайте.');
+										
+										$s = str_replace('#LOG#', getinfo('site_url') . 'login', $s);
+										$s = str_replace('#REG#', getinfo('site_url') . 'registration', $s);
+										
+										echo $s;
+									?>
+								</span>
+							</p>
+							
+							
+						<?php } ?>
+						
+				
+				<?php } // else form_comment_easy ?>
+				 
 				<?php 
 					if (mso_hook_present('page-comment-form')) 
 					{

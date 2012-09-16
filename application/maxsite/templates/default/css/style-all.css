@@ -644,10 +644,6 @@ div.type_loginform div.form-end {
   text-align: right;
   font-size: .9em;
 }
-div.widget form.flogin input.flogin_user,
-div.widget form.flogin input.flogin_password {
-  width: 95%;
-}
 div.widget form.flogin input.flogin_submit {
   margin-top: 7px;
 }

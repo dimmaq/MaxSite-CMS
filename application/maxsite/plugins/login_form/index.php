@@ -48,8 +48,22 @@ function login_form_widget($num = 1)
 	else
 	{
 		$after_form = (isset($options['after_form'])) ? $options['after_form'] : '';
-
-		$out = mso_login_form(array( 'login'=>t('Логин (email):') . ' ', 'password'=>t('Пароль:') . ' ', 'submit'=>'', 'form_end'=>$after_form ), getinfo('siteurl') . mso_current_url(), false);
+		
+		if (isset($options['registration']) and $options['registration'])
+		{
+			$registration = '</span><span class="text-right registration"><a href="' . getinfo('siteurl') . 'registration">' . tf('Регистрация') . '</a></span>';
+		}
+		else $registration = '';
+		
+		
+		$out = mso_login_form(array( 
+			'login' => t('Логин (email):') . ' ', 
+			'password' => t('Пароль:') . ' ', 
+			'submit' => '', 
+			'form_end' => $after_form,
+			'submit_end' => $registration
+			), 
+			getinfo('siteurl') . mso_current_url(), false);
 	}
 	
 	if ($out)
@@ -72,6 +86,7 @@ function login_form_widget_form($num = 1)
 	
 	if ( !isset($options['header']) ) $options['header'] = '';
 	if ( !isset($options['after_form']) ) $options['after_form'] = '';
+	if ( !isset($options['registration']) ) $options['registration'] = '0';
 	
 	// вывод самой формы
 	$CI = & get_instance();
@@ -79,8 +94,16 @@ function login_form_widget_form($num = 1)
 	
 	$form = mso_widget_create_form(t('Заголовок'), form_input( array( 'name'=>$widget . 'header', 'value'=>$options['header'])), t('Укажите заголовок виджета'));
 	
-	$form .= mso_widget_create_form(t('Текст после формы'), form_input( array( 'name'=>$widget . 'after_form', 'value'=>$options['after_form'])), t('Например, ссылка на регистрацию'));
+	$form .= mso_widget_create_form(t('Регистрация'), form_dropdown( $widget . 'registration', 
+			array( 
+				'0' => t('Не показывать ссылку'), 
+				'1' => t('Показывать ссылку'), 
+				), 
+				$options['registration']), t('Ссылка будет отображена рядом с кнопкой входа'));
+	
+	$form .= mso_widget_create_form(t('Текст после формы'), form_input( array( 'name'=>$widget . 'after_form', 'value'=>$options['after_form'])), t('Можно использовать HTML'));
 
+	
 	
 	return $form;
 }
@@ -98,6 +121,7 @@ function login_form_widget_update($num = 1)
 	# обрабатываем POST
 	$newoptions['header'] = mso_widget_get_post($widget . 'header');
 	$newoptions['after_form'] = mso_widget_get_post($widget . 'after_form');
+	$newoptions['registration'] = mso_widget_get_post($widget . 'registration');
 	
 	if ( $options != $newoptions ) 
 		mso_add_option($widget, $newoptions, 'plugins' );

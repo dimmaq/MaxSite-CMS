@@ -42,6 +42,8 @@ mso_admin_plugin_options('my_plugin', 'plugins',
 						'type' => 'info', # нужно указать такой тип!
 						'title' => 'Тут какой-то Заголовок', 
 						'text' => 'Тут какой-то текст', 
+						'id' => 'myInfo', // можно указать для блока ID 
+						'class' => 'myInfo24', // можно указать для блока css-class 
 					),
 									
 		'f4' => array(

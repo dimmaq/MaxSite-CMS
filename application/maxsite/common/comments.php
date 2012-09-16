@@ -1667,6 +1667,10 @@ function mso_comuser_auth($data)
 	$comusers_nik = isset($data['comusers_nik']) ? $data['comusers_nik'] : '';
 	$redirect = isset($data['redirect']) ? $data['redirect'] : true;
 	
+	// если $die = true, то всё рубим через die
+	// иначе возвращаем результат по return
+	$die = isset($data['die']) ? $data['die'] : true;
+	
 	// разрешить создавать через эту функцию новых комюзеров (если такого email нет в базе)
 	$allow_create_new_comuser = isset($data['allow_create_new_comuser']) ? $data['allow_create_new_comuser'] : true;
 	
@@ -1679,7 +1683,8 @@ function mso_comuser_auth($data)
 	$query = $CI->db->get('users');
 	if ($query->num_rows() > 0) # есть
 	{
-		die( tf('Данный email уже используется на сайте админом или автором.'));
+		if ($die) die(tf('Данный email уже используется на сайте админом или автором.'));
+			else return tf('Данный email уже используется на сайте админом или автором.');
 	}
 
 		
@@ -1715,7 +1720,8 @@ function mso_comuser_auth($data)
 			else
 			{
 				// email есть но пароль ошибочный
-				die(t('Переданный пароль является ошибочным для нашего сайта', 'plugins'));
+				if ($die) die(tf('Переданный пароль является ошибочным для нашего сайта'));
+					else return tf('Данный email уже зарегистрирован на сайте. Для входа нужно указать верный пароль.');
 			}
 		}
 		else
@@ -1740,7 +1746,10 @@ function mso_comuser_auth($data)
 		
 		// но если запрещены регистрации, то все рубим
 		if ( !mso_get_option('allow_comment_comusers', 'general', '1') )
-				die(t('На сайте запрещена регистрация комюзеров...', 'plugins'));
+		{
+			if ($die) die(t('На сайте запрещена регистрация.'));
+				else return t('На сайте запрещена регистрация.');
+		}
 		
 		// если пароль не указан, то генерируем его случайным образом
 		if ($pass === false) $pass = substr(mso_md5($email), 1, 9);
@@ -1757,10 +1766,18 @@ function mso_comuser_auth($data)
 		$ins_data['comusers_ip_register'] = $_SERVER['REMOTE_ADDR'];
 		$ins_data['comusers_notify'] = '1'; // сразу включаем подписку на уведомления
 		
-		if ($comusers_nik)
+		if (isset($data['comusers_url'])) // если указан сайт
+		{
+			if ($comusers_url = mso_clean_str($data['comusers_url'])) 
+					$ins_data['comusers_url'] = $comusers_url;
+		}
+		else $comusers_url = '';
+		
+		if ($comusers_nik = mso_clean_str($comusers_nik, 'base|not_url'))
 		{
 			$ins_data['comusers_nik'] = $comusers_nik;
 		}
+		
 		// Автоматическая активация новых комюзеров
 		// если активация стоит автоматом, то сразу её и прописываем
 		if ( mso_get_option('comusers_activate_auto', 'general', '0') )
@@ -1798,7 +1815,7 @@ function mso_comuser_auth($data)
 				'comusers_password' => mso_md5($pass), 
 				'comusers_email' => $email,
 				'comusers_nik' => $comusers_nik,
-				'comusers_url' => '',
+				'comusers_url' => $comusers_url,
 				'comusers_avatar_url' => '', 
 				'comusers_last_visit' => '',
 			);
@@ -1813,7 +1830,8 @@ function mso_comuser_auth($data)
 		}
 		else
 		{
-			die(t('Произошла ошибка регистрации', 'plugins'));
+			if ($die) die(t('Произошла ошибка регистрации'));
+				else return t('Произошла ошибка регистрации');
 		}
 	}
 	
