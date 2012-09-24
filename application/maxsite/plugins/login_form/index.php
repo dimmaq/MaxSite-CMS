@@ -51,7 +51,7 @@ function login_form_widget($num = 1)
 		
 		if (isset($options['registration']) and $options['registration'])
 		{
-			$registration = '</span><span class="text-right registration"><a href="' . getinfo('siteurl') . 'registration">' . tf('Регистрация') . '</a></span>';
+			$registration = '</span><span class="text-right registration"><a href="' . getinfo('siteurl') . 'registration">' . tf('Регистрация') . '</a>';
 		}
 		else $registration = '';
 		

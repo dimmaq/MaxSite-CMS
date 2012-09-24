@@ -2713,13 +2713,13 @@ function mso_load_jquery($plugin = '', $path = '')
 		{
 			$jquery_type = mso_get_option('jquery_type', 'general', 'self');
 			
-			$version = '1.8.1';
+			$version = '1.8.2';
 			
 			if ($jquery_type == 'google') $url = 'http://ajax.googleapis.com/ajax/libs/jquery/' . $version . '/jquery.min.js'; // Google Ajax API CDN 
 			elseif ($jquery_type == 'microsoft') $url = 'http://ajax.aspnetcdn.com/ajax/jQuery/jquery-' . $version . '.min.js'; // Microsoft CDN
 			elseif ($jquery_type == 'jquery') $url = 'http://code.jquery.com/jquery-' . $version . '.min.js'; //jQuery CDN
 			elseif ($jquery_type == 'huyandex') $url = 'http://yandex.st/jquery/' . $version . '/jquery.min.js';
-			else $url = getinfo('common_url') . 'jquery/jquery-' . $version . '.min.js';
+			else $url = getinfo('common_url') . 'jquery/jquery.min.js';
 			
 			return '<script src="' . $url . '"></script>' . NR;
 		}

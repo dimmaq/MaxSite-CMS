@@ -165,7 +165,7 @@ function mso_admin_plugin_options($key, $type, $ar, $title = '', $info = '', $te
 				if (isset($val['id'])) $tag_id = ' id="' . $val['id'] . '"';
 					else $tag_id= '';
 				
-				if (isset($val['class'])) $tag_class = ' class="' . $val['class'] . '"';
+				if (isset($val['class'])) $tag_class = ' ' . $val['class'];
 					else $tag_class= '';
 				
 				$form .= '<div class="admin_plugin_options_info' . $tag_class . '"' . $tag_id . '>'; 
