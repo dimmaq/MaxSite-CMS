@@ -682,8 +682,12 @@ $(function()
 				t = this.title;
 				if (!t) { t = ''; }
 				else { t = ' ' + t; }
+				title = $(this).parent('label').find('em').text();
+				if (title) title = ' ' + title;
 				
-				codegal = codegal + '[gal={$up}mini/' + this.value + t + ']{$up}'+ this.value +'[\/gal]{$n}';
+				title = title.replace(/((\s*\S+)*)\s*/, "$1");
+				
+				codegal = codegal + '[gal={$up}mini/' + this.value + t + title +']{$up}'+ this.value +'[\/gal]{$n}';
 			}
 		});
 
