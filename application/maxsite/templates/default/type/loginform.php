@@ -54,7 +54,7 @@
 			'password'=> tf('Пароль'), 
 			'submit'=> '', 
 			'submit_value'=> tf('Войти'), 
-			'form_end'=>'<div class="form-end">' . $reg . '<a href="' . getinfo('siteurl') . '">'. tf('Вернуться к сайту'). '</a></div>'
+			'form_end'=>'<div class="form-end">' . $reg . '<a href="' . getinfo('siteurl') . 'password-recovery">'. tf('Забыли пароль?'). '</a> | '. '<a href="' . getinfo('siteurl') . '">'. tf('Вернуться к сайту'). '</a></div>'
 			), 
 			$redirect_url);
 			

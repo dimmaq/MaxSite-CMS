@@ -62,7 +62,7 @@
 			
 			function _array_plus_decode($s)
 			{
-				// if (is_string($s)) $s = stripcslashes($s);
+				if (is_string($s)) $s = stripcslashes($s);
 				
 				return str_replace('#_#_43_#_#;', '+', $s);
 			}

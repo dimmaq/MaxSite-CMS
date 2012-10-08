@@ -155,8 +155,7 @@
 	}
 
 	
-	
-	
+	# блоки
 	
 	// box - аналог таблиц
 	
@@ -199,7 +198,7 @@
 	
 	
 	
-	// less-стили
+	// less-стили для box
 	div.box {
 		display: table;
 		width: 100%;
@@ -214,3 +213,72 @@
 	}	
 	
 	
+	# Прочие возможности
+	
+	// формирование <a>-ссылки 
+	$link = $p->link('ссылка', 'название', 'подсказка', 'css-класс');
+	
+		Пример:
+		$name_site = getinfo('name_site');
+		if (!is_type('home')) $name_site = $p->link(getinfo('siteurl'), $name_site);
+	
+	
+	// формирование div-блоков
+	
+	// открываем
+	$p->div_start('block1', 'wrap');
+	
+		результат:
+			<div class="block1"><div class="wrap">
+	
+	Каждый параметр - это новый div.класс
+	
+	//закрываем
+	
+	$p->div_end('block1', 'wrap');
+	
+		результат:
+			</div></div>
+	
+	
+	// формирование div.clearfix
+	$p->clearfix();
+	
+	
+	// произвольный html-тэг
+	// полный аналог $p->div()
+	$p->tag('текст', 'css-класс', 'div');
+	
+	
+	# парсинг-шаблонизатор
+	
+	// готовим данные
+	$data = array(
+		'name_site' => 'Мой сайт',
+		'descr_site' => 'Лучший сайт',
+	);
+	
+	// шаблон вывода
+	$template = <<<EOF
+		<div class="my_site">
+			<div class="name_site">{name_site}</div>
+			<div class="descr_site">{descr_site}</div>
+		</div>
+	EOF;
+
+	// сам вывод
+	$p->parse($template, $data);
+
+	
+	// возможен парсинг через файл
+	// имя файла произвольно
+	
+	$p->parse_f(getinfo('template_dir') . 'ns-search.tpl', $data);
+	
+	Файл ns-search.tpl:
+	
+		<div class="my_site">
+			<div class="name_site">{name_site}</div>
+			<div class="descr_site">{descr_site}</div>
+		</div>
+

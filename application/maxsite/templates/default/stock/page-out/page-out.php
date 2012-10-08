@@ -128,7 +128,11 @@ class Page_out
 	// вспомогательная функция для вывода результатов
 	protected function out($out)
 	{
-		if ($this->echo) echo $out;
+		if ($this->echo)
+		{
+			echo $out;
+			return $this; // для цепочки вызовов
+		}
 		
 		return $out;
 	}
@@ -327,7 +331,11 @@ class Page_out
 		if ($out) 
 		{
 			if ($echo === 0) return $this->out($do . $out . $posle);
-			elseif ($echo === true) echo $do . $out . $posle;
+			elseif ($echo === true) 
+			{
+				echo $do . $out . $posle;
+				return $this;
+			}
 			elseif ($echo === false) return $do . $out . $posle;
 		}
 	}
@@ -350,7 +358,7 @@ class Page_out
 		return $this->out(NR . $do . mb_substr(strip_tags($this->val('page_content')), 0, $max_chars, 'UTF-8') . $cut . $posle);
 	}
 	
-	// вывод мета - только значение мета
+	// вывод мета - только значение мета по return
 	function meta_val($meta = '', $default = '', $razd = ', ')
 	{
 		// mso_page_meta_value($meta = '', $page_meta = array(), $default = '', $razd = ', '
@@ -373,13 +381,85 @@ class Page_out
 		return $this->out($text);
 	}
 	
+	// полный аналог div
+	// чтобы не так резало глаза div
+	function tag($text = '', $class = '', $tag = 'div')
+	{
+		if ($class) $class = ' class="' . $class . '"';
+		
+		return $this->out('<' . $tag . $class . '>' . $text . '</' . $tag . '>');
+	}
+	
 	// вывод div с указанным css-классом
-	// или можно указать 
+	// или можно указать свой
 	function div($text = '', $class = '', $tag = 'div')
 	{
 		if ($class) $class = ' class="' . $class . '"';
 		
 		return $this->out('<' . $tag . $class . '>' . $text . '</' . $tag . '>');
+	}
+	
+	// вывод открывающих div с указанным css-классом
+	// сколько аргументов, столько и вложенных div 
+	// название аргумента - это css-класс 
+	function div_start()
+	{
+		$numargs = func_num_args();
+		
+		if ($numargs === 0) 
+		{
+			return $this->out('<div>'); // нет аргументов, одиночный div
+		}
+
+		$args = func_get_args(); // массив всех полученных аргументов
+
+		$out = '';
+		
+		foreach ($args as $class)
+		{
+			$out .= '<div class="' . $class . '">';
+		}
+		
+		return $this->out($out);
+	}	
+	
+	// аналогичная div_start(), только закрывающая
+	function div_end($class = '')
+	{
+		$numargs = func_num_args();
+		
+		if ($numargs === 0) 
+		{
+			return $this->out('</div>' . NR); // нет аргументов, одиночный div
+		}
+
+		$args = func_get_args(); // массив всех полученных аргументов
+		
+		// классы выводятся в обратном порядке
+		$args = array_reverse($args);
+		
+		$out = '';
+		
+		foreach ($args as $class)
+		{
+			// если класс не указан, то делаем без поясняющего комментария
+			if ($class)
+				$out .= '</div><!-- /div.' . $class . ' -->';
+			else
+				$out .= '</div>';
+		}
+		
+		return $this->out($out);
+	}
+	
+	
+	// вывод div.clearfix
+	// или можно указать 
+	function clearfix($class = 'clearfix')
+	{
+		if ($class) $class = ' class="' . $class . '"';
+		
+		return $this->out('<div' . $class . '></div>');
 	}
 	
 	// функция равна line, только всегда отдает по return
@@ -394,6 +474,18 @@ class Page_out
 	{
 		if ($out) return $this->out($do . $out . $posle);
 	}
+	
+	
+	// формируем <a>
+	// возвращаем только по return
+	function link($url = '#', $name = '', $title = '', $class = '')
+	{
+		if ($class) $class = ' class="' . $class . '"';
+		if ($title) $title = ' title="' . htmlspecialchars($title) . '"';
+		
+		return '<a href="' . $url . '"' . $class . $title . '>' . $name . '</a>';
+	}	
+	
 	
 	// для заголовка можно использовать отдельную функцию
 	// в этом случае можно указать отдельные параметры
@@ -411,12 +503,16 @@ class Page_out
 		if ($out) 
 		{
 			if ($echo === 0) return $this->out($out);
-			elseif ($echo === true) echo $out;
+			elseif ($echo === true)
+			{
+				echo $out;
+				return $this;
+			}
 			elseif ($echo === false) return $out;
 		}
 	}
 	
-	// возвращает адрес записи
+	// возвращает адрес записи всегда по return
 	// если $html_link = true, то формирует <a href="адрес">
 	function page_url($html_link = false)
 	{
@@ -483,6 +579,37 @@ class Page_out
 	}
 	
 	
+	// парсинг - используется парсер CodeIgniter
+	// $template - это шаблон 
+	// $data - данные в виде массива
+	function parse($template = '', $data = array(), $echo = true)
+	{
+		$CI = & get_instance();
+		$CI->load->library('parser');
+		
+		$out = $CI->parser->parse_string($template, $data, true);
+		
+		if ($echo) 
+		{
+			echo $out;
+			return $this;
+		}
+		
+		return $out;
+	}
+	
+	
+	// парсинг через файл-шаблон, указанный в $file
+	// путь указывается полный на сервере
+	// $data - данные в виде массива как и в parse()
+	function parse_f($file = '', $data = array(), $echo = true)
+	{
+		if (!file_exists($file)) return;
+		
+		$tmpl = file_get_contents($file);
+		
+		return $this->parse($tmpl, $data, $echo);
+	}	
 	
 } // end  class Page_out 
 

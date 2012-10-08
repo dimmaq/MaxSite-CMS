@@ -881,12 +881,21 @@ function _mso_sql_build_tag($r, &$pag)
 		$slug = mso_segment(2);
 	
 	// если метка не указана, то иммитируем несуществующую метку, чтобы была 404-страница
-	if (!$slug) 
+	if (!$slug and !isset($r['no_meta_value']) and !isset($r['meta_value'])) 
 	{
 		$slug = md5(time());
 		$r['pagination'] = false;
 	}
 	
+	
+	// если no_meta_value = true, то делаем $slug = false
+	// чтобы можно было делать запросы без этого поля
+	// если указан meta_value, то $slug = meta_value
+	if (isset($r['no_meta_value']) and $r['no_meta_value'] === true) $slug = false;
+	elseif (isset($r['meta_value']) and $r['meta_value']) $slug = $r['meta_value'];
+	
+	if ($r['exclude_page_id']) $exclude_page_id = true;
+		else $exclude_page_id = false;
 	
 	$offset = 0;
 
@@ -909,7 +918,10 @@ function _mso_sql_build_tag($r, &$pag)
 			if (is_array($r['type'])) $CI->db->where_in('page_type_name', $r['type']);
 				else $CI->db->where('page_type_name', $r['type']);
 		}
-
+		
+		if ($exclude_page_id)
+			$CI->db->where_not_in('page.page_id', $r['exclude_page_id']);
+			
 		if ($r['page_id_autor']) $CI->db->where('page.page_id_autor', $r['page_id_autor']);
 
 		$CI->db->join('page_type', 'page_type.page_type_id = page.page_type_id');
@@ -974,7 +986,10 @@ function _mso_sql_build_tag($r, &$pag)
 	$CI->db->join('users', 'users.users_id = page.page_id_autor');
 	$CI->db->join('page_type', 'page_type.page_type_id = page.page_type_id');
 	$CI->db->join('meta', 'meta.meta_id_obj = page.page_id');
-
+	
+	if ($exclude_page_id)
+			$CI->db->where_not_in('page.page_id', $r['exclude_page_id']);
+			
 	$CI->db->where('meta_key', $r['meta_key']);
 	$CI->db->where('meta_table', $r['meta_table']);
 	if ($slug) $CI->db->where('meta_value', $slug);
@@ -988,6 +1003,7 @@ function _mso_sql_build_tag($r, &$pag)
 			else $CI->db->limit($r['limit']);
 	}
 	
+	//_pr(_sql());
 	if ($function_add_custom_sql = $r['function_add_custom_sql']) $function_add_custom_sql();
 }
 
