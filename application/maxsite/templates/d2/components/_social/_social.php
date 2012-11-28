@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /*
-	(c) http://maxsite.org/
+	(c) http://max-3000.com/
 	
 	вывод соцсететй иконками
 	стили задаются в social.less
@@ -28,6 +28,7 @@ if ($social and isset($social[0]))
 		'evernote' => 'Evernote',
 		'facebook' => 'Facebook',
 		'gplus' => 'Google+',
+		'github' => 'Github',
 		'last_fm' => 'Last FM',
 		'linked_in' => 'Linked In',
 		'mail' => 'Mail.ru',
@@ -57,3 +58,5 @@ if ($social and isset($social[0]))
 	
 	echo '</div>';
 }
+
+# end file

@@ -14,6 +14,7 @@ if ($mso_install and !function_exists('mb_strlen') ) require('mbstring.php');
 
 
 define("NR", "\n"); // перенос строки
+define("NR2", "\n\n"); // двойной перенос строки
 define("TAB", "\t"); // табулятор
 define("NT", "\n\t"); // перенос + табулятор
 
@@ -94,9 +95,14 @@ function getinfo($info = '')
 				break;
 
 		case 'admin_url' :
-				$out = $MSO->config['admin_url']; // [admin_url] => http://localhost/application/maxsite/admin/
+				$out = $MSO->config['admin_url']; 
+				// [admin_url] => http://localhost/application/maxsite/admin/
 				break;
-
+						
+		case 'admin_dir' :
+				$out = $MSO->config['admin_dir'];
+				break;
+				
 		case 'site_admin_url' :
 				$out = $MSO->config['site_admin_url']; // [site_admin_url] => http://localhost/admin/
 				break;
@@ -201,10 +207,7 @@ function getinfo($info = '')
 		case 'uri_get' :
 				$out = $MSO->data['uri_get'];
 				break;
-				
-		case 'admin_dir' :
-				$out = $MSO->config['admin_dir'];
-				break;
+
 				
 		case 'cache_dir' :
 				$out = $MSO->config['cache_dir'];

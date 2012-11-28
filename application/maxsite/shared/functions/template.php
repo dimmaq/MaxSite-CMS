@@ -186,7 +186,7 @@ if (!function_exists('default_out_profiles'))
 # $option - опция
 # $def_component - компонент по умолчанию
 # пример использования
-# if ($fn = get_component_fn('default_header_component2', 'menu')) require($fn);
+# if ($fn = get_component_fn('header_component2', 'menu')) require($fn);
 if (!function_exists('get_component_fn'))
 {
 	function get_component_fn($option = '', $def_component = '')
@@ -209,7 +209,7 @@ if (!function_exists('get_component_fn'))
 # css-файл компонента находится в общем css-каталоге шаблона с именем компонента, например menu.php и menu.css
 if (!function_exists('out_component_css'))
 {
-	function out_component_css($component_options = array('default_header_component1', 'default_header_component2', 'default_header_component3', 'default_header_component4', 'default_header_component5', 'default_footer_component1', 'default_footer_component2', 'default_footer_component3', 'default_footer_component4', 'default_footer_component5'))
+	function out_component_css($component_options = array('header_component1', 'header_component2', 'header_component3', 'header_component4', 'header_component5', 'footer_component1', 'footer_component2', 'footer_component3', 'footer_component4', 'footer_component5'))
 	{
 		
 		// проходимся по всем заданным опциям
@@ -317,8 +317,12 @@ if (!function_exists('mso_default_head_section'))
 		out_component_css();
 			
 		echo NT . mso_load_jquery();
-
-		echo NT . '<!-- plugins -->' . NR;
+		
+		echo NT . '<!--[if lt IE 9]>
+	<script src="' . getinfo('shared_url') . 'js/html5shiv.js"></script>
+	<![endif]-->';
+		
+		echo NR . NT . '<!-- plugins -->' . NR;
 		mso_hook('head');
 		echo NT . '<!-- /plugins -->' . NR;
 
@@ -502,79 +506,6 @@ if (!function_exists('mso_add_file'))
 	}
 }
 
-# получение адреса первой картинки IMG в тексте
-# адрес обрабатывается, чтобы сформировать адрес полный (full), миниатюра (mini) и превью (prev)
-# результат записит от значения $res
-# если $res = true => найденный адрес или $default
-# если $res = 'mini' => адрес mini
-# если $res = 'prev' => адрес prev
-# если $res = 'full' => адрес full
-# если $res = 'all' => массив из всех сразу:
-#  		[full] => http://сайт/uploads/image.jpg
-#  		[mini] => http://сайт/uploads/mini/image.jpg
-#  		[prev] => http://сайт/uploads/_mso_i/image.jpg
-if (!function_exists('mso_get_first_image_url'))
-{
-	function mso_get_first_image_url($text = '', $res = true, $default = '')
-	{
-		$pattern = '!<img.*?src="(.*?)"!i';
-		
-		//$pattern = '!<img.+src=[\'"]([^\'"]+)[\'"].*>!i';
-		
-		preg_match_all($pattern, $text, $matches);
-		
-		//pr($matches);
-		if (isset($matches[1][0])) 
-		{
-			$url = $matches[1][0];
-			if(empty($url)) $url = $default;
-		}
-		else
-			$url = $default;
-		
-		//_pr($url,1);
-		if (strpos($url, '/uploads/smiles/') !== false) return ''; // смайлики исключаем
-		
-		if ($res === true) return $url;
-		
-		$out = array();
-
-		// если адрес не из нашего uploads, то отдаем для всех картинок исходный адрес
-		if (strpos($url, getinfo('uploads_url')) === false) 
-		{
-			$out['mini'] = $out['full'] = $out['prev'] = $url;
-			
-			if ($res == 'mini' or $res == 'prev' or $res == 'full') return $out['mini'];
-				else return $out;
-		
-		}
-		
-		if (strpos($url, '/mini/') !== false) // если в адресе /mini/ - это миниатюра
-		{
-			$out['mini'] = $url;
-			$out['full'] = str_replace('/mini/', '/', $url);
-			$out['prev'] = str_replace('/mini/', '/_mso_i/', $url);
-		}
-		elseif(strpos($url, '/_mso_i/') !== false) // если в адресе /_mso_i/ - это превью 100х100
-		{
-			$out['prev'] = $url;
-			$out['full'] = str_replace('/_mso_i/', '/', $url);
-			$out['mini'] = str_replace('/_mso_i/', '/mini/', $url);
-		}
-		else // обычная картинка
-		{
-			$fn = end(explode("/", $url)); // извлекаем имя файла
-			$out['full'] = $url;
-			$out['mini'] = str_replace($fn, 'mini/' . $fn, $url);
-			$out['prev'] = str_replace($fn, '_mso_i/' . $fn, $url);
-		}
-		
-		if ($res == 'mini') return $out['mini'];
-		elseif ($res == 'prev') return $out['prev'];
-		elseif ($res == 'full') return $out['full'];
-		else return $out;
-	}
-}
 
 # Функция возвращает путь к файлу относительно текущего шаблона
 # если файла нет, то возвращается false
