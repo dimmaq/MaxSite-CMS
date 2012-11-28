@@ -42,7 +42,7 @@
 	// подключаем meta.ini из текущего шаблона
 	// при этом складываем их с дефолтным
 	
-	$meta_def = mso_get_ini_file( getinfo('templates_dir') . 'default/meta.ini'); // можно использовать дефолтный
+	$meta_def = mso_get_ini_file( getinfo('shared_dir') . 'meta/meta.ini'); // можно использовать дефолтный
 	$all = array_merge($all, $meta_def);
 	
 	if (file_exists(getinfo('template_dir') . 'meta.ini')) 
@@ -57,7 +57,7 @@
 		if ($meta_templ) $all = array_merge($all, $meta_templ);
 	}
 	
-	// описание см. default/custom/_my_meta.php
+	// описание см. shared/blanks/custom/_my_meta.php
 	if (file_exists(getinfo('template_dir') . 'custom/my_meta.php'))
 	{
 		require( getinfo('template_dir') . 'custom/my_meta.php' );

@@ -148,14 +148,16 @@ function getinfo($info = '')
 
 		case 'description_site' :
 				$out = mso_get_option('description_site', 'general');
-				//$out = htmlspecialchars(mso_get_option('description_site', 'general'));
 				break;
 
 		case 'title' :
-				//$out = htmlspecialchars(mso_get_option('title', 'general'));
 				$out = mso_get_option('title', 'general');
 				break;
-
+		
+		case 'title_current' : // текущий титул
+				$out = $MSO->title;
+				break;
+		
 		case 'description' :
 				$out = htmlspecialchars(mso_get_option('description', 'general'));
 				break;
@@ -219,7 +221,15 @@ function getinfo($info = '')
 		case 'type_foreach_file':
 				$out = isset($MSO->data['type_foreach_file']) ? $MSO->data['type_foreach_file'] : '';
 				break;
-
+		
+		case 'shared_dir' :
+				$out = $MSO->config['base_dir'] . 'shared/';
+				break;
+		
+		case 'shared_url' :
+				$out = $MSO->config['base_url'] . 'shared/';
+				break;
+				
 	endswitch;
 
 	return $out;
@@ -2893,8 +2903,8 @@ function mso_add_to_cookie($name_cookies, $value, $expire, $redirect = false)
 
 	$add_to_cookie[$name_cookies] = array('value'=>$value, 'expire'=> $expire );
 
-	$CI->session->set_userdata(	array(	'_add_to_cookie' => $add_to_cookie ) );
-	$CI->session->set_userdata(	array(	'_add_to_cookie_redirect' => $redirect ) ); // куда редиректимся
+	$CI->session->set_userdata(	array('_add_to_cookie' => $add_to_cookie ) );
+	$CI->session->set_userdata(	array('_add_to_cookie_redirect' => $redirect ) ); // куда редиректимся
 
 	if ($redirect)
 	{
@@ -3646,12 +3656,14 @@ function _mso_logout()
 	if ($comuser) 
 	{
 		$name_cookies = 'maxsite_comuser';
-		$expire  = time() - (60 * 60 * 24 * 365); // 365 дней
+		$expire  = time() - 31500000;
 		$value = ''; 
-		
-		
+
+		//_pr($url);
 		// mso_add_to_cookie('mso_edit_form_comuser', '', $expire); 
-		mso_add_to_cookie($name_cookies, $value, $expire, getinfo('siteurl') . mso_current_url()); // в куку для всего сайта
+		//mso_add_to_cookie($name_cookies, $value, $expire, getinfo('siteurl') . mso_current_url()); // в куку для всего сайта
+		mso_add_to_cookie($name_cookies, $value, $expire, $url); // в куку для всего сайта
+		
 	}
 	elseif ($url) mso_redirect($url, true);
 	else mso_redirect(getinfo('site_url'), true);
@@ -4135,7 +4147,7 @@ function mso_lessc($less_file = '', $css_file = '', $css_url = '', $use_cache = 
 		else
 		{
 			// в виде содержимого
-			return '<pre>' . $out . '</pre>';
+			return $out;
 		}
 	}
 }
@@ -4152,7 +4164,70 @@ function mso_load_script($url = '')
 	return NT . '<script src="' . $url . '"></script>';
 }
 
-/*
+
+# Функция возвращает полный путь к файлу, который следует подключить в index.php шаблона
+# использовать вместо старого варианта выбора type-файла
+# 	if ($fn = mso_dispatcher()) require($fn);
+function mso_dispatcher()
+{
+	# тип данных
+	$type = getinfo('type');
+
+	# для rss используются отдельное подключение
+	if (is_feed())
+	{
+		// ищем файл в шаблоне или shared
+		if ($f = mso_find_ts_file('type/feed/' . $type . '.php'))
+			return $f;
+		else
+			return mso_find_ts_file('type/feed/home.php');
+	}
+
+	# в зависимости от типа данных подключаем нужный файл
+
+	# на page_404 может быть свой хук. Тогда ничего не подключаем
+	if ($type == 'page_404' 
+		and mso_hook_present('custom_page_404') 
+		and mso_hook('custom_page_404')) 
+	{
+		return false;
+	}
+	elseif ($type == 'page_404') // страница не найдена, формируем по сегменту
+	{
+		$seg = mso_strip(mso_segment(1));
+		$fn = 'type/' . $seg . '/' . $seg . '.php';
+	}
+	else
+	{
+		$fn = 'type/' . $type . '/' . $type . '.php';
+	}
+	
+	if ($f = mso_find_ts_file($fn)) 
+		return $f;
+	else
+		return mso_find_ts_file('type/page_404/page_404.php');
+		
+}
+
+
+# поиск файла либо в каталоге шаблона, либо в shared-каталоге
+# файл указывается относительно каталога шаблона/shared-каталога
+# приоритет имеет файл в шаблоне, после в shared
+# если файл не найден, то возвращается $default
+# иначе полный путь, годный для require()
+# if ($fn = mso_find_ts_file('type/page-comments.php')) require($fn);
+function mso_find_ts_file($fn, $default = false)
+{
+	$fn1 = getinfo('template_dir') . $fn; // путь в шаблоне
+	$fn2 = getinfo('shared_dir') . $fn; // путь в shared
+	
+	if ( file_exists($fn1) ) return $fn1; // если шаблонный
+	elseif (file_exists($fn2)) return $fn2; // нет, значит shared
+	else return $default;
+}
+
+
+
 # профилирование - старт
 # первый параметр метка
 function _mso_profiler_start($point = 'first', $echo = false)
@@ -4196,8 +4271,6 @@ function _mso_profiler_end($point = 'first', $echo = true)
 			);
 	else return $_points[$point];
 }
-*/
-
 
 
 # end file

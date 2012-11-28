@@ -125,9 +125,9 @@ function samborsky_polls_archive_404($args = array())
 	$archive_url = mso_get_option('plugin_samborsky_polls', 'plugins', array('archive_url'=>'polls-archive'));
 	if (mso_segment(1) == $archive_url['archive_url'])
 	{
-		require_once(getinfo('template_dir') . 'main-start.php');
+		if ($fn = mso_find_ts_file('main/main-start.php')) require($fn);
 		echo samborsky_polls_archive();
-		require_once(getinfo('template_dir').'main-end.php');
+		if ($fn = mso_find_ts_file('main/main-end.php')) require($fn);
 		
 		# по хуку custom_page_404 нужно возвращать true, если не требуется обработка по page_404
 		return true; 

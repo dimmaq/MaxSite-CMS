@@ -4,7 +4,7 @@ mso_head_meta('title', t('Галерея') ); // meta title страницы
 
 
 # начальная часть шаблона
-require(getinfo('template_dir') . 'main-start.php');
+if ($fn = mso_find_ts_file('main/main-start.php')) require($fn);
 
 if (isset($options['all']))
 {
@@ -59,6 +59,6 @@ if (isset($options['all']))
 }
 
 # конечная часть шаблона
-require(getinfo('template_dir') . 'main-end.php');
+if ($fn = mso_find_ts_file('main/main-end.php')) require($fn);
 	
 # end file

@@ -19,6 +19,10 @@ class Page_out
 	var $max = 1; // всего записей в цикле
 	var $last = false; // признак, что это последняя запись
 	
+	var $count_cells = 2; // кол-во ячеек в одной строке для box_grid()
+	var $cur_cells = 1; // текущая ячейка
+	var $close_box_grid = false; // признак, что div-строка box_grid не закрыта
+	
 	
 	function __construct()
 	{
@@ -470,7 +474,7 @@ class Page_out
 	
 	// вывод произвольного блока
 	// только если $out содержит текст
-	function block($do = '', $posle = '', $out = '')
+	function block($out = '', $do = '', $posle = '')
 	{
 		if ($out) return $this->out($do . $out . $posle);
 	}
@@ -484,7 +488,20 @@ class Page_out
 		if ($title) $title = ' title="' . htmlspecialchars($title) . '"';
 		
 		return '<a href="' . $url . '"' . $class . $title . '>' . $name . '</a>';
-	}	
+	}
+	
+	// формируем <img>
+	// возвращаем только по return
+	function img($src = '', $class = '', $title = '', $alt = '', $width = '', $height = '')
+	{
+		if ($class) $class = ' class="' . $class . '"';
+		if ($title) $title = ' title="' . htmlspecialchars($title) . '"';
+		if ($alt) $alt = ' alt="' . htmlspecialchars($alt) . '"';
+		if ($width) $width = ' width="' . $width . '"';
+		if ($height) $height = ' height="' . $height . '"';
+		
+		return '<img src="' . $src . '"' . $class . $title . $alt . $width . $height . '>';
+	}
 	
 	
 	// для заголовка можно использовать отдельную функцию
@@ -510,6 +527,17 @@ class Page_out
 			}
 			elseif ($echo === false) return $out;
 		}
+	}
+	
+	
+	// возвращает название сайта только по return
+	// если это не home, то в виде A-ссылки
+	function name_site()
+	{
+		return !is_type('home') ? 
+					$this->link(getinfo('siteurl'), getinfo('name_site')) 
+				: 
+					getinfo('name_site');
 	}
 	
 	// возвращает адрес записи всегда по return
@@ -611,6 +639,197 @@ class Page_out
 		return $this->parse($tmpl, $data, $echo);
 	}	
 	
+	
+	// вывод записей по принципу ячеек таблицы
+	// Здесь задается кол-во ячеек в одной строке
+	//	1 2
+	//  3 4
+	//  5 6
+	function box_grid($count_cells = 2)
+	{
+		$this->count_cells = $count_cells;
+		$this->cur_cells = 1;
+	}
+	
+	
+	// вывод записи
+	function box_grid_cell($class = '')
+	{
+		// для первой ячейки нужно открыть блоки
+		if ($this->cur_cells == 1)
+		{
+			$this->box_start('', false);
+			$this->row_start();
+			$this->close_box_grid = false;
+		}
+		
+		// добавляем специфичные классы для ячейки
+		// автоматом формируем номер ячейки
+		// 
+		
+		if ($class) 
+			$class .= ' cell_' . $this->cur_cells;
+		else
+			$class = 'cell_' . $this->cur_cells;
+			
+		$this->cell_start($class);
+	}	
+	
+	// следующая итерация цикла - увеличиваем счетчик
+	function box_grid_next()
+	{
+		$this->cell_end(); // закрыли ячейку
+		
+		// если это последняя ячейка в строке, то закрываем
+		if ($this->cur_cells >= $this->count_cells)
+		{
+			$this->cur_cells = 1;
+			$this->row_end();
+			$this->box_end(false);
+			$this->close_box_grid = true;
+		
+		}
+		else
+		{
+			$this->cur_cells++;
+		}
+	}	
+	
+	// закрываем все открытие ячейки
+	function box_grid_end()
+	{
+		if (!$this->close_box_grid) // есть не закрытый div 
+		{
+			$this->row_end();
+			$this->box_end(false);
+			$this->close_box_grid = true;
+		}
+	}
+	
 } // end  class Page_out 
+
+
+
+
+/*
+	Класс для вывода записей в колонках
+*/
+
+class Columns 
+{
+	protected $cols_count = 3; // количество колонок
+	protected $pages_count = 1; // всего количество записей
+	protected $cut = 1; // кол-во записей в одной колонке
+	protected $_echo = true; // выводить данные по echo - иначе return
+	protected $cut_i = 1; // номер записи в колонке
+	protected $cut_num_col = 1; // номер колонки
+	protected $cut_close_div = false; // признак закрытого DIV
+	
+	function __construct($cols_count = 3, $pages_count = 1, $_echo = true)
+	{
+		// запомним
+		$this->cols_count = $cols_count;
+		$this->pages_count = $pages_count;
+		
+		// режим вывода
+		$this->_echo = $_echo;
+		
+		// вычислим
+		$this->cut = ceil($pages_count/$cols_count); // кол-во записей в одной колонке
+		
+		// основной контейнер
+		if ($this->_echo) echo NR . NR . '<div class="columns"><div class="columns-wrap">';
+				else return NR . NR . '<div class="columns"><div class="columns-wrap">';
+
+	}
+	
+	// вывод внутри цикла
+	function out($class = 'left', $style = '')
+	{
+		if ($this->cut_i == 1)
+		{
+			$this->cut_close_div = false;
+			
+			if ($style) $style = ' style="' . $style . '"';
+			
+			$out = NR . '<div class="' . $class 
+					. ' column column-' . $this->cut_num_col
+					. ' column-' . $this->cut_num_col . '-of-' . $this->cols_count
+					. ( ($this->cut_num_col == 1) ? ' column-first':'' ) 
+					. ( ($this->cut_num_col == $this->cols_count) ? ' column-last':'' ) 
+					. '"' 
+					. $style . '>'
+					. NR . '<div class="column-content">';
+					
+			if ($this->_echo) echo $out;
+				else return $out;
+		}
+	}
+	
+	// следующая итерация
+	function next()
+	{
+		$this->cut_i++;
+
+		if ($this->cut_i > $this->cut)
+		{
+			$this->cut_i = 1;
+			$this->cut_close_div = true;
+			$this->cut_num_col++;
+
+			if ($this->_echo) echo '</div></div>' . NR;
+				else return '</div></div>' . NR;
+		}
+	}
+	
+	// завершение вывода колонок
+	function close()
+	{
+		$out = '';
+		
+		// незакрытый div left
+		if (!$this->cut_close_div) $out .= '</div></div>' . NR;
+		
+		// основной контейнер
+		$out .= '<div class="clearfix"></div></div></div><!-- end columns -->' . NR;
+
+		if ($this->_echo) echo $out;
+		else return $out;
+		
+	}
+	
+	// можно задать старт новой колонки явно
+	function new_col($class = 'left', $style = '')
+	{
+		$this->cut_close_div = true; // флаг, чтобы не ставить лишний div в close()
+		
+		if ($style) $style = ' style="' . $style . '"';
+			
+		$out = NR . '<div class="' . $class 
+				. ' column"' 
+				. $style . '>'
+				. '<div class="column-content">';
+				
+		if ($this->_echo) echo $out;
+			else return $out;
+	}
+	
+	
+	// можно задать конец колонки явно
+	function end_col()
+	{
+		if ($this->_echo) echo '</div></div>' . NR;
+				else return '</div></div>' . NR;
+	}	
+	
+	
+	// подчистка float
+	function clearfix()
+	{
+		if ($this->_echo) echo '<div class="clearfix"></div>' . NR;
+				else return '<div class="clearfix"></div>' . NR;
+	}	
+	
+} // end  class Columns 
 
 # end file

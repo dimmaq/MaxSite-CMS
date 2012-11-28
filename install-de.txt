@@ -19,7 +19,7 @@ SYSTEMANFORDERUNGEN
 1. Fähigkeit zur Arbeit mit .htaccess und aktiven mod_rewrite.
 2. MySQL > 4.1. Arbeit mit UTF8. Datenbank Typ MyISAM.
 3. Aktive Bibliothek mbstring.
-4. PHP > 5.1.6.
+4. PHP > 5.2.4.
 
 
 =========

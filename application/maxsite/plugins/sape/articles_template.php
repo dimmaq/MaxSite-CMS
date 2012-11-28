@@ -4,11 +4,11 @@ mso_head_meta('title', '{title}');
 mso_head_meta('description', '{description}');
 mso_head_meta('keywords', '{keywords}');
 
-require(getinfo('template_dir') . 'main-start.php');
+if ($fn = mso_find_ts_file('main/main-start.php')) require($fn);
 
 echo '<h1>{header}</h1>';
 echo '{body}';
 
-require(getinfo('template_dir') . 'main-end.php');
+if ($fn = mso_find_ts_file('main/main-end.php')) require($fn);
 	
 # end file

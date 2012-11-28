@@ -4,7 +4,7 @@
  * указывается url входящего изображения
  * на выходе url нового изображения
  
-			require_once(getinfo('template_dir') . 'stock/thumb/thumb.php');
+			require_once(getinfo('templates_dir') . 'default/stock/thumb/thumb.php');
 			
 			// адрес должен быть в uploads!!!
 			$img = 'http://сайт/uploads/файл';

@@ -31,13 +31,20 @@ function template_options_admin_page($args = array())
 	
 	if ( !mso_check_allow('template_options_admin') ) return $args;
 	
-	# подключаем options.php из шаблона
-	$fn = $MSO->config['templates_dir'] . $MSO->config['template'] . '/options.php';
+	# options/options.php
+	$fn1 = $MSO->config['templates_dir'] . $MSO->config['template'] . '/options/options.php';
+	
+	# options.php
+	$fn2 = $MSO->config['templates_dir'] . $MSO->config['template'] . '/options.php';
 	
 	# если файла нет, то подключаем дефолтный из админки
-	if (!file_exists($fn)) $fn =  $MSO->config['admin_plugins_dir'] . 'template_options/options.php';
-	
-	require_once($fn);
+	# template_options/options.php
+	$fn3 = $MSO->config['admin_plugins_dir'] . 'template_options/options.php';
+
+	if (file_exists($fn1)) require_once($fn1);
+	elseif (file_exists($fn2)) require_once($fn2);
+	else require_once($fn3);
+
 }
 
 

@@ -50,40 +50,17 @@
 			
 			$params = $post['params'];
 			
-			$params = urldecode($params);
-			
-			// pr($params);
-			
-			// нужно заменить + из-за особенностей парсинга parse_str
-			$params = str_replace('+', '#_#_43_#_#;',$params);
-			
-			// pr($params);
-			
-			
-			function _array_plus_decode($s)
-			{
-				if (is_string($s)) $s = stripcslashes($s);
-				
-				return str_replace('#_#_43_#_#;', '+', $s);
-			}
-			
 			parse_str($params, $post);
 			
-			$post = array_map('_array_plus_decode', $post);
+			function _array_stripcslashes($s)
+			{
+				if (is_string($s)) 
+					return stripcslashes($s);
+				else 
+					return $s;
+			}
 			
-			//_pr($post);
-			
-			// удалим экранирующие слэши из контента 
-			// откуда они берутся???
-			// $post['f_content'] = stripcslashes($post['f_content']);
-			
-			// плюсы заменим назад
-			// $post['f_content'] = str_replace('#_#_43_#_#;', '+', $post['f_content']); 
-			
-			
-			// _pr($post);
-			
-			
+			$post = array_map('_array_stripcslashes', $post);
 			
 			// в $post все переданные поля формы
 			
@@ -94,7 +71,6 @@
 			$post['f_submit'] = array($id => '');
 			
 			require(getinfo('admin_plugins_dir') . 'admin_page/post-edit.php');
-			// pr($post);
 		}
 	}
 

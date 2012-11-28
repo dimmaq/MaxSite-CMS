@@ -7,19 +7,19 @@
 
 class Maxsite_lib 
 {
-	var $version = '0.755';
-	var $config = array();
-	var $data = array();
-	var $hooks = array();
-	var $active_plugins = array();
-	var $sidebars = array();
-	var $widgets = array();
-	var $title = '';
-	var $description = '';
-	var $keywords = '';
-	var $language = false;
-	var $current_lang_dir = false;
-	var $cache = array();
+	public $version = '0.78';
+	public $config = array();
+	public $data = array();
+	public $hooks = array();
+	public $active_plugins = array();
+	public $sidebars = array();
+	public $widgets = array();
+	public $title = '';
+	public $description = '';
+	public $keywords = '';
+	public $language = false;
+	public $current_lang_dir = false;
+	public $cache = array();
 	
 	
 	public function __construct()

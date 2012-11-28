@@ -9,7 +9,7 @@
 # коммментарии
 
 
-$page_text_ok = true; // разрешить вывод текста комментария в зависимости отпароля записи
+$page_text_ok = true; // разрешить вывод текста комментария в зависимости от пароля записи
 
 if (isset($page['page_password']) and $page['page_password']) // есть пароль у страницы
 {
@@ -52,6 +52,8 @@ if (is_login()) $edit_link = getinfo('siteurl') . 'admin/comments/edit/';
 	else $edit_link = '';
 
 if ($comments or $page_comment_allow) echo NR . '<div class="type type_page_comments">' . NR;
+
+if ($f = mso_page_foreach('page-comments-do-list')) require($f); // подключаем кастомный вывод
 
 if ($page_text_ok and $comments) // есть страницы
 { 	
@@ -137,6 +139,8 @@ if ($page_text_ok and $comments) // есть страницы
 	echo '</ol>';
 	echo '</div>' . NR;
 }
+
+if ($f = mso_page_foreach('page-comments-posle-list')) require($f); // подключаем кастомный вывод
 
 if ($page_comment_allow and $page_text_ok)
 {

@@ -1,18 +1,19 @@
 <h1>Заголовок H1</h1>
-<p>Sed ullamcorper, tortor ac feugiat rhoncus, <u>lectus orci ornare massa</u>, in <s>fringilla lectus</s> odio a eros. Pellentesque volutpat, nunc quis pellentesque vehicula, <strong>turpis elit varius tortor</strong>, vel sollicitudin est orci ac urna? Cras et scelerisque metus. Mauris sit <sub>amet</sub> consequat <sup>nisl</sup>. Duis in arcu nisi, sed rutrum lectus. Duis <em>pulvinar suscipit lacus at scelerisque</em>. Nam vel tellus non dui laoreet fringilla et ac enim. Integer congue semper elementum.</p>
 
-<p>Sed purus dolor, interdum vel fermentum ut, gravida a elit. :-) Praesent sed magna ut lorem dignissim iaculis. In egestas bibendum volutpat? Suspendisse tortor massa, volutpat vel accumsan condimentum, molestie ut ligula. Cras nunc dui, condimentum in vestibulum sit amet, dignissim ac sem. Nulla aliquet :cheese: urna ut magna tempor dapibus.</p>
+<p>Далеко-далеко за словесными горами в <u>стране гласных</u> и согласных живут <s>рыбные тексты.</s> Вдали от всех живут они в буквенных домах на берегу <strong>Семантика</strong> большого языкового океана. Маленький ручеек Даль журчит по всей стране и обеспечивает ее всеми необходимыми правилами. Эта парадигматическая страна, в которой жаренные члены предложения залетают прямо в рот. Даже всемогущая <sub>пунктуация</sub> не имеет власти над рыбными текстами, ведущими <em>безорфографичный образ жизни</em>. Однажды одна маленькая строчка рыбного текста по имени <sup>Lorem ipsum</sup> решила выйти в большой мир грамматики.</p>
+
+<p> Великий Оксмокс предупреждал ее о злых запятых, диких знаках вопроса и коварных точках с запятой, но текст не дал сбить себя с толку. Он собрал семь своих заглавных букв, подпоясал инициал за пояс и пустился в дорогу. Взобравшись на первую вершину курсивных гор, бросил он последний взгляд назад, на силуэт своего родного города Буквоград, на заголовок деревни Алфавит и на подзаголовок своего переулка Строчка. Грустный реторический вопрос скатился по его щеке и он продолжил свой путь. По дороге встретил текст рукопись.</p>
 
 [h2(first)]Заголовок H2.first[/h2]
 
-<p>Aenean venenatis lobortis convallis. Aliquam in magna tortor, at elementum tellus. Sed rhoncus consequat mauris. In at tortor eros, quis tincidunt risus. Donec dictum, purus in lacinia :smirk: hendrerit; lectus sapien sagittis sem, vitae molestie orci nunc ut lectus? Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. </p>
+<p> Она предупредила его: «В моей стране все переписывается по несколько раз. Единственное, что от меня осталось, это приставка «и». Возвращайся ты лучше в свою безопасную страну». Не послушавшись рукописи, наш текст продолжил свой путь. Вскоре ему повстречался коварный составитель рекламных текстов, напоивший его языком и речью и заманивший в свое агенство, которое использовало его снова и снова в своих проектах. И если его не переписали, то живет он там до сих пор. Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.</p>
 
 <h2>Заголовок H2</h2>
 
-<p>Morbi vel mauris dolor. Pellentesque sollicitudin auctor libero non commodo. Nunc lectus purus, varius vel volutpat non, dapibus a libero. Sed ornare velit luctus enim vestibulum gravida viverra lectus tristique? Suspendisse sollicitudin mauris ac orci sollicitudin sed aliquam odio vehicula. Nam varius vestibulum quam elementum posuere. In ut euismod massa. Ut scelerisque nisi vel nunc consequat luctus. Duis risus sapien, blandit vestibulum accumsan at, sagittis sed orci. Fusce scelerisque, mauris rhoncus fringilla rhoncus, nisl felis semper erat; vitae luctus sem leo non turpis.</p>
+<p>Однажды одна маленькая строчка рыбного текста по имени Lorem ipsum решила выйти в большой мир грамматики. Великий Оксмокс предупреждал ее о злых запятых, диких знаках вопроса и коварных точках с запятой, но текст не дал сбить себя с толку. Он собрал семь своих заглавных букв, подпоясал инициал за пояс и пустился в дорогу.</p>
 
 <h3>Заголовок H3</h3>
-<p>Sed volutpat gravida consectetur. Quisque accumsan, nisi non cursus mollis, tortor nunc commodo tellus, non pretium est sapien sodales purus. Proin diam justo; luctus et hendrerit vitae, laoreet ut arcu. Nullam eu scelerisque lacus. Vestibulum ornare nibh et magna venenatis eget blandit velit iaculis. Morbi at euismod mauris.</p>
+<p> Вдали от всех живут они в буквенных домах на берегу Семантика большого языкового океана. Маленький ручеек Даль журчит по всей стране и обеспечивает ее всеми необходимыми правилами. Эта парадигматическая страна, в которой жаренные члены предложения залетают прямо в рот. Даже всемогущая пунктуация не имеет власти над рыбными текстами, ведущими безорфографичный образ жизни. Однажды одна маленькая строчка рыбного текста по имени Lorem ipsum решила выйти в большой мир грамматики.</p>
 
 <h4>Заголовок H4</h4>
 <p>Sed magna elit, laoreet ac ornare sed, tempus a velit. Donec lobortis scelerisque urna, id malesuada sem tristique scelerisque! Etiam feugiat mi a diam mollis et bibendum dui placerat! Duis posuere ultrices euismod. Sed lacinia nulla sed nisl vestibulum in fringilla nulla congue. Suspendisse luctus convallis lacinia. Sed facilisis pharetra magna, a gravida tellus ultrices ut. Mauris eget semper elit. Donec euismod hendrerit lectus vitae sagittis.</p>
@@ -67,47 +68,45 @@
 </blockquote>
 
 
-<h2>Сообщения DIV</h2>
-
-[div(message note)]message note[/div] 
-[div(message alert)]message alert[/div] 
-[div(message error)]message error[/div] 
-[div(message ok)]message ok[/div] 
-[div(message about)]message about[/div] 
-
-[div(message idea)]message idea[/div]
-[div(message mail)]message mail[/div] 
-[div(message home)]message home[/div] 
-[div(message question)]message question[/div] 
-
-[div(message about box-shadow margin20)]message about box-shadow margin20[/div] 
-[div(message error noicon)]message error noicon[/div] 
-[div(message ok yellow no-border)]message ok yellow no-border[/div] 
-[div(message alert noicon no-border-radius no-border)]message alert noicon no-border-radius no-border[/div] 
-
-[div(radius8 white bg-red box-shadow margin20 margin-lr0 padding10)]radius8 white bg-red box-shadow margin20 margin-lr0 padding10[/div] 
-
-
-[div(message note small)]message note small[/div] 
-[div(message alert small)]message alert small[/div] 
-[div(message error small)]message error small[/div] 
-[div(message ok small)]message ok small[/div] 
-[div(message about small)]message about small[/div] 
-
-[div(message idea small)]message idea small[/div]
-[div(message mail small)]message mail small[/div] 
-[div(message home small)]message home small[/div] 
-[div(message question small)]message question small[/div] 
-
-
-
 <h2>Обычный список UL/LI</h2>
 <ul>
-<li>Nulla lobortis semper libero, rutrum volutpat leo faucibus a. Fusce justo eros, porta at cursus eu, tincidunt ut magna. Nulla.</li>
-<li>Vestibulum pretium sapien eget neque bibendum at auctor justo gravida. Nam dapibus, diam eu sodales aliquet, orci lorem auctor felis.</li>
-<li>Proin ut neque ut quam vestibulum blandit. Phasellus tempus semper est, at malesuada leo suscipit.</li>
-<li>Phasellus faucibus fringilla ligula, at ultrices arcu varius quis. Aliquam sollicitudin scelerisque bibendum. Proin sed.</li>
+	<li>Nulla lobortis semper libero, rutrum volutpat leo faucibus a. Fusce justo eros, porta at cursus eu, tincidunt ut magna. Nulla.</li>
+	<li>Vestibulum pretium sapien eget neque bibendum at auctor justo gravida. Nam dapibus, diam eu sodales aliquet, orci lorem auctor felis.</li>
+	<li>Proin ut neque ut quam vestibulum blandit. Phasellus tempus semper est, at malesuada leo suscipit.</li>
+	<li>Phasellus faucibus fringilla ligula, at ultrices arcu varius quis. Aliquam sollicitudin scelerisque bibendum. Proin sed.</li>
 </ul>
+
+<h2>Обычный вложенный список UL/LI</h2>
+<ul>
+	<li>Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.
+		<ul>
+			<li>Nulla lobortis semper libero, rutrum volutpat leo faucibus a. Fusce justo eros, porta at cursus eu, tincidunt ut magna. Nulla.</li>
+			<li>Vestibulum pretium sapien eget neque bibendum at auctor justo gravida. Nam dapibus, diam eu sodales aliquet, orci lorem auctor felis.</li>
+		</ul>
+	</li>
+
+	<li>Вдали от всех живут они в буквенных домах на берегу Семантика большого языкового океана.
+		<ul>
+			<li>Nulla lobortis semper libero, rutrum volutpat leo faucibus a. Fusce justo eros, porta at cursus eu, tincidunt ut magna. Nulla.</li>
+			<li>Vestibulum pretium sapien eget neque bibendum at auctor justo gravida. Nam dapibus, diam eu sodales aliquet, orci lorem auctor felis.</li>
+		</ul>
+	</li>
+
+	<li> Эта парадигматическая страна, в которой жаренные члены предложения залетают прямо в рот.
+		<ul>
+			<li>Nulla lobortis semper libero, rutrum volutpat leo faucibus a. Fusce justo eros, porta at cursus eu, tincidunt ut magna. Nulla.</li>
+			<li>Vestibulum pretium sapien eget neque bibendum at auctor justo gravida. Nam dapibus, diam eu sodales aliquet, orci lorem auctor felis.</li>
+		</ul>
+	</li>
+	
+	<li> Маленький ручеек Даль журчит по всей стране и обеспечивает ее всеми необходимыми правилами.
+		<ul>
+			<li>Nulla lobortis semper libero, rutrum volutpat leo faucibus a. Fusce justo eros, porta at cursus eu, tincidunt ut magna. Nulla.</li>
+			<li>Vestibulum pretium sapien eget neque bibendum at auctor justo gravida. Nam dapibus, diam eu sodales aliquet, orci lorem auctor felis.</li>
+		</ul>
+	</li>
+</ul>
+
 
 <h2>Нумерованный список OL/LI</h2>
 <ol>
@@ -120,18 +119,20 @@
 <h2>Список определений (DL/DT/DD)</h2>
 
 <dl>
-<dt>title</dt>
-<dd>definition</dd>
-<dd>definition</dd>
-<dd>definition</dd>
-<dt>title</dt>
-<dd>definition</dd>
-<dd>definition</dd>
-<dd>definition</dd>
-<dt>title</dt>
-<dd>definition</dd>
-<dd>definition</dd>
-<dd>definition</dd>
+	<dt>title</dt>
+	<dd>definition</dd>
+	<dd>definition</dd>
+	<dd>definition</dd>
+		
+	<dt>title</dt>
+	<dd>definition</dd>
+	<dd>definition</dd>
+	<dd>definition</dd>
+	
+	<dt>title</dt>
+	<dd>definition</dd>
+	<dd>definition</dd>
+	<dd>definition</dd>
 </dl>
 
 

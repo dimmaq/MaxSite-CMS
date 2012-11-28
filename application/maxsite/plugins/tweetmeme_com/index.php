@@ -77,7 +77,7 @@ function tweetmeme_com_mso_options()
 						'type' => 'checkbox', 
 						'name' => t('Использовать блок twitter.com'), 
 						'description' => t('В этом случае настройки отображения tweetmeme.com игнорируются.'),
-						'default' => '0',
+						'default' => '1',
 					),
 			
 			'twitter_data-count' => array(
@@ -139,7 +139,7 @@ function tweetmeme_com_content($text = '')
 		}
 	
 	
-	if (!isset($options['twitter_orig'])) $options['twitter_orig'] = false;
+	if (!isset($options['twitter_orig'])) $options['twitter_orig'] = true;
 	
 	// если использовать вывод с tweetmeme.com
 	if (!$options['twitter_orig'])

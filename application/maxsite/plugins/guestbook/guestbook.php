@@ -16,7 +16,7 @@ function guestbook_css($a = array())
 }
 
 # начальная часть шаблона
-require(getinfo('template_dir') . 'main-start.php');
+if ($fn = mso_find_ts_file('main/main-start.php')) require($fn);
 
 $CI = & get_instance();
 
@@ -249,6 +249,6 @@ if ($query->num_rows() > 0)
 mso_hook('pagination', $pag);
 
 # конечная часть шаблона
-require(getinfo('template_dir') . 'main-end.php');
+if ($fn = mso_find_ts_file('main/main-end.php')) require($fn);
 	
 ?>

@@ -217,7 +217,7 @@
 				<h3>' . t('Дата публикации') . '</h3>
 				<p><label><input name="f_date_change" id="f_date_change" type="checkbox" ' . $f_date_change . '> ' . t('Изменить дату') . '</label> 
 				
-				<a href="#" style="font-size: 1.2em; text-decoration: none;" id="set_current_time" title="' . t('Уставновить текущее время компьютера') . '">&#9685;</a>
+				<a href="#" style="font-size: 1.2em; text-decoration: none;" id="set_current_time" title="' . t('Установить текущее время компьютера') . '">&#9685;</a>
 				
 				</p>
 				<p>' . $date_y . ' - ' . $date_m . ' - ' . $date_d . '</p>

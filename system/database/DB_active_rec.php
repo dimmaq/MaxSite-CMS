@@ -1992,7 +1992,6 @@ class CI_DB_active_record extends CI_DB_driver {
 	 *
 	 * @return	void
 	 */
-	 
 	/* MaxSite CMS меняем  protected на public */
 	public function _reset_select()
 	{

@@ -229,11 +229,12 @@ if (!function_exists('mso_default_head_section'))
 {
 	function mso_default_head_section($options = array())
 	{
-	
+		
 		// ob_start(); # задел на будущее - буферизация
 	// <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=8"><![endif]-->
-		echo '<!DOCTYPE HTML>
-<html><head>' . mso_hook('head-start') . '
+		echo 
+'<!DOCTYPE HTML>
+<html' . mso_get_val('head_section_html_add') . '><head>' . mso_hook('head-start') . '
 	<meta charset="UTF-8">
 	<title>' . mso_head_meta('title') . '</title>
 	<meta name="generator" content="MaxSite CMS">
@@ -246,59 +247,70 @@ if (!function_exists('mso_default_head_section'))
 	
 		echo NT . '<!-- RSS -->' . NT . mso_rss();
 		
-		if (file_exists(getinfo('template_dir') . 'custom/head-start.php')) require(getinfo('template_dir') . 'custom/head-start.php');
+		if ($fn = mso_fe('custom/head-start.php')) require($fn);
 
-		echo NT . '<!-- CSS -->' . NT . '<link rel="stylesheet" href="'; 
+		echo NT . '<!-- CSS -->'; 
 		
-			if (file_exists(getinfo('template_dir') . 'css/css.php')) echo getinfo('template_url') . 'css/css.php'; 
-			else 
-			{
-				if (file_exists(getinfo('template_dir') . 'css/my_style.css')) // если есть css/my_style.css
-				{
-					echo getinfo('template_url') . 'css/my_style.css'; 
-				}
-				else
-				{ 
-					if (file_exists(getinfo('template_dir') . 'css/style-all-mini.css')) // если есть style-all-mini.css
-					{
-						echo getinfo('template_url') . 'css/style-all-mini.css'; 
-					}
-					elseif (file_exists(getinfo('template_dir') . 'css/style-all.css')) // нет mini, подключаем обычный файл
-					{
-						echo getinfo('template_url') . 'css/style-all.css'; 
-					}
-					else echo getinfo('templates_url') . 'default/css/style-all-mini.css'; 
-				}
-			}
-			
-		echo '">';
-
-		
-		// подключение var_style.css
-		
-		// если есть var_style.php, то используем только его
-		if (file_exists(getinfo('template_dir') . 'css/var_style.php')) 
+		// если есть style.php в шаблоне, то подключается только он, исключая все остальные файлы
+		if ($fn = mso_fe('css/style.php')) 
 		{
-			require(getinfo('template_dir') . 'css/var_style.php');
+			require($fn);
 		}
 		else
 		{
-			$var_file = '';
+			echo NT . '<link rel="stylesheet" href="'; 
 			
-			if (file_exists(getinfo('template_dir') . 'css/var_style.css')) 
-				$var_file = getinfo('template') . '/css/var_style.css';	
-			elseif (file_exists(getinfo('templates_dir') . 'default/css/var_style.css')) 
-				$var_file = 'default/css/var_style.css';
+				if (file_exists(getinfo('template_dir') . 'css/css.php')) echo getinfo('template_url') . 'css/css.php'; 
+				else 
+				{
+					if (file_exists(getinfo('template_dir') . 'css/my_style.css')) // если есть css/my_style.css
+					{
+						echo getinfo('template_url') . 'css/my_style.css'; 
+					}
+					else
+					{ 
+						if (file_exists(getinfo('template_dir') . 'css/style-all-mini.css')) // если есть style-all-mini.css
+						{
+							echo getinfo('template_url') . 'css/style-all-mini.css'; 
+						}
+						elseif (file_exists(getinfo('template_dir') . 'css/style-all.css')) // нет mini, подключаем обычный файл
+						{
+							echo getinfo('template_url') . 'css/style-all.css'; 
+						}
+						else echo getinfo('templates_url') . 'default/css/style-all-mini.css'; 
+					}
+				}
+				
+			echo '">';
+
 			
-			// если var_style.css нулевой длины, то не подключаем его
-			if (filesize(getinfo('templates_dir') . $var_file))
-				echo NT . '<link rel="stylesheet" href="' . getinfo('templates_url') . $var_file . '">';	
-		}
+			// подключение var_style.css
+			
+			// если есть var_style.php, то используем только его
+			if ($fn = mso_fe('css/var_style.php')) 
+			{
+				require($fn);
+			}
+			else
+			{
+				$var_file = '';
+				
+				if (file_exists(getinfo('template_dir') . 'css/var_style.css')) 
+					$var_file = getinfo('template') . '/css/var_style.css';	
+				elseif (file_exists(getinfo('templates_dir') . 'default/css/var_style.css')) 
+					$var_file = 'default/css/var_style.css';
+				
+				// если var_style.css нулевой длины, то не подключаем его
+				if (filesize(getinfo('templates_dir') . $var_file))
+					echo NT . '<link rel="stylesheet" href="' . getinfo('templates_url') . $var_file . '">';	
+			}
+		
+		} // else style.php
 		
 		echo NT . '<link rel="stylesheet" href="' . getinfo('template_url') . 'css/print.css" media="print">';
 		
-		// если есть fonts.css, то подключаем его - подумать ещё
-		// файл специально исползуется для подгрузки шрифтов через @import 
+		// если есть fonts.css, то подключаем его
+		// файл специально используется для подгрузки шрифтов через @import 
 		mso_add_file('css/fonts.css');
 		
 		// и import.css для каких-то других @import
@@ -316,7 +328,7 @@ if (!function_exists('mso_default_head_section'))
 		
 		default_out_profiles();
 
-		if (file_exists(getinfo('template_dir') . 'custom/head.php')) require(getinfo('template_dir') . 'custom/head.php');
+		if ($fn = mso_fe('custom/head.php')) require($fn);
 		if ($f = mso_page_foreach('head')) require($f);
 		if (function_exists('ushka')) echo ushka('head');
 		
@@ -565,5 +577,20 @@ if (!function_exists('mso_get_first_image_url'))
 	}
 }
 
+# Функция возвращает путь к файлу относительно текущего шаблона
+# если файла нет, то возвращается false
+# 	if ($fn = mso_fe('stock/page_out/page-out.php')) require($fn);
+if (!function_exists('mso_fe'))
+{
+	function mso_fe($file)
+	{
+		$file = getinfo('template_dir') . $file;
+
+		if (file_exists($file)) 
+			return $file;
+		else 
+			return false;
+	}
+}
 
 # end file
